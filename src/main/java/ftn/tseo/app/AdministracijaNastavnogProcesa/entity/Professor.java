@@ -1,0 +1,108 @@
+package ftn.tseo.app.AdministracijaNastavnogProcesa.entity;
+
+
+import static javax.persistence.GenerationType.IDENTITY;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="professor")
+public class Professor {
+	
+	public enum Role {
+	    PROFESSOR, ASSOCIATE, DEMONSTRATOR;
+	}
+	
+	@Id
+	@GeneratedValue(strategy=IDENTITY)
+	@Column(name="professor_id", unique=true, nullable=false)
+	private Integer id;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="role", unique=false, nullable=false)
+	private Role role;
+	
+	@OneToOne(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY)
+	@JoinColumn(name="user_id")
+	private User user;
+	
+	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="professor")
+	private Set<ExamTaking> examTakings = new HashSet<ExamTaking>();
+	
+	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="professor")
+	private Set<CourseProfessor> courseProfessors = new HashSet<CourseProfessor>();
+
+	
+	
+	public Professor() {
+		super();
+	}
+
+	public Professor(Integer id, Role role, User user, Set<ExamTaking> examTakings,
+			Set<CourseProfessor> courseProfessors) {
+		super();
+		this.id = id;
+		this.role = role;
+		this.user = user;
+		this.examTakings = examTakings;
+		this.courseProfessors = courseProfessors;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Set<ExamTaking> getExamTakings() {
+		return examTakings;
+	}
+
+	public void setExamTakings(Set<ExamTaking> examTakings) {
+		this.examTakings = examTakings;
+	}
+
+	public Set<CourseProfessor> getCourseProfessors() {
+		return courseProfessors;
+	}
+
+	public void setCourseProfessors(Set<CourseProfessor> courseProfessors) {
+		this.courseProfessors = courseProfessors;
+	}
+	
+
+	
+}

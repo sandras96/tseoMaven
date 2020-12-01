@@ -33,16 +33,19 @@ public class Exam {
 	@Column(name="points", unique=false, nullable=false)
 	private float points;
 	
-	@ManyToOne(fetch= FetchType.EAGER)
+	@ManyToOne(cascade= {CascadeType.REFRESH},fetch= FetchType.EAGER)
 	@JoinColumn(name="course_id")
 	private Course course;
 	
 	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.EAGER, mappedBy="exam")
 	private Set<Assignment> assignments = new HashSet<Assignment>();
 	
-	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="exam")
+	@OneToMany(cascade= {CascadeType.REFRESH}, fetch= FetchType.LAZY, mappedBy="exam")
 	private Set<ExamTaking> examTaking = new HashSet<ExamTaking>();
 
+	@ManyToOne(cascade= {CascadeType.REFRESH},fetch= FetchType.EAGER)
+	@JoinColumn(name="examPeriod_id")
+	private ExamPeriod examPeriod;
 	
 	
 	public Exam() {

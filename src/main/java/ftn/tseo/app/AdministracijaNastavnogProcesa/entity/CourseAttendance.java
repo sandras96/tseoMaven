@@ -29,21 +29,17 @@ public class CourseAttendance {
 	@JoinColumn(name="course_id")
 	private Course course;
 	
-	@ManyToOne(fetch= FetchType.EAGER)
-	@JoinColumn(name="enrollmentYear_id")
-	private EnrollmentYear enrollmentYear;
 
 	
 	public CourseAttendance() {
 		super();
 	}
 
-	public CourseAttendance(Integer id, Student student, Course course, EnrollmentYear enrollmentYear) {
+	public CourseAttendance(Integer id, Student student, Course course) {
 		super();
 		this.id = id;
 		this.student = student;
 		this.course = course;
-		this.enrollmentYear = enrollmentYear;
 	}
 
 	public Integer getId() {
@@ -70,13 +66,6 @@ public class CourseAttendance {
 		this.course = course;
 	}
 
-	public EnrollmentYear getEnrollmentYear() {
-		return enrollmentYear;
-	}
-
-	public void setEnrollmentYear(EnrollmentYear enrollmentYear) {
-		this.enrollmentYear = enrollmentYear;
-	}
 	
 	
 

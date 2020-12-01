@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -41,11 +42,11 @@ public class Professor {
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="professor")
+	@OneToMany(cascade= {CascadeType.REFRESH}, fetch= FetchType.LAZY, mappedBy="professor")
 	private Set<ExamTaking> examTakings = new HashSet<ExamTaking>();
 	
-	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="professor")
-	private Set<CourseProfessor> courseProfessors = new HashSet<CourseProfessor>();
+	@ManyToMany(mappedBy="professors")
+	private Set<Course> courses = new HashSet<Course>();
 
 	
 	
@@ -53,15 +54,16 @@ public class Professor {
 		super();
 	}
 
-	public Professor(Integer id, Role role, User user, Set<ExamTaking> examTakings,
-			Set<CourseProfessor> courseProfessors) {
+	public Professor(Integer id, Role role, User user, Set<ExamTaking> examTakings, Set<Course> courses) {
 		super();
 		this.id = id;
 		this.role = role;
 		this.user = user;
 		this.examTakings = examTakings;
-		this.courseProfessors = courseProfessors;
+		this.courses = courses;
 	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -95,13 +97,15 @@ public class Professor {
 		this.examTakings = examTakings;
 	}
 
-	public Set<CourseProfessor> getCourseProfessors() {
-		return courseProfessors;
+	public Set<Course> getCourses() {
+		return courses;
 	}
 
-	public void setCourseProfessors(Set<CourseProfessor> courseProfessors) {
-		this.courseProfessors = courseProfessors;
+	public void setCourses(Set<Course> courses) {
+		this.courses = courses;
 	}
+
+	
 	
 
 	

@@ -13,6 +13,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -42,13 +45,18 @@ public class Course {
 	@Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private Boolean deleted;
 	
-	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="course")
+	@OneToMany(cascade= {CascadeType.REFRESH}, fetch= FetchType.LAZY, mappedBy="course")
 	private Set<CourseAttendance> courseAttendances = new HashSet<CourseAttendance>();
 	
-	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="course")
-	private Set<CourseProfessor> courseProfessors = new HashSet<CourseProfessor>();
+	@ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+        name = "courseProfessor", 
+        joinColumns = @JoinColumn(name = "course_id"), 
+        inverseJoinColumns =  @JoinColumn(name = "professor_id") 
+    )
+    private Set<Professor> professors = new HashSet<Professor>();
 	
-	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="course")
+	@OneToMany(cascade= {CascadeType.REFRESH}, fetch= FetchType.LAZY, mappedBy="course")
 	private Set<Exam> exams = new HashSet<Exam>();
 	
 	
@@ -57,7 +65,7 @@ public class Course {
 	}
 
 	public Course(Integer id, String name, float espb, Semester semester, Boolean deleted,
-			Set<CourseAttendance> courseAttendances, Set<CourseProfessor> courseProfessors, Set<Exam> exams) {
+			Set<CourseAttendance> courseAttendances, Set<Professor> professors, Set<Exam> exams) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -65,7 +73,7 @@ public class Course {
 		this.semester = semester;
 		this.deleted = deleted;
 		this.courseAttendances = courseAttendances;
-		this.courseProfessors = courseProfessors;
+		this.professors = professors;
 		this.exams = exams;
 	}
 
@@ -129,14 +137,12 @@ public class Course {
 		this.courseAttendances = courseAttendances;
 	}
 
-
-	public Set<CourseProfessor> getCourseProfessors() {
-		return courseProfessors;
+	public Set<Professor> getProfessors() {
+		return professors;
 	}
 
-
-	public void setCourseProfessors(Set<CourseProfessor> courseProfessors) {
-		this.courseProfessors = courseProfessors;
+	public void setProfessors(Set<Professor> professors) {
+		this.professors = professors;
 	}
 
 	public Set<Exam> getExams() {

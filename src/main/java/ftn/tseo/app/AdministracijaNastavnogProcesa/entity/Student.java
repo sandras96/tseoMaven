@@ -56,10 +56,10 @@ public class Student {
 	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="student")
 	private Set<Payment> payments = new HashSet<Payment>();
 	
-	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="student")
+	@OneToMany(cascade= {CascadeType.REFRESH}, fetch= FetchType.LAZY, mappedBy="student")
 	private Set<CourseAttendance> courseAttendances = new HashSet<CourseAttendance>();
 	
-	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="student")
+	@OneToMany(cascade= {CascadeType.REFRESH}, fetch= FetchType.LAZY, mappedBy="student")
 	private Set<ExamTaking> examTakings = new HashSet<ExamTaking>();
 
 	public Student() {

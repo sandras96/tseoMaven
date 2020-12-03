@@ -1,0 +1,40 @@
+package ftn.tseo.app.AdministracijaNastavnogProcesa.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Exam;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.repository.ExamRepository;
+
+@Service
+public class ExamService {
+	
+	@Autowired
+	ExamRepository examRepository;
+	
+	public Exam findOne(Integer id) {
+		return examRepository.findById(id).orElse(null);
+	}
+
+	public List<Exam> findAll() {
+		return examRepository.findAll();
+	}
+	
+	public Page<Exam> findAll(Pageable pageable) {
+		return examRepository.findAll(pageable);
+	}
+
+	public Exam save(Exam exam) {
+		return examRepository.save(exam);
+	}
+
+	public void remove(Integer id) {
+		examRepository.deleteById(id);
+	}
+
+
+}

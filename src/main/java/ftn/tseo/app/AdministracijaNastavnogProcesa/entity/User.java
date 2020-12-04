@@ -45,7 +45,7 @@ public class User implements Serializable {
 	private String email;
 	
 	@Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
-	private Boolean deleted;
+	private boolean deleted;
 	
 	@OneToOne(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy = "user")
 	private Student student;
@@ -61,7 +61,7 @@ public class User implements Serializable {
 	
 
 	public User(Integer id, String firstname, String lastname, String username, String password, String email,
-			Boolean deleted, Student student, Professor professor) {
+			boolean deleted) {
 		super();
 		this.id = id;
 		this.firstname = firstname;
@@ -70,9 +70,10 @@ public class User implements Serializable {
 		this.password = password;
 		this.email = email;
 		this.deleted = deleted;
-		this.student = student;
-		this.professor = professor;
 	}
+
+
+
 
 
 
@@ -124,31 +125,25 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public Boolean getDeleted() {
+
+	public boolean isDeleted() {
 		return deleted;
 	}
 
-	public void setDeleted(Boolean deleted) {
+	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
 
-	public Student getStudent() {
-		return student;
-	}
-
-	public void setStudent(Student student) {
-		this.student = student;
-	}
-
-	public Professor getProfessor() {
-		return professor;
-	}
-
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
-	}
-	
-	
+	/*
+	 * public Student getStudent() { return student; }
+	 * 
+	 * public void setStudent(Student student) { this.student = student; }
+	 * 
+	 * public Professor getProfessor() { return professor; }
+	 * 
+	 * public void setProfessor(Professor professor) { this.professor = professor; }
+	 * 
+	 */
 	
 
 }

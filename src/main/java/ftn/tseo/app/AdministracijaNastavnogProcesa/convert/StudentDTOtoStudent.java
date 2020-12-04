@@ -1,0 +1,46 @@
+package ftn.tseo.app.AdministracijaNastavnogProcesa.convert;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
+
+import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.StudentDTO;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Student;
+
+public class StudentDTOtoStudent implements Converter<StudentDTO, Student>  {
+	
+	@Autowired
+	UserDTOtoUser userDTOtoUser;
+
+	@Override
+	public Student convert(StudentDTO source) {
+		
+		if(source==null) {
+			return null;
+		}
+		Student student = new Student();
+		student.setId(source.getId());
+		if(source.getAddress()!=null) {
+			student.setAddress(source.getAddress());
+		}
+		if(source.getCity()!=null) {
+			student.setCity(source.getCity());
+		}
+		if(source.getCountry()!=null) {
+			student.setCountry(source.getCountry());
+		}
+		if(source.getZip()!=null) {
+			student.setZip(source.getZip());
+		}
+		if(source.getBirthDate()!=null) {
+			student.setBirthdate(source.getBirthDate());
+		}
+		if(source.getIndexNum()!=null) {
+			student.setIndexNum(source.getIndexNum());
+		}
+		if(source.getUser()!=null) {
+			student.setUser(userDTOtoUser.convert(source.getUser()));
+		}
+		return student;
+	}
+
+}

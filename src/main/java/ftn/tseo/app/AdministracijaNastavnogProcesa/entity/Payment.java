@@ -56,7 +56,7 @@ public class Payment {
 	private Date date;
 	
 	@Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
-	private Boolean deleted;
+	private boolean deleted;
 			
 	@ManyToOne(fetch= FetchType.EAGER)
 	@JoinColumn(name="student_id")
@@ -68,8 +68,10 @@ public class Payment {
 		super();
 	}
 
+
 	public Payment(Integer id, String name, String address, String city, Integer paymentCode, double amount,
-			String purpose, Integer accountNumber, Integer model, Integer reference, Date date, Student student) {
+			String purpose, Integer accountNumber, Integer model, Integer reference, Date date, boolean deleted,
+			Student student) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -82,8 +84,12 @@ public class Payment {
 		this.model = model;
 		this.reference = reference;
 		this.date = date;
+		this.deleted = deleted;
 		this.student = student;
 	}
+
+
+
 
 	public Integer getId() {
 		return id;
@@ -171,6 +177,14 @@ public class Payment {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public Student getStudent() {

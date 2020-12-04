@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
+	
 
 }

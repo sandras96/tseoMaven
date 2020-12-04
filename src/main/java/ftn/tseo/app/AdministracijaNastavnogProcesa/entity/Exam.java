@@ -52,8 +52,9 @@ public class Exam {
 		super();
 	}
 
+
 	public Exam(Integer id, Date date, float points, Course course, Set<Assignment> assignments,
-			Set<ExamTaking> examTaking) {
+			Set<ExamTaking> examTaking, ExamPeriod examPeriod) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -61,7 +62,10 @@ public class Exam {
 		this.course = course;
 		this.assignments = assignments;
 		this.examTaking = examTaking;
+		this.examPeriod = examPeriod;
 	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -110,6 +114,16 @@ public class Exam {
 	public void setExamTaking(Set<ExamTaking> examTaking) {
 		this.examTaking = examTaking;
 	}
+
+
+	public ExamPeriod getExamPeriod() {
+		return examPeriod;
+	}
+
+	public void setExamPeriod(ExamPeriod examPeriod) {
+		this.examPeriod = examPeriod;
+	}
+
 	
 	
 }

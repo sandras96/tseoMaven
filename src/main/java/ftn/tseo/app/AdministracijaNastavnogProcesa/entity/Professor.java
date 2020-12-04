@@ -39,7 +39,7 @@ public class Professor {
 	private Role role;
 	
 	@OneToOne(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY)
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="userRel", referencedColumnName="user_id")
 	private User user;
 	
 	@OneToMany(cascade= {CascadeType.REFRESH}, fetch= FetchType.LAZY, mappedBy="professor")

@@ -43,7 +43,7 @@ public class Course {
 	private Semester semester;
 	
 	@Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
-	private Boolean deleted;
+	private boolean deleted;
 	
 	@OneToMany(cascade= {CascadeType.REFRESH}, fetch= FetchType.LAZY, mappedBy="course")
 	private Set<CourseAttendance> courseAttendances = new HashSet<CourseAttendance>();
@@ -64,7 +64,7 @@ public class Course {
 		super();
 	}
 
-	public Course(Integer id, String name, float espb, Semester semester, Boolean deleted,
+	public Course(Integer id, String name, float espb, Semester semester, boolean deleted,
 			Set<CourseAttendance> courseAttendances, Set<Professor> professors, Set<Exam> exams) {
 		super();
 		this.id = id;
@@ -118,15 +118,13 @@ public class Course {
 	}
 
 
-	public Boolean getDeleted() {
+	public boolean isDeleted() {
 		return deleted;
 	}
 
-
-	public void setDeleted(Boolean deleted) {
+	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
-
 
 	public Set<CourseAttendance> getCourseAttendances() {
 		return courseAttendances;

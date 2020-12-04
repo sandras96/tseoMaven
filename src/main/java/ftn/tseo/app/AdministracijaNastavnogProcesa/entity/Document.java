@@ -30,7 +30,7 @@ public class Document {
 	private Date date;
 	
 	@Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
-	private Boolean deleted;
+	private boolean deleted;
 	
 	@ManyToOne(fetch= FetchType.EAGER)
 	@JoinColumn(name="student_id")
@@ -42,11 +42,12 @@ public class Document {
 		super();
 	}
 
-	public Document(Integer id, String name, Date date, Student student) {
+	public Document(Integer id, String name, Date date, boolean deleted, Student student) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.date = date;
+		this.deleted = deleted;
 		this.student = student;
 	}
 
@@ -72,8 +73,20 @@ public class Document {
 		return date;
 	}
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public Student getStudent() {
@@ -83,7 +96,7 @@ public class Document {
 	public void setStudent(Student student) {
 		this.student = student;
 	}
-	
+
 	
 	
 	

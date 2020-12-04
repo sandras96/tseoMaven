@@ -47,7 +47,7 @@ public class Student {
 	private String country;
 	
 	@OneToOne(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY)
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="userRel", referencedColumnName="user_id")
 	private User user;
 	
 	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="student")

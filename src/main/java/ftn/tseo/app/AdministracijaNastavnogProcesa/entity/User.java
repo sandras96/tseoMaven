@@ -2,23 +2,34 @@ package ftn.tseo.app.AdministracijaNastavnogProcesa.entity;
 
 import static javax.persistence.GenerationType.IDENTITY;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
 import javax.persistence.Entity;
 
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable {
+public class User implements Serializable,UserDetails {
 	/**
 	 * 
 	 */
@@ -53,7 +64,11 @@ public class User implements Serializable {
 	@OneToOne(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy = "user")
 	private Professor professor;
 	
-	
+	@ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+	@JoinTable(name="user_authority",
+			joinColumns=@JoinColumn(name="user_id",referencedColumnName="user_id"),
+			inverseJoinColumns = @JoinColumn(name="authority_id",referencedColumnName="id"))
+	private Set<Authority> user_authorities = new HashSet<>();
 	
 	public User() {
 		super();
@@ -71,10 +86,6 @@ public class User implements Serializable {
 		this.email = email;
 		this.deleted = deleted;
 	}
-
-
-
-
 
 
 	public Integer getId() {
@@ -132,6 +143,44 @@ public class User implements Serializable {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+
+	@Override
+	 public Collection<? extends GrantedAuthority> getAuthorities() {
+		 return this.user_authorities;
+	 }
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+	
+	@JsonIgnore
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public String getauthorities() {
+		String authority= null;
+      for (GrantedAuthority s : user_authorities ) {
+          authority = s.getAuthority();
+      }
+		return authority;
 	}
 
 	/*

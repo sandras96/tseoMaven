@@ -6,5 +6,7 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 	
+	User getByUsername(String username);
+	
 
 }

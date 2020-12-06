@@ -11,6 +11,7 @@ public class UserDTO {
 	private String password;
 	private String email;
 	private boolean deleted;
+	private String authority;
 	private StudentDTO student;
 	private ProfessorDTO professor;
 	
@@ -19,12 +20,12 @@ public class UserDTO {
 	}
 	
 	public UserDTO(User user) {
-		this(user.getId(), user.getFirstname(), user.getLastname(), user.getUsername(), user.getPassword(),
-				user.getEmail(), user.isDeleted());
+		this(user.getId(), user.getUsername(),user.getPassword(),user.getFirstname(), user.getLastname(),user.getEmail(), user.isDeleted(), user.getauthorities());
 	}
+	
 
 	public UserDTO(Integer id, String firstname, String lastname, String username, String password, String email,
-			boolean deleted) {
+			boolean deleted, String authority) {
 		super();
 		this.id = id;
 		this.firstname = firstname;
@@ -105,6 +106,13 @@ public class UserDTO {
 		this.deleted = deleted;
 	}
 
+	public String getAuthority() {
+		return authority;
+	}
+
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
 	
 	
 

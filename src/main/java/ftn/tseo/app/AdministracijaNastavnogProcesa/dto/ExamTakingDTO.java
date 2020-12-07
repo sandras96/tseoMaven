@@ -39,29 +39,58 @@ public class ExamTakingDTO {
 		return id;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public boolean isPass() {
 		return pass;
+	}
+
+	public void setPass(boolean pass) {
+		this.pass = pass;
 	}
 
 	public float getPoints() {
 		return points;
 	}
 
+	public void setPoints(float points) {
+		this.points = points;
+	}
+
 	public Integer getMark() {
 		return mark;
+	}
+
+	public void setMark(Integer mark) {
+		this.mark = mark;
 	}
 
 	public ExamDTO getExam() {
 		return exam;
 	}
 
+	public void setExam(ExamDTO exam) {
+		this.exam = exam;
+	}
+
 	public StudentDTO getStudent() {
 		return student;
+	}
+
+	public void setStudent(StudentDTO student) {
+		this.student = student;
 	}
 
 	public ProfessorDTO getProfessor() {
 		return professor;
 	}
+
+	public void setProfessor(ProfessorDTO professor) {
+		this.professor = professor;
+	}
+
 
 	
 }

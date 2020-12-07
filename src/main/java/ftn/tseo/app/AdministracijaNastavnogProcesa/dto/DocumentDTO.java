@@ -33,21 +33,41 @@ public class DocumentDTO {
 		return id;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Date getDate() {
 		return date;
 	}
 
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	public boolean isDeleted() {
 		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public StudentDTO getStudent() {
 		return student;
 	}
-	
+
+	public void setStudent(StudentDTO student) {
+		this.student = student;
+	}
+
 	
 }

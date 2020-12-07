@@ -33,12 +33,12 @@ public class Exam {
 	@Column(name="points", unique=false, nullable=false)
 	private float points;
 	
+	@Column(name="assignment", unique=false, nullable=false)
+	private String assignment;
+	
 	@ManyToOne(cascade= {CascadeType.REFRESH},fetch= FetchType.EAGER)
 	@JoinColumn(name="course_id")
 	private Course course;
-	
-	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.EAGER, mappedBy="exam")
-	private Set<Assignment> assignments = new HashSet<Assignment>();
 	
 	@OneToMany(cascade= {CascadeType.REFRESH}, fetch= FetchType.LAZY, mappedBy="exam")
 	private Set<ExamTaking> examTaking = new HashSet<ExamTaking>();
@@ -53,14 +53,14 @@ public class Exam {
 	}
 
 
-	public Exam(Integer id, Date date, float points, Course course, Set<Assignment> assignments,
+	public Exam(Integer id, Date date, float points, Course course, String assignment,
 			Set<ExamTaking> examTaking, ExamPeriod examPeriod) {
 		super();
 		this.id = id;
 		this.date = date;
 		this.points = points;
 		this.course = course;
-		this.assignments = assignments;
+		this.assignment = assignment;
 		this.examTaking = examTaking;
 		this.examPeriod = examPeriod;
 	}
@@ -99,13 +99,14 @@ public class Exam {
 		this.course = course;
 	}
 
-	public Set<Assignment> getAssignments() {
-		return assignments;
+	public String getAssignment() {
+		return assignment;
 	}
 
-	public void setAssignments(Set<Assignment> assignments) {
-		this.assignments = assignments;
+	public void setAssignment(String assignment) {
+		this.assignment = assignment;
 	}
+
 
 	public Set<ExamTaking> getExamTaking() {
 		return examTaking;

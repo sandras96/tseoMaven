@@ -26,13 +26,26 @@ public class CourseAttendanceDTO {
 		return id;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public StudentDTO getStudent() {
 		return student;
+	}
+
+	public void setStudent(StudentDTO student) {
+		this.student = student;
 	}
 
 	public CourseDTO getCourse() {
 		return course;
 	}
+
+	public void setCourse(CourseDTO course) {
+		this.course = course;
+	}
+
 	
 	
 

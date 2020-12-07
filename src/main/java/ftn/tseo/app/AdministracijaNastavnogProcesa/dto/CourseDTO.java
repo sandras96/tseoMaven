@@ -35,31 +35,47 @@ public class CourseDTO {
 //		this.courseAttendances = courseAttendances;
 	}
 
-
 	public Integer getId() {
 		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getName() {
 		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public float getEspb() {
 		return espb;
+	}
+
+	public void setEspb(float espb) {
+		this.espb = espb;
 	}
 
 	public Semester getSemester() {
 		return semester;
 	}
 
+	public void setSemester(Semester semester) {
+		this.semester = semester;
+	}
+
 	public boolean isDeleted() {
 		return deleted;
 	}
 
-	public Set<CourseAttendanceDTO> getCourseAttendances() {
-		return courseAttendances;
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
-	
+
+
 
 	
 }

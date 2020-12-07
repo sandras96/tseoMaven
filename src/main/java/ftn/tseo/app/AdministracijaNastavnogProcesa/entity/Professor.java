@@ -5,6 +5,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,16 +24,20 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="professor")
-public class Professor {
+@AttributeOverride(name="person_id", column=@Column(name="professor_id"))
+public class Professor extends Person{
 	
 	public enum Role {
 	    PROFESSOR, ASSOCIATE, DEMONSTRATOR;
 	}
 	
-	@Id
-	@GeneratedValue(strategy=IDENTITY)
-	@Column(name="professor_id", unique=true, nullable=false)
-	private Integer id;
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy=IDENTITY)
+	 * 
+	 * @Column(name="professor_id", unique=true, nullable=false) private Integer id;
+	 */
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="role", unique=false, nullable=false)
@@ -54,9 +59,8 @@ public class Professor {
 		super();
 	}
 
-	public Professor(Integer id, Role role, User user, Set<ExamTaking> examTakings, Set<Course> courses) {
+	public Professor(Role role, User user, Set<ExamTaking> examTakings, Set<Course> courses) {
 		super();
-		this.id = id;
 		this.role = role;
 		this.user = user;
 		this.examTakings = examTakings;
@@ -65,13 +69,6 @@ public class Professor {
 
 
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public Role getRole() {
 		return role;

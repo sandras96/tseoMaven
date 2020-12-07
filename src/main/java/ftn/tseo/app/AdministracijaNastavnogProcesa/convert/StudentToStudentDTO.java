@@ -17,7 +17,7 @@ public class StudentToStudentDTO implements Converter<Student, StudentDTO> {
 			return null;
 		}
 		StudentDTO studentDTO = new StudentDTO();
-		studentDTO.setId(source.getId());
+		studentDTO.setId(source.getPerson_id());
 		if(source.getAddress()!=null) {
 			studentDTO.setAddress(source.getAddress());
 		}

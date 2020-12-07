@@ -29,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "user")
+
 public class User implements Serializable,UserDetails {
 	/**
 	 * 
@@ -40,20 +41,11 @@ public class User implements Serializable,UserDetails {
 	@Column(name="user_id", unique= true, nullable=false)
 	private Integer id;
 	
-	@Column(name="firstname", unique=false, nullable=false, length=20)
-	private String firstname;
-	
-	@Column(name="lastname", unique=false, nullable=false, length=30)
-	private String lastname;
-	
 	@Column(name="username", unique=true, nullable=false, length=30)
 	private String username;
 	
 	@Column(name="password", unique=false, nullable=false)
 	private String password;
-	
-	@Column(name="email", unique=true, nullable=false)
-	private String email;
 	
 	@Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private boolean deleted;
@@ -75,16 +67,16 @@ public class User implements Serializable,UserDetails {
 	}
 	
 
-	public User(Integer id, String firstname, String lastname, String username, String password, String email,
-			boolean deleted) {
+	public User(Integer id, String username, String password, boolean deleted, Student student, Professor professor,
+			Set<Authority> user_authorities) {
 		super();
 		this.id = id;
-		this.firstname = firstname;
-		this.lastname = lastname;
 		this.username = username;
 		this.password = password;
-		this.email = email;
 		this.deleted = deleted;
+		this.student = student;
+		this.professor = professor;
+		this.user_authorities = user_authorities;
 	}
 
 
@@ -92,48 +84,29 @@ public class User implements Serializable,UserDetails {
 		return id;
 	}
 
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
 
 	public String getUsername() {
 		return username;
 	}
 
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 
 	public String getPassword() {
 		return password;
 	}
 
+
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 
@@ -141,8 +114,39 @@ public class User implements Serializable,UserDetails {
 		return deleted;
 	}
 
+
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+
+	public Student getStudent() {
+		return student;
+	}
+
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}
+
+
+	public Set<Authority> getUser_authorities() {
+		return user_authorities;
+	}
+
+
+	public void setUser_authorities(Set<Authority> user_authorities) {
+		this.user_authorities = user_authorities;
 	}
 
 

@@ -11,7 +11,7 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.CourseAttendance;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.repository.CourseAttendanceRepository;
 
 @Service
-public class CourseAttendanceService {
+public class CourseAttendanceService implements CourseAttendanceInterface{
 
 	
 	@Autowired
@@ -37,5 +37,14 @@ public class CourseAttendanceService {
 		courseAttendanceRepository.deleteById(id);
 	}
 	
+	@Override
+	public List<CourseAttendance> findCourseAttendanceByStudentId(Integer id) {
+		return courseAttendanceRepository.findCourseAttendanceByStudentId(id);
+	}
+
+	@Override
+	public List<CourseAttendance> findCourseAttendanceByCourseId(Integer id) {
+		return courseAttendanceRepository.findCourseAttendanceByCourseId(id);
+	}
 	
 }

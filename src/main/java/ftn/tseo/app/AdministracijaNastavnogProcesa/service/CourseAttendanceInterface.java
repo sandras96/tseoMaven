@@ -1,12 +1,10 @@
-package ftn.tseo.app.AdministracijaNastavnogProcesa.repository;
+package ftn.tseo.app.AdministracijaNastavnogProcesa.service;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.CourseAttendance;
 
-public interface CourseAttendanceRepository extends JpaRepository<CourseAttendance, Integer>{
+public interface CourseAttendanceInterface {
 	
 	List<CourseAttendance> findCourseAttendanceByStudentId(Integer id);
 	List<CourseAttendance> findCourseAttendanceByCourseId(Integer id);

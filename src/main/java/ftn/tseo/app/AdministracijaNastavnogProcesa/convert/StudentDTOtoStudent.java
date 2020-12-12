@@ -2,10 +2,12 @@ package ftn.tseo.app.AdministracijaNastavnogProcesa.convert;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.StudentDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Student;
 
+@Component
 public class StudentDTOtoStudent implements Converter<StudentDTO, Student>  {
 	
 	@Autowired
@@ -19,6 +21,13 @@ public class StudentDTOtoStudent implements Converter<StudentDTO, Student>  {
 		}
 		Student student = new Student();
 		student.setPerson_id(source.getId());
+		
+		if(source.getFirstname()!=null) {
+			student.setFirstname(source.getFirstname());
+		}
+		if(source.getLastname()!=null) {
+			student.setLastname(source.getLastname());
+		}
 		if(source.getAddress()!=null) {
 			student.setAddress(source.getAddress());
 		}
@@ -37,8 +46,14 @@ public class StudentDTOtoStudent implements Converter<StudentDTO, Student>  {
 		if(source.getIndexNum()!=null) {
 			student.setIndexNum(source.getIndexNum());
 		}
+		if(source.getEmail()!=null) {
+			student.setEmail(source.getEmail());
+		}
+		if(source.getPhone()!=null) {
+			student.setPhone(source.getPhone());
+		}
 		if(source.getUser()!=null) {
-			student.setUser(userDTOtoUser.convert(source.getUser()));
+			student.setUser(userDTOtoUser.convert(source.getUser())); 
 		}
 		return student;
 	}

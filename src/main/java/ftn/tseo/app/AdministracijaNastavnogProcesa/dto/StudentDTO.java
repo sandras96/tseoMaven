@@ -38,12 +38,16 @@ public class StudentDTO {
 			String country, String email, String phone, UserDTO user) {
 		super();
 		this.id = id;
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.indexNum = indexNum;
 		this.birthDate = birthDate;
 		this.address = address;
 		this.city = city;
 		this.zip = zip;
 		this.country = country;
+		this.email = email;
+		this.phone = phone;
 		this.user = user;
 	}
 
@@ -141,6 +145,15 @@ public class StudentDTO {
 
 	public void setUser(UserDTO user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "StudentDTO [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", indexNum=" + indexNum
+				+ ", birthDate=" + birthDate + ", address=" + address + ", city=" + city + ", zip=" + zip + ", country="
+				+ country + ", email=" + email + ", phone=" + phone + ", user=" + user + ", documents=" + documents
+				+ ", payments=" + payments + ", courseAttendances=" + courseAttendances + ", examTakings=" + examTakings
+				+ "]";
 	}
 
 

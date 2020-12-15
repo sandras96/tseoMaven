@@ -32,7 +32,7 @@ public class Course {
 	@Column(name="course_id", unique=true, nullable=false)
 	private Integer id;
 	
-	@Column(name="name", unique=true, nullable=false, length=50)
+	@Column(name="name", unique=true, nullable=false)
 	private String name;
 	
 	@Column(name="espb", unique=false, nullable=false)

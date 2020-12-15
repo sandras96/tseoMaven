@@ -15,7 +15,7 @@ public class PaymentDTO {
 	private String purpose;
 	private Integer accountNumber;
 	private Integer model;
-	private Integer refference;
+	private Integer reference;
 	private Date date;
 	private boolean deleted;
 	private StudentDTO student;
@@ -31,7 +31,7 @@ public class PaymentDTO {
 	}
 
 	public PaymentDTO(Integer id, String name, String address, String city, Integer paymentCode, double amount,
-			String purpose, Integer accountNumber, Integer model, Integer refference, Date date, boolean deleted,
+			String purpose, Integer accountNumber, Integer model, Integer reference, Date date, boolean deleted,
 			StudentDTO student) {
 		super();
 		this.id = id;
@@ -43,7 +43,7 @@ public class PaymentDTO {
 		this.purpose = purpose;
 		this.accountNumber = accountNumber;
 		this.model = model;
-		this.refference = refference;
+		this.reference = reference;
 		this.date = date;
 		this.deleted = deleted;
 		this.student = student;
@@ -121,12 +121,12 @@ public class PaymentDTO {
 		this.model = model;
 	}
 
-	public Integer getRefference() {
-		return refference;
+	public Integer getReference() {
+		return reference;
 	}
 
-	public void setRefference(Integer refference) {
-		this.refference = refference;
+	public void setReference(Integer reference) {
+		this.reference = reference;
 	}
 
 	public Date getDate() {

@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -23,7 +24,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="student")
-@AttributeOverride(name="person_id", column=@Column(name="student_id"))
+@AttributeOverride(name="id", column=@Column(name="student_id"))
+//@NamedQuery(name = "Student.findById", query = "select s from Student u where s.student_id = ?1")
 public class Student extends Person{
 	
 	/*
@@ -118,6 +120,13 @@ public class Student extends Person{
 
 	public void setExamTakings(Set<ExamTaking> examTakings) {
 		this.examTakings = examTakings;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Student [indexNum=" + indexNum + ", user=" + user + ", documents=" + documents + ", payments="
+				+ payments + ", courseAttendances=" + courseAttendances + ", examTakings=" + examTakings + "]";
 	}
 
 	

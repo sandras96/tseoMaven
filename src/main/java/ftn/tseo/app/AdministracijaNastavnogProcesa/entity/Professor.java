@@ -24,7 +24,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="professor")
-@AttributeOverride(name="person_id", column=@Column(name="professor_id"))
+@AttributeOverride(name="id", column=@Column(name="professor_id"))
 public class Professor extends Person{
 	
 	public enum Role {

@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.CourseDTOtoCourse;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.CourseToCourseDTO;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.StudentToStudentDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.CourseDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.StudentDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.CourseAttendance;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CourseAttendanceService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CourseService;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.service.StudentService;
 
 @RestController
 @RequestMapping(value="api/courses")
@@ -25,6 +29,15 @@ public class CourseController {
 	
 	@Autowired
 	CourseService courseService;
+	
+	@Autowired
+	StudentService studentService;
+	
+	@Autowired
+	StudentToStudentDTO studentToStudentDTO;
+	
+	@Autowired
+	CourseAttendanceService courseAttendanceService;
 	
 	@Autowired
 	CourseDTOtoCourse courseDTOtoCourse;
@@ -84,5 +97,45 @@ public class CourseController {
 		}
 		
 	}
+	@RequestMapping(value="/student/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<CourseDTO>> getCoursesByStudent(@PathVariable("id") Integer id){
+	 	List<CourseAttendance> courseAttendances =courseAttendanceService.findCourseAttendanceByStudentId(id);
+        List<CourseDTO> coursesDTO = new ArrayList<CourseDTO>();
+            for (CourseAttendance ca : courseAttendances) {
+            	if(ca.getStudent() == studentService.findOne(id)) {
+            		CourseDTO courseDTO = courseToCourseDTO.convert(ca.getCourse());
+            		coursesDTO.add(courseDTO);
+            	}
+            }
+         
+        return new ResponseEntity<List<CourseDTO>>(coursesDTO,HttpStatus.OK);
+    }
+	
+	@RequestMapping(value="/student/course/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<StudentDTO>> getStudentsByCourseId(@PathVariable("id") Integer id){
+	 	List<CourseAttendance> courseAttendances =courseAttendanceService.findCourseAttendanceByCourseId(id);
+        List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
+            for (CourseAttendance ca : courseAttendances) {
+            	if(ca.getCourse() == courseService.findOne(id)) {
+            		StudentDTO studentDTO = studentToStudentDTO.convert(ca.getStudent());
+            		studentsDTO.add(studentDTO);
+            	}
+            }
+         
+        return new ResponseEntity<List<StudentDTO>>(studentsDTO,HttpStatus.OK);
+    }
+	
+	
+// not working 	
+	@RequestMapping(value="/professor/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<CourseDTO>> getCoursesByProfessor(@PathVariable("id") Integer id){
+	 	List<Course> courses =courseService.getAllByProfessorId(id);
+        List<CourseDTO> coursesDTO = new ArrayList<CourseDTO>();
+            for (Course course : courses) {
+            		coursesDTO.add(new CourseDTO(course));
+            }
+         
+        return new ResponseEntity<List<CourseDTO>>(coursesDTO,HttpStatus.OK);
+    }
 	
 }

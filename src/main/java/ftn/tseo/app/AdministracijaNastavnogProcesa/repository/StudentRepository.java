@@ -6,4 +6,5 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Student;
 
 public interface StudentRepository extends JpaRepository<Student, Integer> {
 
+	
 }

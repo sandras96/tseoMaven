@@ -28,7 +28,7 @@ public class Payment {
 	@Column(name="name", unique=false, nullable=false, length=50)
 	private String name;
 	
-	@Column(name="addres", unique=false, nullable=false)
+	@Column(name="address", unique=false, nullable=false)
 	private String address;
 	
 	@Column(name="city", unique=false, nullable=false, length=30)

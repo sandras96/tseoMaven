@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
@@ -14,8 +16,8 @@ public class Person {
 
 		@Id
 		@GeneratedValue(strategy=GenerationType.IDENTITY)
-		@Column(name = "person_id", updatable = false, nullable = false)
-	    private Integer person_id;
+		@Column(name = "id", updatable = false, nullable = false)
+	    private Integer id;
 		
 		@Column(name="firstname", unique=false, nullable=false, length=20)
 		private String firstname;
@@ -49,11 +51,11 @@ public class Person {
 //		private int version;   
 
 		public Integer getPerson_id() {
-			return person_id;
+			return id;
 		}
 
 		public void setPerson_id(Integer person_id) {
-			this.person_id = person_id;
+			this.id = person_id;
 		}
 
 		public String getFirstname() {
@@ -126,6 +128,13 @@ public class Person {
 
 		public void setPhone(String phone) {
 			this.phone = phone;
+		}
+
+		@Override
+		public String toString() {
+			return "Person [person_id=" + id + ", firstname=" + firstname + ", lastname=" + lastname
+					+ ", birthdate=" + birthdate + ", address=" + address + ", city=" + city + ", zip=" + zip
+					+ ", country=" + country + ", email=" + email + ", phone=" + phone + "]";
 		}
 
 		

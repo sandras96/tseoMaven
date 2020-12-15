@@ -17,7 +17,7 @@ public class UserDTO {
 	}
 	
 	public UserDTO(User user) {
-		this(user.getId(), user.getUsername(),user.getPassword(), user.isDeleted(), user.getauthorities());
+		this(user.getId(), user.getUsername(), user.getPassword(), user.isDeleted(), user.getauthorities());
 	}
 	
 
@@ -28,15 +28,17 @@ public class UserDTO {
 		this.username = username;
 		this.password = password;
 		this.deleted = deleted;
+		this.authority = authority;
 	}
 
 	public UserDTO(Integer id, String username, String password,
-			boolean deleted, StudentDTO student, ProfessorDTO professor) {
+			boolean deleted, String authority, StudentDTO student, ProfessorDTO professor) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.deleted = deleted;
+		this.authority = authority;
 		this.student = student;
 		this.professor = professor;
 	}
@@ -72,7 +74,7 @@ public class UserDTO {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
-
+	
 	public String getAuthority() {
 		return authority;
 	}
@@ -80,6 +82,14 @@ public class UserDTO {
 	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
+
+	@Override
+	public String toString() {
+		return "UserDTO [id=" + id + ", username=" + username + ", password=" + password + ", deleted=" + deleted + "]";
+	}
+
+
+	
 	
 	
 

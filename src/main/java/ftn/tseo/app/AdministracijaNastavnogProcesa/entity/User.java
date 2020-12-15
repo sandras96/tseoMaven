@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "user")
 
-public class User implements Serializable,UserDetails {
+public class User implements Serializable, UserDetails {
 	/**
 	 * 
 	 */
@@ -139,7 +139,6 @@ public class User implements Serializable,UserDetails {
 		this.professor = professor;
 	}
 
-
 	public Set<Authority> getUser_authorities() {
 		return user_authorities;
 	}
@@ -185,6 +184,11 @@ public class User implements Serializable,UserDetails {
           authority = s.getAuthority();
       }
 		return authority;
+	}
+	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", deleted=" + deleted + "]";
 	}
 
 	/*

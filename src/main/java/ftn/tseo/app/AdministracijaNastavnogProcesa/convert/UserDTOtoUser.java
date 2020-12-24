@@ -27,9 +27,8 @@ public class UserDTOtoUser implements Converter<UserDTO, User> {
 		if(source.getPassword() != null)
 			user.setPassword(passwordEncoder.encode(source.getPassword()));
 		
-		if(!source.isDeleted()) {
-			user.setDeleted(source.isDeleted());
-		}
+		if(!source.isDeleted()) { user.setDeleted(source.isDeleted()); }
+		 
 		return user;
 	}
 

@@ -22,11 +22,13 @@ public class UserToUserDTO implements Converter<User, UserDTO> {
 	/*	if(source.getPassword()!=null) {
 			userDTO.setPassword(source.getPassword());
 		}*/
-		if(!source.isDeleted()) {
-			userDTO.setDeleted(source.isDeleted());;
-		}
-		if(source.getauthorities() != null)
-			userDTO.setAuthority(source.getauthorities());
+	
+		if(!source.isDeleted()) { userDTO.setDeleted(source.isDeleted());; }
+	 
+		
+		  if(source.getUser_authorities() != null)
+		  userDTO.setAuthorities(source.getUser_authorities());
+		 
 		return userDTO;
 	}
 

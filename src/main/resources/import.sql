@@ -4,6 +4,7 @@ insert into user (username, password, deleted) values ( "m", "$2a$04$bAsNVI05Eja
 insert into user (username, password, deleted) values ( "d", "$2a$04$bAsNVI05EjajIzH4AHFdu.RimWMl2K5hmnzeBrcqRX7Cm8BtMgIFK", 0);
 insert into user (username, password, deleted) values ( "h", "$2a$04$bAsNVI05EjajIzH4AHFdu.RimWMl2K5hmnzeBrcqRX7Cm8BtMgIFK", 0);
 insert into user (username, password, deleted) values ( "j", "$2a$04$bAsNVI05EjajIzH4AHFdu.RimWMl2K5hmnzeBrcqRX7Cm8BtMgIFK", 0);
+insert into user (username, password, deleted) values ( "l", "$2a$04$bAsNVI05EjajIzH4AHFdu.RimWMl2K5hmnzeBrcqRX7Cm8BtMgIFK", 0);
 
 INSERT INTO authority VALUES (1,'ADMIN');
 INSERT INTO authority VALUES (2,'STUDENT');

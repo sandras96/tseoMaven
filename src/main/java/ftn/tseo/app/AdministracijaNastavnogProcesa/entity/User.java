@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "user")
 
-public class User implements Serializable, UserDetails {
+public class User implements Serializable {
 	/**
 	 * 
 	 */
@@ -47,9 +47,9 @@ public class User implements Serializable, UserDetails {
 	@Column(name="password", unique=false, nullable=false)
 	private String password;
 	
-	@Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
-	private boolean deleted;
-	
+	@Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE") private
+	boolean deleted;
+	 
 	@OneToOne(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy = "user")
 	private Student student;
 	
@@ -67,7 +67,7 @@ public class User implements Serializable, UserDetails {
 	}
 	
 
-	public User(Integer id, String username, String password, boolean deleted, Student student, Professor professor,
+	public User(Integer id, String username, String password,boolean deleted, Student student, Professor professor,
 			Set<Authority> user_authorities) {
 		super();
 		this.id = id;
@@ -79,6 +79,19 @@ public class User implements Serializable, UserDetails {
 		this.user_authorities = user_authorities;
 	}
 
+
+
+
+	public User(Integer id, String username, String password, boolean deleted, Set<Authority> user_authorities) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.deleted = deleted;
+		this.user_authorities = user_authorities;
+	}
+
+	
 
 	public Integer getId() {
 		return id;
@@ -108,7 +121,7 @@ public class User implements Serializable, UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
 
 	public boolean isDeleted() {
 		return deleted;
@@ -149,43 +162,31 @@ public class User implements Serializable, UserDetails {
 	}
 
 
-	@Override
-	 public Collection<? extends GrantedAuthority> getAuthorities() {
-		 return this.user_authorities;
-	 }
-	@JsonIgnore
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@JsonIgnore
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	@JsonIgnore
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
 	
-	@JsonIgnore
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	public String getauthorities() {
-		String authority= null;
-      for (GrantedAuthority s : user_authorities ) {
-          authority = s.getAuthority();
-      }
-		return authority;
-	}
-	
+	/*
+	 * @Override public Collection<? extends GrantedAuthority> getAuthorities() {
+	 * return this.user_authorities; }
+	 * 
+	 * @JsonIgnore
+	 * 
+	 * @Override public boolean isAccountNonExpired() { return true; }
+	 * 
+	 * @JsonIgnore
+	 * 
+	 * @Override public boolean isAccountNonLocked() { return true; }
+	 * 
+	 * @JsonIgnore
+	 * 
+	 * @Override public boolean isCredentialsNonExpired() { return true; }
+	 * 
+	 * @JsonIgnore
+	 * 
+	 * @Override public boolean isEnabled() { return true; }
+	 * 
+	 * public String getauthorities() { String authority= null; for
+	 * (GrantedAuthority s : user_authorities ) { authority = s.getAuthority(); }
+	 * return authority; }
+	 */
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", deleted=" + deleted + "]";

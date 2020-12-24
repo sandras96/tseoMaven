@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.cors.CorsConfiguration;
@@ -34,37 +35,44 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CustomUserDetailsServ
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
-	
-	
-	 
-	
-	@Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Autowired
-    private CustomUserDetailsService jwtUserDetailsService;
+    CustomUserDetailsService jwtUserDetailsService;
 
     //Neautorizovani pristup zastcenim resursima
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
     @Bean
+	public TokenAuthenticationFilter authenticationJwtTokenFilter() {
+		return new TokenAuthenticationFilter();
+	}
+    
+    @Override
+	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+		authenticationManagerBuilder.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+	}
+
+    
+    @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
     
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
    
 
     //Definisemo nacin autentifikacije
     //Svaki
-    @Autowired
-    public void configureGlobal( AuthenticationManagerBuilder auth ) throws Exception {
-        auth.userDetailsService( jwtUserDetailsService )
-                .passwordEncoder( passwordEncoder() );
-    }
+	/*
+	 * @Autowired public void configureGlobal( AuthenticationManagerBuilder auth )
+	 * throws Exception { auth.userDetailsService( jwtUserDetailsService )
+	 * .passwordEncoder( passwordEncoder() ); }
+	 */
 
     @Autowired
     TokenHelper tokenHelper;
@@ -81,26 +89,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
                 //svim korisnicima dopusti da pristupe putanjama /auth/**
                 .antMatchers("/api/auth/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/student/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/students/**").permitAll()
                 
                 //svaki zahtev mora biti autorizovan
                 .anyRequest().authenticated().and()
                 //presretni svaki zahtev filterom
-                .addFilterBefore(new TokenAuthenticationFilter(tokenHelper, jwtUserDetailsService), BasicAuthenticationFilter.class)
+                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
 
         .csrf().disable();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() 
-    {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+	/*
+	 * @Bean CorsConfigurationSource corsConfigurationSource() { CorsConfiguration
+	 * configuration = new CorsConfiguration();
+	 * configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+	 * configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+	 * UrlBasedCorsConfigurationSource source = new
+	 * UrlBasedCorsConfigurationSource(); source.registerCorsConfiguration("/**",
+	 * configuration); return source; }
+	 */
 
 
     //Generalna bezbednost aplikacije

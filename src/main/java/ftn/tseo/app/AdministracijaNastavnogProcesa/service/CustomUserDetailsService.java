@@ -36,9 +36,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.getByUsername(username);
         if (user == null) {
-            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
+            throw new UsernameNotFoundException("User Not Found with username: " + username);
         } else {
-            return user;
+            return UserDetailsImpl.build(user);
         }
 	}
 	//Funkcija pomocu koje korisnik menja svoju lozinku

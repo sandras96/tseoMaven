@@ -1,22 +1,28 @@
 package ftn.tseo.app.AdministracijaNastavnogProcesa.entity;
 
+import java.util.List;
+
 public class UserTokenState {
 	
 	private String access_token;
+	private String type = "Bearer";
 	private int id;
-	private String authority;
+	private List<String> authorities;
+	private String username;
+	private boolean deleted;
 
-    public UserTokenState() {
-        this.access_token = null;
-    }
 
-    public UserTokenState(String access_token,int id,String authority) {
-        this.access_token = access_token;
-        this.id =  id;
-        this.authority = authority;
-    }
 
-    public String getAccess_token() {
+    public UserTokenState(String access_token, int id, String username, boolean deleted, List<String> authorities) {
+		super();
+		this.access_token = access_token;
+		this.id = id;
+		this.authorities = authorities;
+		this.username = username;
+		this.deleted = deleted;
+	}
+
+	public String getAccess_token() {
         return access_token;
     }
 
@@ -32,12 +38,33 @@ public class UserTokenState {
 		this.id = id;
 	}
 
-	public String getAuthority() {
-		return authority;
+
+	public String getType() {
+		return type;
 	}
 
-	public void setAuthority(String authority) {
-		this.authority = authority;
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public List<String> getAuthorities() {
+		return authorities;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
     

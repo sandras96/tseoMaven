@@ -2,6 +2,8 @@ package ftn.tseo.app.AdministracijaNastavnogProcesa.controller;
 
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,6 +29,7 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.UserTokenState;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.security.JwtAuthenticationRequest;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.security.TokenHelper;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CustomUserDetailsService;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.service.UserDetailsImpl;
 
 
 
@@ -36,7 +39,7 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CustomUserDetailsServ
 
 @RestController
 @RequestMapping(value = "api/auth")
-@CrossOrigin("*")
+@CrossOrigin
 public class AuthenticationController {
 
 	 	@Autowired
@@ -56,7 +59,7 @@ public class AuthenticationController {
 	    ) throws AuthenticationException, IOException {
 	    	System.out.println(authenticationRequest.getUsername()+" " + authenticationRequest.getPassword());
 	        // Izvrsavanje security dela
-	        final Authentication authentication = authenticationManager.authenticate(
+	        Authentication authentication = authenticationManager.authenticate(
 	                new UsernamePasswordAuthenticationToken(
 	                        authenticationRequest.getUsername(),
 	                        authenticationRequest.getPassword()
@@ -66,21 +69,23 @@ public class AuthenticationController {
 
 	        // Ubaci username + password u kontext
 	        SecurityContextHolder.getContext().setAuthentication(authentication);
-
+	        String jwt = tokenHelper.generateJwtToken(authentication);
 	        // Kreiraj token
-	        User user = (User)authentication.getPrincipal();
-	        if(user.isDeleted()) {
+	        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
+	        if(userDetails.isDeleted()) {
 	        	return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 	        }
-	        String jws = tokenHelper.generateToken( user.getUsername());
-	        String autority= null;
-	        for (GrantedAuthority s : user.getAuthorities() ) {
-	            
-	            autority = s.getAuthority();
-	            
-	        }
+	      
+	        List<String> roles = userDetails.getAuthorities().stream()
+					.map(item -> item.getAuthority())
+					.collect(Collectors.toList());
+	        System.out.println("ROLES SU " + roles);
 	        // Vrati token kao odgovor na uspesno autentifikaciju
-	        return ResponseEntity.ok(new UserTokenState(jws,user.getId(),autority));
+	        return ResponseEntity.ok(new UserTokenState(jwt,
+	        											userDetails.getId(),
+	        											userDetails.getUsername(),
+	        											userDetails.isDeleted(),
+	        											roles));
 	    }
 	    
 	    

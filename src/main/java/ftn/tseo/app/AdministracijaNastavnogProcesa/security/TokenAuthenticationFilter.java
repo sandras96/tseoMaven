@@ -8,23 +8,25 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CustomUserDetailsService;
 
 public class TokenAuthenticationFilter extends OncePerRequestFilter{
 
 	
-
+	@Autowired
     private TokenHelper tokenHelper;
 
-    private UserDetailsService userDetailsService;
-
-    public TokenAuthenticationFilter(TokenHelper tokenHelper, UserDetailsService userDetailsService) {
-        this.tokenHelper = tokenHelper;
-        this.userDetailsService = userDetailsService;
-    }
+	@Autowired
+    private CustomUserDetailsService userDetailsService;
 
 
     @Override
@@ -34,24 +36,32 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter{
             FilterChain chain
     ) throws IOException, ServletException {
 
-        String username;
-        String authToken = tokenHelper.getToken(request);
+    	try {
+			String jwt = parseJwt(request);
+			if (jwt != null && tokenHelper.validateJwtToken(jwt)) {
+				String username = tokenHelper.getUserNameFromJwtToken(jwt);
 
-        if (authToken != null) {
-            //uzmi username iz tokena
-            username = tokenHelper.getUsernameFromToken(authToken);
-            if (username != null) {
-                // uzmi user-a na osnovu username-a
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                //proveri da li je prosledjeni token validan
-                if (tokenHelper.validateToken(authToken, userDetails)) {
-                    // kreiraj autentifikaciju
-                    TokenBasedAuthentication authentication = new TokenBasedAuthentication(userDetails);
-                    authentication.setToken(authToken);
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
-            }
+				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+						userDetails, null, userDetails.getAuthorities());
+				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+			}
+		} catch (Exception e) {
+			logger.error("Cannot set user authentication: {}", e);
+     
         }
         chain.doFilter(request, response);
     }
+    
+    private String parseJwt(HttpServletRequest request) {
+		String headerAuth = request.getHeader("Authorization");
+
+		if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
+			return headerAuth.substring(7, headerAuth.length());
+		}
+
+		return null;
+	}
 }

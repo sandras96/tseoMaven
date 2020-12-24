@@ -1,5 +1,9 @@
 package ftn.tseo.app.AdministracijaNastavnogProcesa.dto;
 
+import java.util.List;
+import java.util.Set;
+
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Authority;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.User;
 
 public class UserDTO {
@@ -8,7 +12,7 @@ public class UserDTO {
 	private String username;
 	private String password;
 	private boolean deleted;
-	private String authority;
+	private Set<Authority> authorities;
 	private StudentDTO student;
 	private ProfessorDTO professor;
 	
@@ -17,31 +21,21 @@ public class UserDTO {
 	}
 	
 	public UserDTO(User user) {
-		this(user.getId(), user.getUsername(), user.getPassword(), user.isDeleted(), user.getauthorities());
+		this(user.getId(), user.getUsername(), user.getPassword(), user.isDeleted() , user.getUser_authorities());
 	}
 	
 
 	public UserDTO(Integer id, String username, String password,
-			boolean deleted, String authority) {
+			boolean deleted , Set<Authority> authorities ) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.deleted = deleted;
-		this.authority = authority;
+		this.authorities = authorities;
 	}
 
-	public UserDTO(Integer id, String username, String password,
-			boolean deleted, String authority, StudentDTO student, ProfessorDTO professor) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.deleted = deleted;
-		this.authority = authority;
-		this.student = student;
-		this.professor = professor;
-	}
+	
 
 	public Integer getId() {
 		return id;
@@ -75,12 +69,13 @@ public class UserDTO {
 		this.deleted = deleted;
 	}
 	
-	public String getAuthority() {
-		return authority;
+
+	public Set<Authority> getAuthorities() {
+		return authorities;
 	}
 
-	public void setAuthority(String authority) {
-		this.authority = authority;
+	public void setAuthorities(Set<Authority> authorities) {
+		this.authorities = authorities;
 	}
 
 	@Override
@@ -88,8 +83,6 @@ public class UserDTO {
 		return "UserDTO [id=" + id + ", username=" + username + ", password=" + password + ", deleted=" + deleted + "]";
 	}
 
-
-	
 	
 	
 

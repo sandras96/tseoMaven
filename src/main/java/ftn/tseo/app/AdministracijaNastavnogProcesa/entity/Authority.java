@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="authority")
-public class Authority implements GrantedAuthority {
+public class Authority/* implements GrantedAuthority */{
 
 	/**
 	 * 
@@ -15,31 +15,34 @@ public class Authority implements GrantedAuthority {
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
+	private Integer id;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name="name")
-	String name;
+	private EAuthority name;
 
-	@Override
-	public String getAuthority() {
-		return name;
-	}
-
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getName() {
+	public EAuthority getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(EAuthority name) {
 		this.name = name;
 	}
+
+	/*
+	 * @Override public String getAuthority() { return name; }
+	 */
+
+	
+
 	
 	
 

@@ -40,4 +40,8 @@ public class CourseService {
 	public List<Course> getAllByProfessorId(Integer id) {
 		return courseRepository.getAllByProfessorId(id);
 	}
+	
+	public List<Course> findByNameContaining(String name){
+		return courseRepository.findByNameContaining(name);
+	}
 }

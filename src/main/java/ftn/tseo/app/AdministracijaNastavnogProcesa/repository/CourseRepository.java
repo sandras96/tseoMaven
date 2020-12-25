@@ -9,6 +9,8 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
 
 public interface CourseRepository extends JpaRepository<Course, Integer> {
 	
+	List<Course> findByNameContaining(String name);
+	
 	@Query(value = "SELECT course_id FROM course_professor WHERE professor_id = 1",nativeQuery = true)
 	List<Course> getAllByProfessorId(Integer id);
 	

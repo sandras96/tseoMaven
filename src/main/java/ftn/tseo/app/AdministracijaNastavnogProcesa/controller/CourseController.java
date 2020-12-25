@@ -45,7 +45,7 @@ public class CourseController {
 	@Autowired
 	CourseToCourseDTO  courseToCourseDTO;
 	
-	@RequestMapping(value="/all", method= RequestMethod.GET)
+	@RequestMapping(/* value="/all", */ method= RequestMethod.GET)
 	public ResponseEntity<List<CourseDTO>> getAllCourses(){
 		List<Course> courses = courseService.findAll();
 		List<CourseDTO> coursesDTO = new ArrayList<CourseDTO>();
@@ -76,9 +76,9 @@ public class CourseController {
 	
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<CourseDTO> updateCourse(@RequestBody CourseDTO courseDTO){
-		Course course = courseService.findOne(courseDTO.getId());
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
+	public ResponseEntity<CourseDTO> updateCourse(@RequestBody CourseDTO courseDTO, @PathVariable("id") Integer id){
+		Course course = courseService.findOne(id);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -138,4 +138,17 @@ public class CourseController {
         return new ResponseEntity<List<CourseDTO>>(coursesDTO,HttpStatus.OK);
     }
 	
+	@RequestMapping(value="/searchByName/{name}")
+	public ResponseEntity<List<CourseDTO>> searchByName(@PathVariable("name") String name) throws Exception {
+		System.out.println("pretraga po imenu coursa: " + name);
+		List<CourseDTO> coursesDTO = new ArrayList<CourseDTO>();	
+		List<Course> courses = courseService.findByNameContaining(name);
+		System.out.println("Lista kurseva sa imenom: "+ name + " " + courses);
+		for(Course course : courses) {
+			coursesDTO.add(new CourseDTO(course));
+		}
+		return new ResponseEntity<List<CourseDTO>>(coursesDTO,HttpStatus.OK);
+	}
+	
+
 }

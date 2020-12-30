@@ -1,3 +1,34 @@
+--insert into user(address, birthdate, city, country, email, firstname, lastname, phone, zip, deleted, password, username) values ('address1','2018-12-12', 'Uzice', 'Srbija', 'user1@gmail.com', 'firstname1', 'lastname1', '123456', 152369, false, "$2a$04$bAsNVI05EjajIzH4AHFdu.RimWMl2K5hmnzeBrcqRX7Cm8BtMgIFK", 'usr1'); 
+--insert into user(address, birthdate, city, country, email, firstname, lastname, phone, zip, deleted, password, username) values ('address2','2018-12-12', 'Uzice', 'Srbija', 'user2@gmail.com', 'firstname2', 'lastname2', '1235456', 1523629, false, "$2a$04$bAsNVI05EjajIzH4AHFdu.RimWMl2K5hmnzeBrcqRX7Cm8BtMgIFK", 'usr2'); 
+--insert into user(address, birthdate, city, country, email, firstname, lastname, phone, zip, deleted, password, username) values ('address3','2018-12-12', 'Uzice', 'Srbija', 'user3@gmail.com', 'firstname3', 'lastname3', '123456', 152369, false, "$2a$04$bAsNVI05EjajIzH4AHFdu.RimWMl2K5hmnzeBrcqRX7Cm8BtMgIFK", 'usr3'); 
+--insert into user(address, birthdate, city, country, email, firstname, lastname, phone, zip, deleted, password, username) values ('address4','2018-12-12', 'Uzice', 'Srbija', 'user4@gmail.com', 'firstname4', 'lastname4', '123456', 152369, false, "$2a$04$bAsNVI05EjajIzH4AHFdu.RimWMl2K5hmnzeBrcqRX7Cm8BtMgIFK", 'usr4'); 
+--insert into user(address, birthdate, city, country, email, firstname, lastname, phone, zip, deleted, password, username) values ('address5','2018-12-12', 'Uzice', 'Srbija', 'user5@gmail.com', 'firstname5', 'lastname5', '123456', 152369, false, "$2a$04$bAsNVI05EjajIzH4AHFdu.RimWMl2K5hmnzeBrcqRX7Cm8BtMgIFK", 'usr5'); 
+--insert into user(address, birthdate, city, country, email, firstname, lastname, phone, zip, deleted, password, username) values ('address6','2018-12-12', 'Uzice', 'Srbija', 'user6@gmail.com', 'firstname6', 'lastname6', '123456', 152369, false, "$2a$04$bAsNVI05EjajIzH4AHFdu.RimWMl2K5hmnzeBrcqRX7Cm8BtMgIFK", 'admin');  
+
+				
+--insert into student(index_number, user_rel) values ('sf10/2016', 1);
+--insert into student(index_number, user_rel) values ('sf9/2016', 2);
+--insert into student(index_number, user_rel) values ('sf8/2016', 3);  
+
+
+--insert into professor(role, user_rel) values ('PROFESSOR', 4);
+--insert into professor(role, user_rel) values ('ASSOCIATE', 5);
+
+
+--insert into user_authority(user_id, authority_id) values (1,2);
+--insert into user_authority(user_id, authority_id) values (2,2);
+--insert into user_authority(user_id, authority_id) values (3,2);
+
+--insert into user_authority(user_id, authority_id) values (4,3);
+--insert into user_authority(user_id, authority_id) values (5,3);
+
+
+--insert into user_authority(user_id, authority_id) values (6,1);
+
+
+
+
+
 insert into user (username, password, deleted) values ( "sake", "$2a$04$bAsNVI05EjajIzH4AHFdu.RimWMl2K5hmnzeBrcqRX7Cm8BtMgIFK",  0);
 insert into user (username, password, deleted) values ( "n", "$2a$04$bAsNVI05EjajIzH4AHFdu.RimWMl2K5hmnzeBrcqRX7Cm8BtMgIFK", 0);
 insert into user (username, password, deleted) values ( "m", "$2a$04$bAsNVI05EjajIzH4AHFdu.RimWMl2K5hmnzeBrcqRX7Cm8BtMgIFK", 0);

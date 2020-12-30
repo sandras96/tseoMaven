@@ -1,6 +1,5 @@
 package ftn.tseo.app.AdministracijaNastavnogProcesa.dto;
 
-import java.util.List;
 import java.util.Set;
 
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Authority;

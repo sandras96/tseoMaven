@@ -41,7 +41,7 @@ public class ExamTakingController {
 		List<ExamTakingDTO> examTakingsDTO = new ArrayList<ExamTakingDTO>();
 		for(ExamTaking examTaking : examTakings) {
 			System.out.println("ezam taking je :" + examTaking.getMark());
-			examTakingsDTO.add(new ExamTakingDTO(examTaking));
+		//*****	examTakingsDTO.add(new ExamTakingDTO(examTaking));
 		}
 		System.out.println("lista je "+ examTakingsDTO.toString());
 		return new ResponseEntity<>(examTakingsDTO, HttpStatus.OK);
@@ -54,7 +54,8 @@ public class ExamTakingController {
 		if(examTaking == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(new ExamTakingDTO(examTaking), HttpStatus.OK);
+		return null;
+	// *****	return new ResponseEntity<>(new ExamTakingDTO(examTaking), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")

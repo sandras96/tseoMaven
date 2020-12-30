@@ -17,9 +17,9 @@ public class Authority/* implements GrantedAuthority */{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Enumerated(EnumType.STRING)
+
 	@Column(name="name")
-	private EAuthority name;
+	private String name;
 
 	public Integer getId() {
 		return id;
@@ -29,13 +29,15 @@ public class Authority/* implements GrantedAuthority */{
 		this.id = id;
 	}
 
-	public EAuthority getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(EAuthority name) {
+	public void setName(String name) {
 		this.name = name;
 	}
+
+	
 
 	/*
 	 * @Override public String getAuthority() { return name; }

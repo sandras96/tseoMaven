@@ -25,10 +25,11 @@ public class PaymentDTO {
 		
 	}
 
-	public PaymentDTO(Payment p) {
-		this(p.getId(), p.getName(), p.getAddress(), p.getCity(), p.getPaymentCode(), p.getAmount(), p.getPurpose(),
-				p.getAccountNumber(),p.getModel(), p.getReference(),p.getDate(), p.isDeleted(), new StudentDTO(p.getStudent()));
-	}
+	
+	public PaymentDTO(Payment p) { 
+			this(p.getId(), p.getName(), p.getAddress(), p.getCity(), p.getPaymentCode(), p.getAmount(), p.getPurpose(),
+					p.getAccountNumber(),p.getModel(), p.getReference(),p.getDate(), p.isDeleted(), new StudentDTO(p.getStudent())); }
+	 
 
 	public PaymentDTO(Integer id, String name, String address, String city, Integer paymentCode, double amount,
 			String purpose, Integer accountNumber, Integer model, Integer reference, Date date, boolean deleted,

@@ -48,6 +48,7 @@ public class ProfessorToProfessorDTO implements Converter<Professor, ProfessorDT
 		if(source.getPhone()!=null) {
 			professorDTO.setPhone(source.getPhone());
 		}
+
 		if(source.getRole()!=null) {
 			professorDTO.setRole(source.getRole());
 		}

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Professor;
 
 public interface CourseRepository extends JpaRepository<Course, Integer> {
 	
@@ -13,6 +14,8 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 	
 	@Query(value = "SELECT course_id FROM course_professor WHERE professor_id = 1",nativeQuery = true)
 	List<Course> getAllByProfessorId(Integer id);
+	
+	
 	
 	/*
 	 * @Query(value =

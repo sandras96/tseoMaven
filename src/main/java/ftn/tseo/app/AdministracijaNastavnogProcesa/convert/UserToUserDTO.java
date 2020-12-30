@@ -16,19 +16,20 @@ public class UserToUserDTO implements Converter<User, UserDTO> {
 		}
 		UserDTO userDTO = new UserDTO();
 		userDTO.setId(source.getId());
+		
 		if(source.getUsername()!=null) {
 			userDTO.setUsername(source.getUsername());
 		}
-	/*	if(source.getPassword()!=null) {
+		if(source.getPassword()!=null) {
 			userDTO.setPassword(source.getPassword());
-		}*/
+		}
 	
-		if(!source.isDeleted()) { userDTO.setDeleted(source.isDeleted());; }
-	 
+		if(!source.isDeleted()) { 
+			userDTO.setDeleted(source.isDeleted());; }
 		
-		  if(source.getUser_authorities() != null)
-		  userDTO.setAuthorities(source.getUser_authorities());
-		 
+		if(source.getUser_authorities() != null) {
+			userDTO.setAuthorities(source.getUser_authorities());
+		 }
 		return userDTO;
 	}
 

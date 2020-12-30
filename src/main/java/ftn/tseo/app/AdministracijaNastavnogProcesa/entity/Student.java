@@ -1,7 +1,5 @@
 package ftn.tseo.app.AdministracijaNastavnogProcesa.entity;
 
-import static javax.persistence.GenerationType.IDENTITY;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,14 +9,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 
@@ -28,13 +22,6 @@ import javax.persistence.Table;
 //@NamedQuery(name = "Student.findById", query = "select s from Student u where s.student_id = ?1")
 public class Student extends Person{
 	
-	/*
-	 * @Id
-	 * 
-	 * @GeneratedValue(strategy=IDENTITY)
-	 * 
-	 * @Column(name="student_id", unique=true, nullable=false) private Integer id;
-	 */
 	
 	
 	@Column(name="index_number", unique=true, nullable=false, length=15)
@@ -60,6 +47,7 @@ public class Student extends Person{
 		super();
 	}
 
+	
 
 	public Student(String indexNum, User user, Set<Document> documents, Set<Payment> payments,
 			Set<CourseAttendance> courseAttendances, Set<ExamTaking> examTakings) {

@@ -39,7 +39,7 @@ public class PaymentController {
 		List<PaymentDTO> paymentsDTO = new ArrayList<PaymentDTO>();
 		for(Payment payment : payments) {
 			System.out.println("payy je :" + payment.getName());
-			paymentsDTO.add(new PaymentDTO(payment));
+		// *****	paymentsDTO.add(new PaymentDTO(payment));
 		}
 		System.out.println("lista je "+paymentsDTO.toString());
 		return new ResponseEntity<>(paymentsDTO, HttpStatus.OK);
@@ -51,7 +51,8 @@ public class PaymentController {
 		if(payment == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(new PaymentDTO(payment), HttpStatus.OK);
+		return null;
+//	*****	return new ResponseEntity<>(new PaymentDTO(payment), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")

@@ -12,6 +12,9 @@ public class StudentDTOtoStudent implements Converter<StudentDTO, Student>  {
 	
 	@Autowired
 	UserDTOtoUser userDTOtoUser;
+	
+	@Autowired
+	DocumentDTOtoDocument documentDTOtoDocument;
 
 	@Override
 	public Student convert(StudentDTO source) {
@@ -55,6 +58,10 @@ public class StudentDTOtoStudent implements Converter<StudentDTO, Student>  {
 		if(source.getUser()!=null) {
 			student.setUser(userDTOtoUser.convert(source.getUser())); 
 		}
+	
+//		if(source.getDocuments()!=null) {
+//			student.setDocuments(documentDTOtoDocument.convert(source.getDocuments()));
+//		}
 		return student;
 	}
 

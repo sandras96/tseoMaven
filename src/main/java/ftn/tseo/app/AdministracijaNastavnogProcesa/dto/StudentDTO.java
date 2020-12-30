@@ -147,6 +147,38 @@ public class StudentDTO {
 		this.user = user;
 	}
 
+	public Set<DocumentDTO> getDocuments() {
+		return documents;
+	}
+
+	public Set<PaymentDTO> getPayments() {
+		return payments;
+	}
+
+	public Set<CourseAttendanceDTO> getCourseAttendances() {
+		return courseAttendances;
+	}
+
+	public Set<ExamTakingDTO> getExamTakings() {
+		return examTakings;
+	}
+
+	public void setDocuments(Set<DocumentDTO> documents) {
+		this.documents = documents;
+	}
+
+	public void setPayments(Set<PaymentDTO> payments) {
+		this.payments = payments;
+	}
+
+	public void setCourseAttendances(Set<CourseAttendanceDTO> courseAttendances) {
+		this.courseAttendances = courseAttendances;
+	}
+
+	public void setExamTakings(Set<ExamTakingDTO> examTakings) {
+		this.examTakings = examTakings;
+	}
+
 	@Override
 	public String toString() {
 		return "StudentDTO [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", indexNum=" + indexNum

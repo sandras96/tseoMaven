@@ -1,5 +1,8 @@
 package ftn.tseo.app.AdministracijaNastavnogProcesa.convert;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -34,6 +37,14 @@ public class DocumentToDocumentDTO implements Converter<Document, DocumentDTO> {
 		}
 		
 		return documentDTO;
+	}
+	
+	public Set<DocumentDTO> convert(Set<Document> source){
+		Set<DocumentDTO> d = new HashSet<DocumentDTO>();
+			for (Document doc: source) {
+				d.add(convert(doc));
+			}
+		return d;
 	}
 
 }

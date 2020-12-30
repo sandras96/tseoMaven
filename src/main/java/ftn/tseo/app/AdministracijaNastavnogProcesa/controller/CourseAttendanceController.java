@@ -67,7 +67,7 @@ public class CourseAttendanceController {
 		 	List<CourseAttendance> courseAttendances =courseAttendanceService.findCourseAttendanceByCourseId(id);
 	        List<CourseAttendanceDTO> cAttendancesDTO = new ArrayList<>();
 	            for (CourseAttendance ca : courseAttendances) {
-	            	 cAttendancesDTO.add(new CourseAttendanceDTO(ca));
+	          // ****** 	 cAttendancesDTO.add(new CourseAttendanceDTO(ca));
 	            	}
 	         
 	        return new ResponseEntity<List<CourseAttendanceDTO>>(cAttendancesDTO,HttpStatus.OK);
@@ -78,7 +78,7 @@ public class CourseAttendanceController {
 	 	List<CourseAttendance> courseAttendances =courseAttendanceService.findCourseAttendanceByStudentId(id);
         List<CourseAttendanceDTO> cAttendancesDTO = new ArrayList<>();
             for (CourseAttendance ca : courseAttendances) {
-            	 cAttendancesDTO.add(new CourseAttendanceDTO(ca));
+          // ***** 	 cAttendancesDTO.add(new CourseAttendanceDTO(ca));
             	}
          
         return new ResponseEntity<List<CourseAttendanceDTO>>(cAttendancesDTO,HttpStatus.OK);

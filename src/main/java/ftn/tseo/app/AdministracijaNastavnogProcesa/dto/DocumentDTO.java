@@ -16,10 +16,12 @@ public class DocumentDTO {
 		
 	}
 	
+	
 	public DocumentDTO(Document document) {
-		this(document.getId(), document.getName(), document.getDate(), document.isDeleted(), new StudentDTO(document.getStudent()));
-	}
-
+		this(document.getId(), document.getName(), document.getDate(), document.isDeleted(), 
+				new StudentDTO(document.getStudent())); 
+		}
+	 
 	public DocumentDTO(Integer id, String name, Date date, boolean deleted, StudentDTO student) {
 		super();
 		this.id = id;

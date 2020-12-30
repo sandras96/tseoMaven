@@ -12,9 +12,10 @@ public class CourseAttendanceDTO {
 		
 	}
 	
+	
 	public CourseAttendanceDTO(CourseAttendance courseAttendance) {
-		this(courseAttendance.getId(), new StudentDTO(courseAttendance.getStudent()), new CourseDTO(courseAttendance.getCourse()));
-	}
+		this(courseAttendance.getId(), new StudentDTO(courseAttendance.getStudent()),new CourseDTO(courseAttendance.getCourse())); }
+	 
 	
 	public CourseAttendanceDTO(Integer id, StudentDTO student, CourseDTO course) {
 		this.id = id;

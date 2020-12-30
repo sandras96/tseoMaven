@@ -17,10 +17,11 @@ public class ExamTakingDTO {
 		
 	}
 
-	public ExamTakingDTO(ExamTaking examTaking) {
-		this(examTaking.getId(), examTaking.isPass(), examTaking.getPoints(), examTaking.getMark(),
-				new ExamDTO(examTaking.getExam()), new StudentDTO(examTaking.getStudent()), new ProfessorDTO(examTaking.getProfessor()));
-	}
+	
+	public ExamTakingDTO(ExamTaking examTaking) { 
+			this(examTaking.getId(), examTaking.isPass(), examTaking.getPoints(), examTaking.getMark(),
+				new ExamDTO(examTaking.getExam()), new StudentDTO(examTaking.getStudent()), new ProfessorDTO(examTaking.getProfessor())); }
+	 
 	
 	
 	public ExamTakingDTO(Integer id, boolean pass, float points, Integer mark, ExamDTO exam, StudentDTO student,

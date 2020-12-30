@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Professor;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.repository.CourseRepository;
 
 @Service
@@ -44,4 +45,5 @@ public class CourseService {
 	public List<Course> findByNameContaining(String name){
 		return courseRepository.findByNameContaining(name);
 	}
+	
 }

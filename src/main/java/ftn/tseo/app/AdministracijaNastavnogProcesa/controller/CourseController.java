@@ -16,9 +16,11 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.CourseDTOtoCourse;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.CourseToCourseDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.StudentToStudentDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.CourseDTO;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.ProfessorDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.StudentDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.CourseAttendance;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Professor;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CourseAttendanceService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CourseService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.StudentService;
@@ -45,7 +47,7 @@ public class CourseController {
 	@Autowired
 	CourseToCourseDTO  courseToCourseDTO;
 	
-	@RequestMapping(/* value="/all", */ method= RequestMethod.GET)
+	@RequestMapping(value="/all",  method= RequestMethod.GET)
 	public ResponseEntity<List<CourseDTO>> getAllCourses(){
 		List<Course> courses = courseService.findAll();
 		List<CourseDTO> coursesDTO = new ArrayList<CourseDTO>();
@@ -113,6 +115,7 @@ public class CourseController {
 	
 	@RequestMapping(value="/student/course/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<StudentDTO>> getStudentsByCourseId(@PathVariable("id") Integer id){
+		System.out.println("Usao sam u listu studenata za odabrani kurs");
 	 	List<CourseAttendance> courseAttendances =courseAttendanceService.findCourseAttendanceByCourseId(id);
         List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
             for (CourseAttendance ca : courseAttendances) {
@@ -127,16 +130,18 @@ public class CourseController {
 	
 	
 // not working 	
-	@RequestMapping(value="/professor/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<CourseDTO>> getCoursesByProfessor(@PathVariable("id") Integer id){
-	 	List<Course> courses =courseService.getAllByProfessorId(id);
-        List<CourseDTO> coursesDTO = new ArrayList<CourseDTO>();
-            for (Course course : courses) {
-            		coursesDTO.add(new CourseDTO(course));
-            }
+//	@RequestMapping(value="/professor/{id}", method = RequestMethod.GET)
+//    public ResponseEntity<List<CourseDTO>> getCoursesByProfessor(@PathVariable("id") Integer id){
+//	 	List<Course> courses =courseService.getAllByProfessorId(id);
+ //       List<CourseDTO> coursesDTO = new ArrayList<CourseDTO>();
+//            for (Course course : courses) {
+//            		coursesDTO.add(new CourseDTO(course));
+//           }
          
-        return new ResponseEntity<List<CourseDTO>>(coursesDTO,HttpStatus.OK);
-    }
+///        return new ResponseEntity<List<CourseDTO>>(coursesDTO,HttpStatus.OK);
+//    }
+	
+	
 	
 	@RequestMapping(value="/searchByName/{name}")
 	public ResponseEntity<List<CourseDTO>> searchByName(@PathVariable("name") String name) throws Exception {

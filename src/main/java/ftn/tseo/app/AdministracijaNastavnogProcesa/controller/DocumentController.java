@@ -1,7 +1,9 @@
 package ftn.tseo.app.AdministracijaNastavnogProcesa.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -83,4 +85,17 @@ public class DocumentController {
 		}
 		
 	}
+	@RequestMapping(value="/student/{id}", method= RequestMethod.GET)
+	public ResponseEntity<Set<DocumentDTO>> getDocumentByStudentId(@PathVariable Integer id){
+		Set<Document> documents = documentService.findAllByStudentId(id);
+		Set<DocumentDTO> documentsDTO = new HashSet<DocumentDTO>();
+		for(Document document : documents) {
+			System.out.println("document je :" + document.getName());
+		 documentsDTO.add(new DocumentDTO(document));
+		}
+		System.out.println("lista je "+documentsDTO.toString());
+		return new ResponseEntity<>(documentsDTO, HttpStatus.OK);
+	}
+
+	
 }

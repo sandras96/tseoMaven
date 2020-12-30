@@ -1,7 +1,6 @@
 package ftn.tseo.app.AdministracijaNastavnogProcesa.entity;
 
 
-import static javax.persistence.GenerationType.IDENTITY;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,9 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -31,13 +28,6 @@ public class Professor extends Person{
 	    PROFESSOR, ASSOCIATE, DEMONSTRATOR;
 	}
 	
-	/*
-	 * @Id
-	 * 
-	 * @GeneratedValue(strategy=IDENTITY)
-	 * 
-	 * @Column(name="professor_id", unique=true, nullable=false) private Integer id;
-	 */
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="role", unique=false, nullable=false)
@@ -66,9 +56,6 @@ public class Professor extends Person{
 		this.examTakings = examTakings;
 		this.courses = courses;
 	}
-
-
-
 
 	public Role getRole() {
 		return role;
@@ -100,6 +87,12 @@ public class Professor extends Person{
 
 	public void setCourses(Set<Course> courses) {
 		this.courses = courses;
+	}
+
+	@Override
+	public String toString() {
+		return "Professor [role=" + role + ", user=" + user + ", examTakings=" + examTakings
+				+ ", courses=" + courses + "]";
 	}
 
 	

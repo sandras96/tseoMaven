@@ -36,5 +36,8 @@ public class ProfessorService {
 	public void remove(Integer id) {
 		professorRepository.deleteById(id);
 	}
-
+	
+	public List<Professor> getAllByCourseId(Integer id) {
+		return professorRepository.getAllByCourseId(id);
+	}
 }

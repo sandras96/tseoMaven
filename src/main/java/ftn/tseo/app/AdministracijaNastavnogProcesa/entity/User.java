@@ -2,10 +2,10 @@ package ftn.tseo.app.AdministracijaNastavnogProcesa.entity;
 
 import static javax.persistence.GenerationType.IDENTITY;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
@@ -20,26 +20,25 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
 @Entity
 @Table(name = "user")
 
+@AttributeOverride(name="id", column=@Column(name="user_id"))
 public class User implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	
 	@Id
 	@GeneratedValue(strategy=IDENTITY)
-	@Column(name="user_id", unique= true, nullable=false)
-	private Integer id;
+	@Column(name="user_id", unique= true, nullable=false) private Integer id;
+	 
 	
 	@Column(name="username", unique=true, nullable=false, length=30)
 	private String username;
@@ -80,8 +79,6 @@ public class User implements Serializable {
 	}
 
 
-
-
 	public User(Integer id, String username, String password, boolean deleted, Set<Authority> user_authorities) {
 		super();
 		this.id = id;
@@ -91,7 +88,6 @@ public class User implements Serializable {
 		this.user_authorities = user_authorities;
 	}
 
-	
 
 	public Integer getId() {
 		return id;
@@ -133,25 +129,6 @@ public class User implements Serializable {
 	}
 
 
-	public Student getStudent() {
-		return student;
-	}
-
-
-	public void setStudent(Student student) {
-		this.student = student;
-	}
-
-
-	public Professor getProfessor() {
-		return professor;
-	}
-
-
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
-	}
-
 	public Set<Authority> getUser_authorities() {
 		return user_authorities;
 	}
@@ -187,21 +164,7 @@ public class User implements Serializable {
 	 * (GrantedAuthority s : user_authorities ) { authority = s.getAuthority(); }
 	 * return authority; }
 	 */
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", deleted=" + deleted + "]";
-	}
-
-	/*
-	 * public Student getStudent() { return student; }
-	 * 
-	 * public void setStudent(Student student) { this.student = student; }
-	 * 
-	 * public Professor getProfessor() { return professor; }
-	 * 
-	 * public void setProfessor(Professor professor) { this.professor = professor; }
-	 * 
-	 */
 	
+
 
 }

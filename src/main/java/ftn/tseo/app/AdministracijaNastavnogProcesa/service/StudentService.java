@@ -7,9 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.StudentDTOtoStudent;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.StudentDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Student;
-import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.User;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.repository.StudentRepository;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.repository.UserRepository;
 
@@ -19,6 +19,8 @@ public class StudentService {
 	@Autowired
 	StudentRepository studentRepository;
 	
+	@Autowired
+	StudentDTOtoStudent studentDTOtoStudent;;
 
 	@Autowired
 	UserRepository userRepository;
@@ -39,15 +41,12 @@ public class StudentService {
 		return studentRepository.save(student);
 	}
 	
-	public Student saveStudentUser(StudentDTO studentDTO) {
-		User user = userRepository.getOne(studentDTO.getUser().getId());
-		Student student = new Student();
-		student.setUser(user);
-		return studentRepository.save(student);
-	}
-
 	public void remove(Integer id) {
 		studentRepository.deleteById(id);
 	}
 
+	public Student findByIndexNum(String indexNum) {
+		return studentRepository.findByIndexNum(indexNum);
+	}
+	
 }

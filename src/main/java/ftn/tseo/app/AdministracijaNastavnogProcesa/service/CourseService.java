@@ -22,13 +22,15 @@ public class CourseService {
 		return courseRepository.findById(id).orElse(null);
 	}
 
-	public List<Course> findAll() {
-		return courseRepository.findAll();
-	}
 	
-	public Page<Course> findAll(Pageable pageable) {
-		return courseRepository.findAll(pageable);
+	public List<Course> findAll() { 
+		return courseRepository.findAll(); 
 	}
+	 
+	
+//	public Page<Course> findAll(Pageable pageable) {
+//		return courseRepository.findAll(pageable);
+//	}
 
 	public Course save(Course course) {
 		return courseRepository.save(course);
@@ -42,8 +44,9 @@ public class CourseService {
 		return courseRepository.getAllByProfessorId(id);
 	}
 	
-	public List<Course> findByNameContaining(String name){
-		return courseRepository.findByNameContaining(name);
-	}
+	/*
+	 * public List<Course> findByNameContaining(String name){ return
+	 * courseRepository.findByNameContaining(name); }
+	 */
 	
 }

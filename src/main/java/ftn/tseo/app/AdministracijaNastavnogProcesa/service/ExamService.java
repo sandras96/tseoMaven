@@ -36,5 +36,8 @@ public class ExamService {
 		examRepository.deleteById(id);
 	}
 
+	public List<Exam> findAllByCourseId(Integer id){
+		return examRepository.findAllByCourseId(id);
+	}
 
 }

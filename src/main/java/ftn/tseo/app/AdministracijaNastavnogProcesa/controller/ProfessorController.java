@@ -19,11 +19,17 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.ProfessorDTOtoProfess
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.ProfessorToProfessorDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.UserDTOtoUser;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.UserToUserDTO;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.CourseDTO;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.ExamTakingDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.ProfessorDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Authority;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.ExamTaking;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Professor;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.User;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.repository.AuthorityRepository;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CourseService;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.service.ExamTakingService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.ProfessorService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.UserService;
 
@@ -36,6 +42,12 @@ public class ProfessorController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	CourseService courseService;
+	
+	@Autowired
+	ExamTakingService examTakingService;
 	
 	@Autowired
 	ProfessorDTOtoProfessor professorDTOtoProfessor;
@@ -142,7 +154,9 @@ public class ProfessorController {
 		if(professor == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}else {
-			professorService.remove(id);
+			User user = userService.findOne(professor.getUser().getId());
+			user.setDeleted(true);
+			
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		
@@ -158,5 +172,27 @@ public class ProfessorController {
             }
          
         return new ResponseEntity<List<ProfessorDTO>>(professorsDTO,HttpStatus.OK);
+    }
+	
+	@RequestMapping(value="/profcourse/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<CourseDTO>> getCoursesByProfessor(@PathVariable("id") Integer id){
+	 	List<Course> courses =courseService.getAllByProfessorId(id);
+        List<CourseDTO> coursesDTO = new ArrayList<CourseDTO>();
+            for (Course course : courses) {
+            		coursesDTO.add(new CourseDTO(course));
+           }
+         
+        return new ResponseEntity<List<CourseDTO>>(coursesDTO,HttpStatus.OK);
+    }
+	
+	@RequestMapping(value="/profExam/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<ExamTakingDTO>> getExamsByProfessor(@PathVariable("id") Integer id){
+	 	List<ExamTaking> examTakings =examTakingService.findAllByProfessorId(id);
+        List<ExamTakingDTO> examTakingsDTO = new ArrayList<ExamTakingDTO>();
+            for (ExamTaking et : examTakings) {
+            	examTakingsDTO.add(new ExamTakingDTO(et));
+           }
+         
+        return new ResponseEntity<List<ExamTakingDTO>>(examTakingsDTO,HttpStatus.OK);
     }
 }

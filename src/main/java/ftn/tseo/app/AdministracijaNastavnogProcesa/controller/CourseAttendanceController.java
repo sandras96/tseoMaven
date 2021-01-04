@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.CAttendanceDTOtoCAttendance;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.CAttendanceToCAttendanceDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.CourseAttendanceDTO;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.ProfessorDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.CourseAttendance;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Professor;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CourseAttendanceService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CourseService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.StudentService;
@@ -39,24 +41,32 @@ public class CourseAttendanceController {
 	@Autowired
 	CAttendanceToCAttendanceDTO cAttendanceToCAttendanceDTO; 
 	
+	@RequestMapping(value="/all", method= RequestMethod.GET)
+	public ResponseEntity<List<CourseAttendanceDTO>> getAllCAs(){
+		List<CourseAttendance> courseattendances = courseAttendanceService.findAll();
+		List<CourseAttendanceDTO> courseattendancesDTO = new ArrayList<CourseAttendanceDTO>();
+		for(CourseAttendance ca : courseattendances) {
+				System.out.println("ca jee: " + ca.getId());
+				courseattendancesDTO.add(new CourseAttendanceDTO(ca));
+		}
+		System.out.println("lista je "+ courseattendancesDTO.toString());
+		return new ResponseEntity<>(courseattendancesDTO, HttpStatus.OK);
+	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<CourseAttendanceDTO> saveCourseAttendance(@RequestBody CourseAttendanceDTO courseAttendanceDTO){
-		CourseAttendance courseAttendance = courseAttendanceService.save(cAttendanceDTOtoCAttendance.convert(courseAttendanceDTO));
-	/*
-	 * CourseAttendance courseAttendance = new CourseAttendance();
-	 * courseAttendance.setCourse(courseService.findOne(courseAttendanceDTO.
-	 * getCourse().getId())); System.out.println("KURS JE" +
-	 * courseAttendance.getCourse().toString());
-	 * courseAttendance.setStudent(studentService.findOne(3));
-	 * 
-	 * System.out.println("STUDENT JE " +
-	 * courseAttendance.getStudent().getIndexNum());
-	 * courseAttendanceService.save(courseAttendance); System.out.println("CAAA je "
-	 * + courseAttendance.toString()); return new
-	 * ResponseEntity<CourseAttendanceDTO>(new
-	 * CourseAttendanceDTO(courseAttendance),HttpStatus.CREATED);
-	 */
+	//	CourseAttendance courseAttendance = courseAttendanceService.save(cAttendanceDTOtoCAttendance.convert(courseAttendanceDTO));
+			System.out.println("CA DTO JE " + courseAttendanceDTO);
+		  CourseAttendance courseAttendance = new CourseAttendance();
+		  courseAttendance.setCourse(courseService.findOne(courseAttendanceDTO.getCourse().getId())); 
+		  System.out.println("KURS JE" + courseAttendance.getCourse().toString());
+		  courseAttendance.setStudent(studentService.findOne(courseAttendanceDTO.getStudent().getId()));
+		  
+		  System.out.println("STUDENT JE " + courseAttendance.getStudent().getIndexNum());
+		  courseAttendanceService.save(courseAttendance); 
+		  System.out.println("CAAA je "+ courseAttendance.toString()); 
+		
+		 
 		System.out.println("COURSE ATT" + courseAttendance);
 		return new ResponseEntity<>(cAttendanceToCAttendanceDTO.convert(courseAttendance), HttpStatus.CREATED);
 	
@@ -67,7 +77,7 @@ public class CourseAttendanceController {
 		 	List<CourseAttendance> courseAttendances =courseAttendanceService.findCourseAttendanceByCourseId(id);
 	        List<CourseAttendanceDTO> cAttendancesDTO = new ArrayList<>();
 	            for (CourseAttendance ca : courseAttendances) {
-	          // ****** 	 cAttendancesDTO.add(new CourseAttendanceDTO(ca));
+	            		cAttendancesDTO.add(new CourseAttendanceDTO(ca));
 	            	}
 	         
 	        return new ResponseEntity<List<CourseAttendanceDTO>>(cAttendancesDTO,HttpStatus.OK);
@@ -78,7 +88,7 @@ public class CourseAttendanceController {
 	 	List<CourseAttendance> courseAttendances =courseAttendanceService.findCourseAttendanceByStudentId(id);
         List<CourseAttendanceDTO> cAttendancesDTO = new ArrayList<>();
             for (CourseAttendance ca : courseAttendances) {
-          // ***** 	 cAttendancesDTO.add(new CourseAttendanceDTO(ca));
+            		cAttendancesDTO.add(new CourseAttendanceDTO(ca));
             	}
          
         return new ResponseEntity<List<CourseAttendanceDTO>>(cAttendancesDTO,HttpStatus.OK);

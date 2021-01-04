@@ -133,4 +133,16 @@ public class UserController {
 		}
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
 	}
+	
+//	@RequestMapping(value = "/all", method = RequestMethod.GET)
+//	public ResponseEntity<List<AuthorityDTO>> getAuthoritiesByUserId(@PathVariable Integer id) {
+//		User user = userService.findOne(id);
+//		Authority a = new ArrayList<AuthorityDTO>();
+///		List<UserDTO> usersDTO = new ArrayList<UserDTO>();
+//		for (User user : users) {
+//			usersDTO.add(new UserDTO(user));
+//		}
+//		return new ResponseEntity<>(usersDTO, HttpStatus.OK);
+//	}
+//	
 }

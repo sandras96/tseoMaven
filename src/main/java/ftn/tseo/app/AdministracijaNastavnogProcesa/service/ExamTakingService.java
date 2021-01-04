@@ -35,6 +35,10 @@ public class ExamTakingService {
 	public void remove(Integer id) {
 		examTakingRepository.deleteById(id);
 	}
+	
+	public List<ExamTaking> findAllByProfessorId(Integer id){
+		return examTakingRepository.findAllByProfessorId(id);
+	}
 
 
 }

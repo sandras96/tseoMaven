@@ -22,7 +22,7 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.ExamTaking;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.ExamTakingService;
 
 @RestController
-@RequestMapping(value="api/examTakings")
+@RequestMapping(value="api/examtakings")
 public class ExamTakingController {
 	
 	@Autowired 
@@ -41,7 +41,7 @@ public class ExamTakingController {
 		List<ExamTakingDTO> examTakingsDTO = new ArrayList<ExamTakingDTO>();
 		for(ExamTaking examTaking : examTakings) {
 			System.out.println("ezam taking je :" + examTaking.getMark());
-		//*****	examTakingsDTO.add(new ExamTakingDTO(examTaking));
+			examTakingsDTO.add(new ExamTakingDTO(examTaking));
 		}
 		System.out.println("lista je "+ examTakingsDTO.toString());
 		return new ResponseEntity<>(examTakingsDTO, HttpStatus.OK);

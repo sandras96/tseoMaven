@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.CourseAttendance;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Student;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.repository.CourseAttendanceRepository;
 
 @Service
@@ -45,6 +46,10 @@ public class CourseAttendanceService implements CourseAttendanceInterface{
 	@Override
 	public List<CourseAttendance> findCourseAttendanceByCourseId(Integer id) {
 		return courseAttendanceRepository.findCourseAttendanceByCourseId(id);
+	}
+	
+	public List<Student> findStudentsNotIn(Integer id){
+		return courseAttendanceRepository.getStudentsNotIn(id);
 	}
 	
 }

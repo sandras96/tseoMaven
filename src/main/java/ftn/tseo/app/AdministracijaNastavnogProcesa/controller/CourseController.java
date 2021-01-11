@@ -21,6 +21,7 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.StudentDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.CourseAttendance;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Exam;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Student;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.repository.CourseRepository;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CourseAttendanceService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CourseService;
@@ -136,6 +137,8 @@ public class CourseController {
          
         return new ResponseEntity<List<StudentDTO>>(studentsDTO,HttpStatus.OK);
     }
+	
+	
 	
 	@RequestMapping(value="/exam/course/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<ExamDTO>> getExamsByCourseId(@PathVariable("id") Integer id){

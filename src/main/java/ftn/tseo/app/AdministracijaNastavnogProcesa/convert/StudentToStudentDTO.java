@@ -57,9 +57,9 @@ public class StudentToStudentDTO implements Converter<Student, StudentDTO> {
 		if(source.getUser()!=null) {
 			studentDTO.setUser(userToUserDTO.convert(source.getUser()));
 		}
-		if(source.getDocuments()!= null) {
-			studentDTO.setDocuments(documentToDocumentDTO.convert(source.getDocuments()));
-		}
+	//	if(source.getDocuments()!= null) {
+	//		studentDTO.setDocuments(documentToDocumentDTO.convert(source.getDocuments()));
+	//	}
 		 
 		
 		return studentDTO;

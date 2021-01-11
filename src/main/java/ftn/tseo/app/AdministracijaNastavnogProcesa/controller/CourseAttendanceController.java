@@ -16,8 +16,11 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.CAttendanceDTOtoCAtte
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.CAttendanceToCAttendanceDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.CourseAttendanceDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.ProfessorDTO;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.StudentDTO;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.UserDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.CourseAttendance;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Professor;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Student;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CourseAttendanceService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CourseService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.StudentService;
@@ -53,14 +56,27 @@ public class CourseAttendanceController {
 		return new ResponseEntity<>(courseattendancesDTO, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<CourseAttendanceDTO> saveCourseAttendance(@RequestBody CourseAttendanceDTO courseAttendanceDTO){
-	//	CourseAttendance courseAttendance = courseAttendanceService.save(cAttendanceDTOtoCAttendance.convert(courseAttendanceDTO));
-			System.out.println("CA DTO JE " + courseAttendanceDTO);
+	@RequestMapping(method=RequestMethod.POST, consumes="application/json", value="/courseId/{courseId}/studentId/{studentId}")
+	public ResponseEntity<CourseAttendanceDTO> createCourseAttendance(@PathVariable("courseId") Integer courseId, @PathVariable("studentId") Integer studentId ){
 		  CourseAttendance courseAttendance = new CourseAttendance();
-		  courseAttendance.setCourse(courseService.findOne(courseAttendanceDTO.getCourse().getId())); 
+		  System.out.println("STUDENT ID JE " + studentId);
+		  courseAttendance.setCourse(courseService.findOne(courseId)); 
+		  List<CourseAttendance> courseAttendances = courseAttendanceService.findCourseAttendanceByCourseId(courseId);
+		  if(!courseAttendances.isEmpty()) {
+			  for(CourseAttendance ca : courseAttendances) {
+				  if(ca.getStudent().getPerson_id() == studentId) {
+					  return new ResponseEntity<CourseAttendanceDTO>(HttpStatus.FORBIDDEN);
+				  }else {
+					  courseAttendance.setStudent(studentService.findOne(studentId));
+				  }
+			  }
+		  }
+		  else {
+			  courseAttendance.setStudent(studentService.findOne(studentId));
+		  }
+		  
 		  System.out.println("KURS JE" + courseAttendance.getCourse().toString());
-		  courseAttendance.setStudent(studentService.findOne(courseAttendanceDTO.getStudent().getId()));
+		  
 		  
 		  System.out.println("STUDENT JE " + courseAttendance.getStudent().getIndexNum());
 		  courseAttendanceService.save(courseAttendance); 
@@ -92,6 +108,18 @@ public class CourseAttendanceController {
             	}
          
         return new ResponseEntity<List<CourseAttendanceDTO>>(cAttendancesDTO,HttpStatus.OK);
+    }
+	
+	@RequestMapping(value="/studentNotIn/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<StudentDTO>> getStudentsNotInCourse(@PathVariable("id") Integer id){
+		System.out.println("Usao sam u listu studenata koji ne pohadjaju kurs");
+	 	List<Student> students =courseAttendanceService.findStudentsNotIn(id);
+        List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
+            for (Student student : students) {
+            	studentsDTO.add(new StudentDTO(student));
+            }
+         
+        return new ResponseEntity<List<StudentDTO>>(studentsDTO,HttpStatus.OK);
     }
 
 }

@@ -102,9 +102,9 @@ insert into exam_taking(mark, pass, points, exam_id, professor_id, student_id)va
 insert into exam_taking(mark, pass, points, exam_id, professor_id, student_id)values(5, false, 48, 4, 1,2);
 
 --PAYMENT
-insert into payment(account_number,address,amount,city,date,deleted,model,name,payment_code,purpose,reference,student_id) values
-					(1567456, 'adress1', 520, 'Ue', '2018-12-12', false, 15, 'name', 5, 'purpose', 556, 1);
+insert into payment(account_number,address,amount,city,date,deleted,model,name,payment_code,purpose,reference,student_id) values (1567456, 'adress1', 520, 'Ue', '2018-12-12', false, 15, 'name', 5, 'purpose', 556, 1);
 
+insert into payment(account_number, address, amount, city, date, deleted, model, name, payment_code, purpose, reference, student_id) values (123456, 'address', 560, 'UE', '2018-12-12', false, 5, 'name1', 456, 'uplata', 36, 1);
 
 
 --INSERT INTO authority VALUES (1,'ADMIN');

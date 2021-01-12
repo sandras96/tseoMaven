@@ -1,7 +1,9 @@
 package ftn.tseo.app.AdministracijaNastavnogProcesa.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +41,7 @@ public class PaymentController {
 		List<PaymentDTO> paymentsDTO = new ArrayList<PaymentDTO>();
 		for(Payment payment : payments) {
 			System.out.println("payy je :" + payment.getName());
-		// *****	paymentsDTO.add(new PaymentDTO(payment));
+			paymentsDTO.add(new PaymentDTO(payment));
 		}
 		System.out.println("lista je "+paymentsDTO.toString());
 		return new ResponseEntity<>(paymentsDTO, HttpStatus.OK);
@@ -51,8 +53,8 @@ public class PaymentController {
 		if(payment == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return null;
-//	*****	return new ResponseEntity<>(new PaymentDTO(payment), HttpStatus.OK);
+		
+			return new ResponseEntity<>(new PaymentDTO(payment), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
@@ -83,6 +85,18 @@ public class PaymentController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		
+	}
+	
+	@RequestMapping(value="/student/{id}", method= RequestMethod.GET)
+	public ResponseEntity<Set<PaymentDTO>> getPaymentByStudentId(@PathVariable Integer id){
+		Set<Payment> payments = paymentService.findAllByStudentId(id);
+		Set<PaymentDTO> paymentsDTO = new HashSet<PaymentDTO>();
+		for(Payment payment : payments) {
+			System.out.println("document je :" + payment.getName());
+			paymentsDTO.add(new PaymentDTO(payment));
+		}
+		System.out.println("lista je "+paymentsDTO.toString());
+		return new ResponseEntity<>(paymentsDTO, HttpStatus.OK);
 	}
 
 }

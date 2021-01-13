@@ -1,7 +1,9 @@
 package ftn.tseo.app.AdministracijaNastavnogProcesa.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.ETakingDTOtoETaking;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.ETakingToETakingDTO;
-import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.CourseDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.ExamTakingDTO;
-import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.StudentDTO;
-import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.ExamTaking;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.ExamTakingService;
 
@@ -54,8 +53,8 @@ public class ExamTakingController {
 		if(examTaking == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return null;
-	// *****	return new ResponseEntity<>(new ExamTakingDTO(examTaking), HttpStatus.OK);
+		
+		return new ResponseEntity<>(new ExamTakingDTO(examTaking), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
@@ -86,6 +85,29 @@ public class ExamTakingController {
 			examTakingService.remove(id);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
-		
 	}
+	
+	@RequestMapping(value="/student/{id}", method= RequestMethod.GET)
+	public ResponseEntity<Set<ExamTakingDTO>> getExamTakingstByStudentId(@PathVariable Integer id){
+		Set<ExamTaking> examtakings = examTakingService.findAllByStudentId(id);
+		Set<ExamTakingDTO> examtakingsDTO = new HashSet<ExamTakingDTO>();
+		for(ExamTaking examTaking : examtakings) {
+			System.out.println("examtaking je :" + examTaking.getPoints());
+			examtakingsDTO.add(new ExamTakingDTO(examTaking));
+		}
+		System.out.println("lista je "+examtakingsDTO.toString());
+		return new ResponseEntity<>(examtakingsDTO, HttpStatus.OK);
+	}
+	@RequestMapping(value="/exam/{id}", method= RequestMethod.GET)
+	public ResponseEntity<Set<ExamTakingDTO>> getExamTakingstByExamId(@PathVariable Integer id){
+		Set<ExamTaking> examtakings = examTakingService.findAllByExamId(id);
+		Set<ExamTakingDTO> examtakingsDTO = new HashSet<ExamTakingDTO>();
+		for(ExamTaking examTaking : examtakings) {
+			System.out.println("examtaking je :" + examTaking.getPoints());
+			examtakingsDTO.add(new ExamTakingDTO(examTaking));
+		}
+		System.out.println("lista je "+examtakingsDTO.toString());
+		return new ResponseEntity<>(examtakingsDTO, HttpStatus.OK);
+	}
+	
 }

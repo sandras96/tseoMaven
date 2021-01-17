@@ -148,10 +148,26 @@ public class StudentController {
 		if (student == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
-			studentService.remove(id);
+			System.out.println("STUDENT ZA BRISANJE JE " + student.getPerson_id());
+			User user = userService.getByStudentId(id);
+			user.setDeleted(true);
+			userService.save(user);
+		//	studentService.deleteStudentById(id);
+			
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 
+	}
+	
+	@RequestMapping(value = "user/{id}", method = RequestMethod.GET)
+	public ResponseEntity<StudentDTO> getStudentByUserId(@PathVariable Integer id) {
+		Student student = studentService.findByUserId(id);
+		System.out.println("STUDENT JE " + student);
+		if (student == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(new StudentDTO(student), HttpStatus.OK);
 	}
 
 }

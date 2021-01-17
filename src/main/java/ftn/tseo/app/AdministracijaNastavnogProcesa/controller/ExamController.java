@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.ExamDTOtoExam;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.ExamToExamDTO;
-import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.CourseDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.ExamDTO;
-import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.StudentDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Exam;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.ExamPeriod;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CourseService;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.service.ExamPeriodService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.ExamService;
 
 @RestController
@@ -27,6 +28,12 @@ public class ExamController {
 	
 	@Autowired
 	ExamService examService;
+	
+	@Autowired
+	CourseService courseService;
+	
+	@Autowired
+	ExamPeriodService examPeriodService;
 	
 	@Autowired
 	ExamDTOtoExam examDTOtoExam;
@@ -56,9 +63,15 @@ public class ExamController {
 		return new ResponseEntity<>(new ExamDTO(exam), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<ExamDTO> saveExam(@RequestBody ExamDTO examDTO){
-		Exam exam = examService.save(examDTOtoExam.convert(examDTO));
+	@RequestMapping(method=RequestMethod.POST, value="/{cId}/{epId}", consumes="application/json")
+	public ResponseEntity<ExamDTO> saveExam(@RequestBody ExamDTO examDTO, @PathVariable Integer cId, @PathVariable Integer epId){
+		Exam exam = new Exam();
+		exam = examDTOtoExam.convert(examDTO);
+		Course course = courseService.findOne(cId);
+		exam.setCourse(course);
+		ExamPeriod examPeriod = examPeriodService.findOne(epId);
+		exam.setExamPeriod(examPeriod);
+		examService.save(exam);
 		
 		System.out.println("EXAM JE" + exam);
 		return new ResponseEntity<>(examToExamDTO.convert(exam), HttpStatus.CREATED);

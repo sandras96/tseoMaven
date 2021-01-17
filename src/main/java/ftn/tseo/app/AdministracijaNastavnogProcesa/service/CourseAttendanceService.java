@@ -51,5 +51,8 @@ public class CourseAttendanceService implements CourseAttendanceInterface{
 	public List<Student> findStudentsNotIn(Integer id){
 		return courseAttendanceRepository.getStudentsNotIn(id);
 	}
+	public CourseAttendance findByStudentAndCourse(Integer id1, Integer id2) {
+		return courseAttendanceRepository.findByStudentIdAndCourseId(id1, id2);
+	}
 	
 }

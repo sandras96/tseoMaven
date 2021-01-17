@@ -48,5 +48,9 @@ public class StudentService {
 	public Student findByIndexNum(String indexNum) {
 		return studentRepository.findByIndexNum(indexNum);
 	}
+	public Student findByUserId(Integer id) {
+		return studentRepository.findByUserId(id);
+	}
 	
+
 }

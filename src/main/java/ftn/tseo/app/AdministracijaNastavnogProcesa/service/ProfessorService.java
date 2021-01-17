@@ -40,4 +40,7 @@ public class ProfessorService {
 	public List<Professor> getAllByCourseId(Integer id) {
 		return professorRepository.getAllByCourseId(id);
 	}
+	public Professor findByUserId(Integer id) {
+		return professorRepository.findByUserId(id);
+	}
 }

@@ -32,12 +32,12 @@ public class ExamDTOtoExam implements Converter<ExamDTO, Exam>{
 		if(source.getAssignment()!=null) {
 			exam.setAssignment(source.getAssignment());
 		}
-		if(source.getCourse()!=null) {
-			exam.setCourse(courseDTOtoCourse.convert(source.getCourse()));
-		}
-		if(source.getExamPeriod()!=null) {
-			exam.setExamPeriod(ePeriodDTOtoEPeriod.convert(source.getExamPeriod()));
-		}
+//		if(source.getCourse()!=null) {
+//			exam.setCourse(courseDTOtoCourse.convert(source.getCourse()));
+//		}
+//		if(source.getExamPeriod()!=null) {
+//			exam.setExamPeriod(ePeriodDTOtoEPeriod.convert(source.getExamPeriod()));
+//		}
 		return exam;
 	}
 	

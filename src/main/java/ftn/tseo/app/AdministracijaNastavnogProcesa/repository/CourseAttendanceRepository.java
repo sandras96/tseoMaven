@@ -12,6 +12,7 @@ public interface CourseAttendanceRepository extends JpaRepository<CourseAttendan
 	
 	List<CourseAttendance> findCourseAttendanceByStudentId(Integer id);
 	List<CourseAttendance> findCourseAttendanceByCourseId(Integer id);
+	CourseAttendance findByStudentIdAndCourseId(Integer sId, Integer cId);
 
 	@Query(value = "SELECT DISTINCT s.* FROM student s JOIN course_attendance ca ON s.student_id = ca.student_id WHERE s.student_id NOT IN (SELECT ca.student_id FROM course_attendance ca WHERE ca.course_id = ?);",nativeQuery = true)
 	List<Student> getStudentsNotIn(Integer id);

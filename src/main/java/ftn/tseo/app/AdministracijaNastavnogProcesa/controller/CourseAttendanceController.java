@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.CAttendanceDTOtoCAttendance;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.CAttendanceToCAttendanceDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.CourseAttendanceDTO;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.CourseDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.ProfessorDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.StudentDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.UserDTO;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.CourseAttendance;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Professor;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Student;
@@ -113,13 +115,31 @@ public class CourseAttendanceController {
 	@RequestMapping(value="/studentNotIn/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<StudentDTO>> getStudentsNotInCourse(@PathVariable("id") Integer id){
 		System.out.println("Usao sam u listu studenata koji ne pohadjaju kurs");
-	 	List<Student> students =courseAttendanceService.findStudentsNotIn(id);
+		List<CourseAttendance> courseAttendances =courseAttendanceService.findCourseAttendanceByCourseId(id);
+		List<Student> students = studentService.findAll();
         List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
-            for (Student student : students) {
-            	studentsDTO.add(new StudentDTO(student));
+            for (CourseAttendance ca : courseAttendances) {
+            	for(Student student : students) {
+            		if(student.getPerson_id()!=ca.getStudent().getPerson_id()) {
+            			studentsDTO.add(new StudentDTO(student));
+            		}
+            	}
+            	
             }
          
         return new ResponseEntity<List<StudentDTO>>(studentsDTO,HttpStatus.OK);
     }
+	
+	@RequestMapping(value="/{sId}/{cId}", method=RequestMethod.DELETE)
+	public ResponseEntity<CourseDTO> deleteCourseAttendance(@PathVariable Integer sId, @PathVariable Integer cId){
+		CourseAttendance ca = courseAttendanceService.findByStudentAndCourse(sId, cId);
+		if(ca == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}else {
+			courseAttendanceService.remove(ca.getId());
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		
+	}
 
 }

@@ -22,10 +22,12 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.UserToUserDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.CourseDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.ExamTakingDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.ProfessorDTO;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.StudentDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Authority;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.ExamTaking;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Professor;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Student;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.User;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.repository.AuthorityRepository;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CourseService;
@@ -154,9 +156,9 @@ public class ProfessorController {
 		if(professor == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}else {
-			User user = userService.findOne(professor.getUser().getId());
-			user.setDeleted(true);
-			
+		//	User user = userService.findOne(professor.getUser().getId());
+		//	user.setDeleted(true);
+			System.out.println("PROFESSOR ZA BRISANJE JE " + professor.getPerson_id());
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		
@@ -185,6 +187,18 @@ public class ProfessorController {
         return new ResponseEntity<List<CourseDTO>>(coursesDTO,HttpStatus.OK);
     }
 	
+	@RequestMapping(value="/profcourse/{pId}/{cId}", method=RequestMethod.DELETE)
+	public ResponseEntity<CourseDTO> deleteCourseByProfessor(@PathVariable Integer pId, @PathVariable Integer cId){
+		Course course = courseService.findOne(cId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}else {
+			courseService.removeCourseProfessor(pId,cId);
+			System.out.println("COURSE PROFESSOR ZA BRISANJE JE " + course.getName());
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		
+	}
 	@RequestMapping(value="/profExam/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<ExamTakingDTO>> getExamsByProfessor(@PathVariable("id") Integer id){
 	 	List<ExamTaking> examTakings =examTakingService.findAllByProfessorId(id);
@@ -195,4 +209,15 @@ public class ProfessorController {
          
         return new ResponseEntity<List<ExamTakingDTO>>(examTakingsDTO,HttpStatus.OK);
     }
+	
+	@RequestMapping(value="user/{id}", method = RequestMethod.GET)
+	public ResponseEntity<ProfessorDTO> getProfessorByUserId(@PathVariable Integer id){
+		Professor professor = professorService.findByUserId(id);
+		System.out.println("PROFESSOR JE " + professor);
+		if(professor == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(new ProfessorDTO(professor), HttpStatus.OK);
+	}
 }

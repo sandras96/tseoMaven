@@ -90,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 //svim korisnicima dopusti da pristupe putanjama /auth/**
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/students/**").permitAll()
-                
+                .antMatchers(HttpMethod.GET,"/api/files/**").permitAll()
                 //svaki zahtev mora biti autorizovan
                 .anyRequest().authenticated().and()
                 //presretni svaki zahtev filterom
@@ -119,6 +119,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 "/auth/login"
                 
                 
+                
         );
         web.ignoring().antMatchers(
                 HttpMethod.GET,
@@ -131,7 +132,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 "/**/*.js",
                 "/**/*.jpg",
                 "/**/*.png",
+                
+        
                 "/node_modules/**"
+               
                
                 
             );

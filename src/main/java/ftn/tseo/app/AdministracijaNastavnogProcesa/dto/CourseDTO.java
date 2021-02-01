@@ -1,5 +1,6 @@
 package ftn.tseo.app.AdministracijaNastavnogProcesa.dto;
 
+import java.awt.List;
 import java.util.Set;
 
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
@@ -12,6 +13,7 @@ public class CourseDTO {
 	private float espb;
 	private Semester semester;
 	private boolean deleted;
+	private Set<ProfessorDTO> professors;
 	private Set<CourseAttendanceDTO> courseAttendances;
 
 	
@@ -25,8 +27,7 @@ public class CourseDTO {
 
 	
 	
-	public CourseDTO(Integer id, String name, float espb, Semester semester, boolean deleted
-			/*Set<CourseAttendanceDTO> courseAttendances*/) {
+	public CourseDTO(Integer id, String name, float espb, Semester semester, boolean deleted) {
 		this.id = id;
 		this.name = name;
 		this.espb = espb;
@@ -75,6 +76,16 @@ public class CourseDTO {
 		this.deleted = deleted;
 	}
 
+	public Set<ProfessorDTO> getProfessors() {
+		return professors;
+	}
+
+	public void setProfessors(Set<ProfessorDTO> professors) {
+		this.professors = professors;
+	}
+	
+	
+	
 
 
 	

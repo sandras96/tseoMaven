@@ -16,11 +16,16 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.ExamDTOtoExam;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.ExamToExamDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.ExamDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.CourseAttendance;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Exam;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.ExamPeriod;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.ExamTaking;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CourseAttendanceService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.CourseService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.ExamPeriodService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.ExamService;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.service.ExamTakingService;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.service.ProfessorService;
 
 @RestController
 @RequestMapping(value="api/exams")
@@ -34,6 +39,9 @@ public class ExamController {
 	
 	@Autowired
 	ExamPeriodService examPeriodService;
+	
+	@Autowired
+	CourseAttendanceService courseAttendanceService;
 	
 	@Autowired
 	ExamDTOtoExam examDTOtoExam;
@@ -78,9 +86,21 @@ public class ExamController {
 	
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<ExamDTO> updateExam(@RequestBody ExamDTO examDTO){
-		Exam exam = examService.findOne(examDTO.getId());
+	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<ExamDTO> createExam(@RequestBody ExamDTO examDTO){
+		System.out.println("exam koji sam dobila iz forme je " + examDTO.toString());
+		Exam exam = new Exam();
+		exam = examDTOtoExam.convert(examDTO);
+		examService.save(exam);
+		
+		System.out.println("EXAM JE" + exam);
+		return new ResponseEntity<>(examToExamDTO.convert(exam), HttpStatus.CREATED);
+	
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
+	public ResponseEntity<ExamDTO> updateExam(@RequestBody ExamDTO examDTO, @PathVariable("id") Integer id){
+		Exam exam = examService.findOne(id);
 		if(exam == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -99,5 +119,52 @@ public class ExamController {
 		}
 		
 	}
-
+	
+	@RequestMapping(value="/examPeriod/{id}", method= RequestMethod.GET)
+	public ResponseEntity<List<ExamDTO>> getAllExamsByExamPeriodId(@PathVariable Integer id){
+		List<Exam> exams = examService.findAllByExamPeriodId(id);
+		List<ExamDTO> examsDTO = new ArrayList<ExamDTO>();
+		for(Exam exam : exams) {
+			System.out.println("exam je :" + exam.getPoints());
+			examsDTO.add(new ExamDTO(exam));
+		}
+		System.out.println("lista je "+ examsDTO.toString());
+		return new ResponseEntity<>(examsDTO, HttpStatus.OK);
+	}
+	@RequestMapping(value="/student/{id}", method= RequestMethod.GET)
+	public ResponseEntity<List<ExamDTO>> getExamByStudentId(@PathVariable Integer id){
+		
+		List<Exam> exams = examService.findAll();
+		List<ExamDTO> examsDTO = new ArrayList<ExamDTO>();
+		List<CourseAttendance> courseAttendances = courseAttendanceService.findCourseAttendanceByStudentId(id);
+		for(CourseAttendance courseAttendance : courseAttendances) {
+			for(Exam exam : exams) {
+				if(courseAttendance.getCourse().getId()==exam.getCourse().getId()) {
+					examsDTO.add(new ExamDTO(exam));
+				}
+			}
+		}
+		
+	
+		
+		System.out.println("lista je "+ examsDTO.toString());
+		return new ResponseEntity<>(examsDTO, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/professor/{id}", method= RequestMethod.GET)
+	public ResponseEntity<List<ExamDTO>> getExamByProfessorId(@PathVariable Integer id){
+		List<Exam> exams = examService.findAll();
+		List<ExamDTO> examsDTO = new ArrayList<ExamDTO>();
+		List<Course> courses = courseService.getAllByProfessorId(id);
+		for(Course course : courses){
+			for(Exam exam : exams) {
+				if(course.getId() == exam.getCourse().getId()) {
+					examsDTO.add(new ExamDTO(exam));
+				}
+			}
+		}
+		
+		System.out.println("lista je "+ examsDTO.toString());
+		return new ResponseEntity<>(examsDTO, HttpStatus.OK);
+	}
 }

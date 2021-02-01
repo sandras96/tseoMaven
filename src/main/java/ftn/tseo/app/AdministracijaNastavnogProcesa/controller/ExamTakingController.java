@@ -66,9 +66,9 @@ public class ExamTakingController {
 	
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<ExamTakingDTO> updateExamTaking(@RequestBody ExamTakingDTO examTakingDTO){
-		ExamTaking examTaking = examTakingService.findOne(examTakingDTO.getId());
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
+	public ResponseEntity<ExamTakingDTO> updateExamTaking(@RequestBody ExamTakingDTO examTakingDTO, @PathVariable Integer id){
+		ExamTaking examTaking = examTakingService.findOne(id);
 		if(examTaking == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

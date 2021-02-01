@@ -27,7 +27,7 @@
 
 
 
-
+insert into file(name,type,data)values("file1", "doc", 0);
 
 insert into user (username, password, deleted) values ( "sake", "$2a$04$bAsNVI05EjajIzH4AHFdu.RimWMl2K5hmnzeBrcqRX7Cm8BtMgIFK",  0);
 insert into user (username, password, deleted) values ( "neks", "$2a$04$bAsNVI05EjajIzH4AHFdu.RimWMl2K5hmnzeBrcqRX7Cm8BtMgIFK", 0);
@@ -43,11 +43,9 @@ INSERT INTO authority VALUES (3,'PROFESSOR');
 
 INSERT INTO user_authority VALUES (1,1);
 INSERT INTO user_authority VALUES (2,2);
-INSERT INTO user_authority VALUES (2,1);
 INSERT INTO user_authority VALUES (3,2);
 INSERT INTO user_authority VALUES (4,2);
 INSERT INTO user_authority VALUES (5,3);
-INSERT INTO user_authority VALUES (5,1);
 INSERT INTO user_authority VALUES (6,3);
 INSERT INTO user_authority VALUES (7,3);
 
@@ -66,36 +64,36 @@ insert into course(name, espb, semester, deleted) values ('Informaciona bezbedno
 insert into course(name, espb, semester, deleted) values ('Sistemi e-obrazovanja', 6, 'SUMMER',0);
 insert into course(name, espb, semester, deleted) values ('Poslovna informatika', 5, 'SUMMER',0);
 
-insert into course_attendance(course_id, student_id) values (1,2);
-insert into course_attendance(course_id, student_id) values (1,1);
-insert into course_attendance(course_id, student_id) values (2,2);
-insert into course_attendance(course_id, student_id) values (2,1);
-insert into course_attendance(course_id, student_id) values (4,2);
-insert into course_attendance(course_id, student_id) values (4,3);
-insert into course_attendance(course_id, student_id) values (5,2);
-insert into course_attendance(course_id, student_id) values (5,3);
-insert into course_attendance(course_id, student_id) values (5,1);
-insert into course_attendance(course_id, student_id) values (3,2);
-insert into course_attendance(course_id, student_id) values (3,3);
-insert into course_attendance(course_id, student_id) values (3,1);
+--insert into course_attendance(course_id, student_id) values (1,2);
+--insert into course_attendance(course_id, student_id) values (1,1);
+--insert into course_attendance(course_id, student_id) values (2,2);
+--insert into course_attendance(course_id, student_id) values (2,1);
+--insert into course_attendance(course_id, student_id) values (4,2);
+--insert into course_attendance(course_id, student_id) values (4,3);
+--insert into course_attendance(course_id, student_id) values (5,2);
+--insert into course_attendance(course_id, student_id) values (5,3);
+--insert into course_attendance(course_id, student_id) values (5,1);
+--insert into course_attendance(course_id, student_id) values (3,2);
+--insert into course_attendance(course_id, student_id) values (3,3);
+--insert into course_attendance(course_id, student_id) values (3,1);
 
 
 
-insert into course_professor(course_id, professor_id) values (1,1);
-insert into course_professor(course_id, professor_id) values (1,2);
-insert into course_professor(course_id, professor_id) values (2,2);
-insert into course_professor(course_id, professor_id) values (4,1);
-insert into course_professor(course_id, professor_id) values (4,3);
-insert into course_professor(course_id, professor_id) values (5,2);
-insert into course_professor(course_id, professor_id) values (5,3);
-insert into course_professor(course_id, professor_id) values (3,3);
-insert into course_professor(course_id, professor_id) values (6,3);
+--insert into course_professor(course_id, professor_id) values (1,1);
+--insert into course_professor(course_id, professor_id) values (1,2);
+--insert into course_professor(course_id, professor_id) values (2,2);
+--insert into course_professor(course_id, professor_id) values (4,1);
+--insert into course_professor(course_id, professor_id) values (4,3);
+--insert into course_professor(course_id, professor_id) values (5,2);
+--insert into course_professor(course_id, professor_id) values (5,3);
+--insert into course_professor(course_id, professor_id) values (3,3);
+--insert into course_professor(course_id, professor_id) values (6,3);
 
-insert into document (date, name, student_id, deleted) values ('2018-12-12', 'doc1', 1, 0);
-insert into document (date, name, student_id, deleted) values ('2018-12-12', 'doc2', 1, 0);
-insert into document (date, name, student_id, deleted) values ('2018-12-12', 'doc3', 1, 0);
-insert into document (date, name, student_id, deleted) values ('2018-12-12', 'doc4', 2, 0);
-insert into document (date, name, student_id, deleted) values ('2018-12-12', 'doc5', 3, 0);
+--insert into document (date, name, student_id, deleted) values ('2018-12-12', 'doc1', 1, 0);
+--insert into document (date, name, student_id, deleted) values ('2018-12-12', 'doc2', 1, 0);
+--insert into document (date, name, student_id, deleted) values ('2018-12-12', 'doc3', 1, 0);
+--insert into document (date, name, student_id, deleted) values ('2018-12-12', 'doc4', 2, 0);
+--insert into document (date, name, student_id, deleted) values ('2018-12-12', 'doc5', 3, 0);
 
 insert into exam (date, points, assignment, course_id, exam_period_id) values ('2018-12-12', 65, 'asss5', 1, 1);
 insert into exam (date, points, assignment, course_id, exam_period_id) values ('2018-12-12', 35, 'asss55', 1, 2);
@@ -106,9 +104,9 @@ insert into exam_period(name, start_date, end_date)values('januarski rok', '2018
 insert into exam_period(name, start_date, end_date)values('februarski rok', '2018-12-12', '2018-12-12');
 insert into exam_period(name, start_date, end_date)values('aprilski rok', '2018-12-12', '2018-12-12');
 
-insert into exam_taking(mark, pass, points, exam_id, professor_id, student_id)values(6, true, 55, 1, 1,1);
-insert into exam_taking(mark, pass, points, exam_id, professor_id, student_id)values(10, true, 98, 3, 3,3);
-insert into exam_taking(mark, pass, points, exam_id, professor_id, student_id)values(5, false, 48, 4, 1,2);
+--insert into exam_taking(mark, points, exam_id, professor_id, student_id)values(6, 55, 1, 1,1);
+--insert into exam_taking(mark, points, exam_id, professor_id, student_id)values(10, 98, 3, 3,3);
+--insert into exam_taking(mark, points, exam_id, professor_id, student_id)values(5, 48, 4, 1,2);
 
 --PAYMENT
 insert into payment(account_number,address,amount,city,date,deleted,model,name,payment_code,purpose,reference,student_id) values (1567456, 'adress1', 520, 'Ue', '2018-12-12', false, 15, 'name', 5, 'purpose', 556, 1);

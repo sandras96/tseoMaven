@@ -133,15 +133,15 @@ public class ProfessorController {
 		}
 		professor = professorDTOtoProfessor.convert(professorDTO);
 		
-		User user = userService.findOne(professorDTO.getUser().getId());
-		String string = "";
-		Set<Authority> aa = new HashSet<>();
-		for (Authority a : professorDTO.getUser().getAuthorities()) {
-			string = a.getName();
-			Authority b = authorityRepository.findByName(string);
-			aa.add(b);
-		}
-		user.setUser_authorities(aa);
+//		User user = userService.findOne(professorDTO.getUser().getId());
+//		String string = "";
+//		Set<Authority> aa = new HashSet<>();
+//		for (Authority a : professorDTO.getUser().getAuthorities()) {
+//			string = a.getName();
+//			Authority b = authorityRepository.findByName(string);
+//			aa.add(b);
+//		}
+//		user.setUser_authorities(aa);
 		
 		professor.setUser(userDTOtoUser.convert(professorDTO.getUser()));
 		professorService.save(professor);
@@ -149,7 +149,6 @@ public class ProfessorController {
 		return new ResponseEntity<>(professorToProfessorDTO.convert(professor), HttpStatus.OK);
 		
 	}
-	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<ProfessorDTO> deleteProfessor(@PathVariable Integer id){
 		Professor professor = professorService.findOne(id);
@@ -186,18 +185,41 @@ public class ProfessorController {
          
         return new ResponseEntity<List<CourseDTO>>(coursesDTO,HttpStatus.OK);
     }
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value = "/{id}/{courseId}")
+	public ResponseEntity<ProfessorDTO> updateCoursesforProfessor(@RequestBody ProfessorDTO professorDTO,
+										@PathVariable("id") Integer id, @PathVariable("courseId") Integer courseId  ){
+		System.out.println("Update courses for professor");
+		Professor professor = professorService.findOne(id);
+		Course course = courseService.findOne(courseId);
+		if(professor == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Set<Course> courses = new HashSet<>();
+		courses.add(course);
+		professor.setCourses(courses);
+		course.getProfessors().add(professor);
+		professorService.save(professor);
+		return new ResponseEntity<>(professorToProfessorDTO.convert(professor), HttpStatus.OK);
+	}
 	
 	@RequestMapping(value="/profcourse/{pId}/{cId}", method=RequestMethod.DELETE)
 	public ResponseEntity<CourseDTO> deleteCourseByProfessor(@PathVariable Integer pId, @PathVariable Integer cId){
+		System.out.println("Delete courses for professor");
+		Professor professor = professorService.findOne(pId);
 		Course course = courseService.findOne(cId);
+		if(professor == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}else {
-			courseService.removeCourseProfessor(pId,cId);
-			System.out.println("COURSE PROFESSOR ZA BRISANJE JE " + course.getName());
-			return new ResponseEntity<>(HttpStatus.OK);
 		}
-		
+		Set<Course> courses = professor.getCourses();
+		courses.remove(course);
+		professor.setCourses(courses);
+		course.getProfessors().remove(professor);
+		professorService.save(professor);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	@RequestMapping(value="/profExam/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<ExamTakingDTO>> getExamsByProfessor(@PathVariable("id") Integer id){

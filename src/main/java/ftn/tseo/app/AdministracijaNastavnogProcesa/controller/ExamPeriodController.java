@@ -58,16 +58,20 @@ public class ExamPeriodController {
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<ExamPeriodDTO> saveExamPeriod(@RequestBody ExamPeriodDTO examPeriodDTO){
-		ExamPeriod examPeriod = examPeriodService.save(ePeriodDTOtoEPeriod.convert(examPeriodDTO));
+		ExamPeriod examPeriod = examPeriodService.findByName(examPeriodDTO.getName());
+		if(examPeriod != null) {
+			return new ResponseEntity<ExamPeriodDTO>(HttpStatus.FORBIDDEN);
+		}
+		 examPeriod = examPeriodService.save(ePeriodDTOtoEPeriod.convert(examPeriodDTO));
 		
 		System.out.println("EXA, PERIOD  JE" + examPeriod);
 		return new ResponseEntity<>(ePeriodToEPeriodDTO.convert(examPeriod), HttpStatus.CREATED);
 	
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<ExamPeriodDTO> updateExamPeriod(@RequestBody ExamPeriodDTO examPeriodDTO){
-		ExamPeriod examPeriod = examPeriodService.findOne(examPeriodDTO.getId());
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
+	public ResponseEntity<ExamPeriodDTO> updateExamPeriod(@RequestBody ExamPeriodDTO examPeriodDTO, @PathVariable("id") Integer id){
+		ExamPeriod examPeriod = examPeriodService.findOne(id);
 		if(examPeriod == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

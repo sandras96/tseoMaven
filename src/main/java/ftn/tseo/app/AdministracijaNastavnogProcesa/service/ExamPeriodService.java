@@ -36,5 +36,8 @@ public class ExamPeriodService {
 		examPeriodRepository.deleteById(id);
 	}
 
+	public ExamPeriod findByName(String name) {
+		return examPeriodRepository.findByName(name);
+	}
 
 }

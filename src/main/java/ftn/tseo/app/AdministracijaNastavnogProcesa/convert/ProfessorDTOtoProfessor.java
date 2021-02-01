@@ -39,8 +39,8 @@ public class ProfessorDTOtoProfessor implements Converter<ProfessorDTO, Professo
 		if(source.getZip()!=null) {
 			professor.setZip(source.getZip());
 		}
-		if(source.getBirthdate()!=null) {
-			professor.setBirthdate(source.getBirthdate());
+		if(source.getBirthDate()!=null) {
+			professor.setBirthdate(source.getBirthDate());
 		}
 		if(source.getEmail()!=null) {
 			professor.setEmail(source.getEmail());

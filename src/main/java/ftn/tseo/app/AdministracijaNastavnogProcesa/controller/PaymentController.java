@@ -65,9 +65,9 @@ public class PaymentController {
 		return new ResponseEntity<>(paymentToPaymentDTO.convert(payment), HttpStatus.CREATED);
 	}
 
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<PaymentDTO> updatePayment(@RequestBody PaymentDTO paymentDTO){
-		Payment payment = paymentService.findOne(paymentDTO.getId());
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
+	public ResponseEntity<PaymentDTO> updatePayment(@RequestBody PaymentDTO paymentDTO,@PathVariable("id") Integer id){
+		Payment payment = paymentService.findOne(id);
 		if(payment == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

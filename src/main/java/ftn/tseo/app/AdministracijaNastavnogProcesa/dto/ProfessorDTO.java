@@ -11,7 +11,7 @@ public class ProfessorDTO {
 	private Integer id;
 	private String firstname;
 	private String lastname;
-	private Date birthdate;
+	private Date birthDate;
 	private String address;
 	private String city;
 	private Integer zip;
@@ -36,13 +36,13 @@ public class ProfessorDTO {
 
 
 
-	public ProfessorDTO(Integer id, String firstname, String lastname, Date birthdate, String address, String city,
+	public ProfessorDTO(Integer id, String firstname, String lastname, Date birthDate, String address, String city,
 			Integer zip, String country, String email, String phone, Role role, UserDTO user) {
 		super();
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
-		this.birthdate = birthdate;
+		this.birthDate = birthDate;
 		this.address = address;
 		this.city = city;
 		this.zip = zip;
@@ -77,12 +77,12 @@ public class ProfessorDTO {
 		this.lastname = lastname;
 	}
 
-	public Date getBirthdate() {
-		return birthdate;
+	public Date getBirthDate() {
+		return birthDate;
 	}
 
-	public void setBirthdate(Date birthdate) {
-		this.birthdate = birthdate;
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	public String getAddress() {
@@ -147,6 +147,14 @@ public class ProfessorDTO {
 
 	public void setUser(UserDTO user) {
 		this.user = user;
+	}
+
+	public Set<CourseDTO> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(Set<CourseDTO> courses) {
+		this.courses = courses;
 	}
 
 	

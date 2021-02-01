@@ -20,9 +20,6 @@ public class ExamTaking {
 	@Column(name="examTaking_id", unique=true, nullable=false)
 	private Integer id;
 	
-	@Column(name="pass", columnDefinition="BOOLEAN DEFAULT TRUE")
-	private boolean pass;
-
 	@Column(name="points", unique=false, nullable=false)
 	private float points;
 	
@@ -46,11 +43,10 @@ public class ExamTaking {
 		super();
 	}
 
-	public ExamTaking(Integer id, boolean pass, float points, Integer mark, Exam exam, Student student,
+	public ExamTaking(Integer id, float points, Integer mark, Exam exam, Student student,
 			Professor professor) {
 		super();
 		this.id = id;
-		this.pass = pass;
 		this.points = points;
 		this.mark = mark;
 		this.exam = exam;
@@ -64,14 +60,6 @@ public class ExamTaking {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public boolean isPass() {
-		return pass;
-	}
-
-	public void setPass(boolean pass) {
-		this.pass = pass;
 	}
 
 	public float getPoints() {

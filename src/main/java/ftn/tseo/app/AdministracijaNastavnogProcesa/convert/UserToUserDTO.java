@@ -1,6 +1,8 @@
 package ftn.tseo.app.AdministracijaNastavnogProcesa.convert;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.UserDTO;
@@ -9,6 +11,7 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.User;
 @Component
 public class UserToUserDTO implements Converter<User, UserDTO> {
 
+	
 	@Override
 	public UserDTO convert(User source) {
 		if(source == null) {

@@ -34,6 +34,9 @@ public class Student extends Person{
 	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="student")
 	private Set<Document> documents = new HashSet<Document>();
 	
+//	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="student")
+//	private Set<FileDB> files = new HashSet<FileDB>();
+	
 	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="student")
 	private Set<Payment> payments = new HashSet<Payment>();
 	

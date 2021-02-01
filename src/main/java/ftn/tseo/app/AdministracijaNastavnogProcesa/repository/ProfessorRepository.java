@@ -9,7 +9,7 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Professor;
 
 public interface ProfessorRepository extends JpaRepository<Professor, Integer> {
 
-	@Query(value = "SELECT p.* FROM professor p JOIN course_professor cp ON p.professor_id = cp.professor_id WHERE course_id =?",nativeQuery = true)
+	@Query(value = "SELECT p.* FROM professor p JOIN course_professor cp ON p.professor_id = cp.professor_id WHERE cp.course_id =?",nativeQuery = true)
 	List<Professor> getAllByCourseId(Integer id);
 	
 	Professor findByUserId(Integer id);

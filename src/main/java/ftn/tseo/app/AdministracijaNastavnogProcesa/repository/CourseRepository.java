@@ -20,11 +20,6 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 	List<Course> getAllByProfessorId(Integer id);
 	
 	
-	@Transactional
-	@Modifying
-	@Query(value = "DELETE FROM course_professor WHERE professor_id = ? AND course_id=?;",nativeQuery = true)
-	void removeCourseProfessor(Integer id1, Integer id2);
-	
 	Page<Course> findByNameContaining(String title, Pageable pageable);
 	
 	

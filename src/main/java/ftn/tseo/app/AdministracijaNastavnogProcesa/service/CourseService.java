@@ -44,9 +44,6 @@ public class CourseService {
 		return courseRepository.getAllByProfessorId(id);
 	}
 	
-	public void removeCourseProfessor(Integer id1, Integer id2) {
-		 courseRepository.removeCourseProfessor(id1, id2);
-	}
 	/*
 	 * public List<Course> findByNameContaining(String name){ return
 	 * courseRepository.findByNameContaining(name); }

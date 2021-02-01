@@ -39,5 +39,12 @@ public class ExamService {
 	public List<Exam> findAllByCourseId(Integer id){
 		return examRepository.findAllByCourseId(id);
 	}
-
+	
+	public List<Exam> findAllByExamPeriodId(Integer id){
+		return examRepository.findAllByExamPeriodId(id);
+	}
+	
+	public List<Exam> getAllByStudentId(Integer id){
+		return examRepository.getAllByStudentId(id);
+	}
 }

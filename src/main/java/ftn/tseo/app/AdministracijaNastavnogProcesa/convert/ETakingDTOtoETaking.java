@@ -27,9 +27,6 @@ public class ETakingDTOtoETaking implements Converter<ExamTakingDTO, ExamTaking>
 		if(source.getPoints()!=0) {
 			examTaking.setPoints(source.getPoints());
 		}
-		if(!source.isPass()) {
-			examTaking.setPass(source.isPass());
-		}
 		if(source.getMark()!=null) {
 			examTaking.setMark(source.getMark());
 		}

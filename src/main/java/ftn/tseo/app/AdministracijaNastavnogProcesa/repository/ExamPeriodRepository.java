@@ -6,4 +6,5 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.ExamPeriod;
 
 public interface ExamPeriodRepository extends JpaRepository<ExamPeriod, Integer> {
 
+	ExamPeriod findByName(String name);
 }

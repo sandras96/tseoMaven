@@ -81,7 +81,8 @@ public class PaymentController {
 		if(payment == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}else {
-			paymentService.remove(id);
+			payment.setDeleted(true);
+			paymentService.save(payment);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		
@@ -92,8 +93,11 @@ public class PaymentController {
 		Set<Payment> payments = paymentService.findAllByStudentId(id);
 		Set<PaymentDTO> paymentsDTO = new HashSet<PaymentDTO>();
 		for(Payment payment : payments) {
-			System.out.println("document je :" + payment.getName());
-			paymentsDTO.add(new PaymentDTO(payment));
+			if(!payment.isDeleted()) {
+				System.out.println("document je :" + payment.getName());
+				paymentsDTO.add(new PaymentDTO(payment));
+			}
+			
 		}
 		System.out.println("lista je "+paymentsDTO.toString());
 		return new ResponseEntity<>(paymentsDTO, HttpStatus.OK);

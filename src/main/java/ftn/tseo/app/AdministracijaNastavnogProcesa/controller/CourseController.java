@@ -19,6 +19,7 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.CourseDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.ExamDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.StudentDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course.Semester;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.CourseAttendance;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Exam;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Student;
@@ -62,8 +63,11 @@ public class CourseController {
 		List<Course> courses = courseService.findAll();
 		List<CourseDTO> coursesDTO = new ArrayList<CourseDTO>();
 		for(Course course : courses) {
-			System.out.println("course je :" + course.getName());
-			coursesDTO.add(new CourseDTO(course));
+			if(!course.isDeleted()) {
+				System.out.println("course je :" + course.getName());
+				coursesDTO.add(new CourseDTO(course));
+			}
+			
 		}
 		System.out.println("lista je "+ coursesDTO.toString());
 		return new ResponseEntity<>(coursesDTO, HttpStatus.OK);
@@ -74,6 +78,9 @@ public class CourseController {
 		Course course = courseService.findOne(id);
 		System.out.println("Course JE " + course);
 		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		if(course.isDeleted()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(new CourseDTO(course), HttpStatus.OK);
@@ -99,12 +106,13 @@ public class CourseController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<CourseDTO> deleteCourse(@PathVariable Integer id){
+	public ResponseEntity<?> deleteCourse(@PathVariable Integer id){
 		Course course = courseService.findOne(id);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}else {
-			courseService.remove(id);
+			course.setDeleted(true);
+			courseService.save(course);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		
@@ -115,8 +123,10 @@ public class CourseController {
         List<CourseDTO> coursesDTO = new ArrayList<CourseDTO>();
             for (CourseAttendance ca : courseAttendances) {
             	if(ca.getStudent() == studentService.findOne(id)) {
-            		CourseDTO courseDTO = courseToCourseDTO.convert(ca.getCourse());
-            		coursesDTO.add(courseDTO);
+            		if(!ca.getCourse().isDeleted()) {
+            			CourseDTO courseDTO = courseToCourseDTO.convert(ca.getCourse());
+                		coursesDTO.add(courseDTO);
+            		}
             	}
             }
          
@@ -126,77 +136,86 @@ public class CourseController {
 	@RequestMapping(value="/student/course/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<StudentDTO>> getStudentsByCourseId(@PathVariable("id") Integer id){
 		System.out.println("Usao sam u listu studenata za odabrani kurs");
+		Course course = courseService.findOne(id);
+		if(course==null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	 	List<CourseAttendance> courseAttendances =courseAttendanceService.findCourseAttendanceByCourseId(id);
         List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
             for (CourseAttendance ca : courseAttendances) {
             	if(ca.getCourse() == courseService.findOne(id)) {
             		StudentDTO studentDTO = studentToStudentDTO.convert(ca.getStudent());
-            		studentsDTO.add(studentDTO);
+            		if(!studentDTO.getUser().isDeleted()) {
+            			studentsDTO.add(studentDTO);
+            		}
             	}
             }
          
         return new ResponseEntity<List<StudentDTO>>(studentsDTO,HttpStatus.OK);
     }
 	
-	
-	
 	@RequestMapping(value="/exam/course/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<ExamDTO>> getExamsByCourseId(@PathVariable("id") Integer id){
 		System.out.println("Usao sam u listu ispita za odabrani kurs");
+		Course course = courseService.findOne(id);
+		if(course==null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	 	List<Exam> exams = examService.findAllByCourseId(id);
         List<ExamDTO> examsDTO = new ArrayList<ExamDTO>();
             for (Exam exam : exams) {
-            		examsDTO.add(new ExamDTO(exam));
+            		if(!exam.getExamPeriod().isDeleted()) {
+            			examsDTO.add(new ExamDTO(exam));
+            		}
             }
          
         return new ResponseEntity<List<ExamDTO>>(examsDTO,HttpStatus.OK);
     }
 	
+/////////////////////////////////////// SEARCH ////////////////////////////////////////
 	
+	@RequestMapping(value="/searchByName/{name}")
+	public ResponseEntity<List<CourseDTO>> searchByName(@PathVariable("name") String name) throws Exception {
+		System.out.println("pretraga po imenu coursa: " + name);
+		List<CourseDTO> coursesDTO = new ArrayList<CourseDTO>();
+		List<Course> courses = new ArrayList<Course>();
+		courses = courseService.findByNameContaining(name);
+		System.out.println("Lista kurseva sa imenom: "+ name + " " + courses);
+		for(Course course : courses) {
+			if(!course.isDeleted()) {
+				coursesDTO.add(new CourseDTO(course));
+			}
+			
+		}
+		return new ResponseEntity<List<CourseDTO>>(coursesDTO,HttpStatus.OK);
+	}
+	@RequestMapping(value="/searchBySemester/{semester}")
+	public ResponseEntity<List<CourseDTO>> searchBySemester(@PathVariable("semester") String semester) throws Exception {
+		System.out.println("pretraga po semester coursa: " + semester);
+		String s = "%"+semester+"%";
+		List<CourseDTO> coursesDTO = new ArrayList<CourseDTO>();	
+		List<Course> courses = courseService.findBySemesterContaining(s);
+		System.out.println("Lista kurseva sa semestrom: "+ semester + " " + courses);
+		for(Course course : courses) {
+			if(!course.isDeleted()) {
+				coursesDTO.add(new CourseDTO(course));
+			};
+		}
+		return new ResponseEntity<List<CourseDTO>>(coursesDTO,HttpStatus.OK);
+	}
 	
+	@RequestMapping(value="/searchByEspb/{espb}")
+	public ResponseEntity<List<CourseDTO>> searchByEspb(@PathVariable("espb") float espb) throws Exception {
+		System.out.println("pretraga po espb coursa: " + espb);
+		List<CourseDTO> coursesDTO = new ArrayList<CourseDTO>();	
+		List<Course> courses = courseService.findByEspb(espb);
+		System.out.println("Lista kurseva sa semestrom: "+ espb + " " + courses);
+		for(Course course : courses) {
+			if(!course.isDeleted()) {
+				coursesDTO.add(new CourseDTO(course));
+			}
+		}
+		return new ResponseEntity<List<CourseDTO>>(coursesDTO,HttpStatus.OK);
+	}
 	
-	
-	
-	
-//	@RequestMapping(value="/searchByName/{name}")
-//	public ResponseEntity<List<CourseDTO>> searchByName(@PathVariable("name") String name) throws Exception {
-	//	System.out.println("pretraga po imenu coursa: " + name);
-	//	List<CourseDTO> coursesDTO = new ArrayList<CourseDTO>();	
-	//	List<Course> courses = courseService.findByNameContaining(name);
-	//	System.out.println("Lista kurseva sa imenom: "+ name + " " + courses);
-	//	for(Course course : courses) {
-	//		coursesDTO.add(new CourseDTO(course));
-	//	}
-	//	return new ResponseEntity<List<CourseDTO>>(coursesDTO,HttpStatus.OK);
-//	}
-	
-	
-	/*
-	 * @GetMapping("/all") public ResponseEntity<Map<String, Object>>
-	 * getAllCourses( @RequestParam(required = false) String name,
-	 * 
-	 * @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3")
-	 * int size) {
-	 * 
-	 * try { List<Course> courses = new ArrayList<Course>(); Pageable paging =
-	 * PageRequest.of(page,size);
-	 * 
-	 * Page<Course> pageCourses; if(name == null) { pageCourses =
-	 * courseRepository.findAll(paging); }else { pageCourses =
-	 * courseRepository.findByNameContaining(name, paging); } courses =
-	 * pageCourses.getContent();
-	 * 
-	 * 
-	 * Map<String, Object> response = new HashMap<>(); response.put("courses",
-	 * courses); response.put("currentPage", pageCourses.getNumber());
-	 * response.put("totalItems", pageCourses.getTotalElements());
-	 * response.put("totalPages", pageCourses.getTotalPages());
-	 * 
-	 * return new ResponseEntity<>(response, HttpStatus.OK);
-	 * 
-	 * } catch (Exception e) { return new ResponseEntity<>(null,
-	 * HttpStatus.INTERNAL_SERVER_ERROR); }
-	 * 
-	 * }
-	 */
 }

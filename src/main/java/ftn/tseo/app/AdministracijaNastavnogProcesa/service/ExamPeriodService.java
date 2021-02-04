@@ -39,5 +39,9 @@ public class ExamPeriodService {
 	public ExamPeriod findByName(String name) {
 		return examPeriodRepository.findByName(name);
 	}
+	
+	public List<ExamPeriod> findAllByNameContaining(String name) {
+		return examPeriodRepository.findAllByNameContaining(name);
+	}
 
 }

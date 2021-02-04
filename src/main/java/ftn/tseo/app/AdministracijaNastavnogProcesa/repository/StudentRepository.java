@@ -14,5 +14,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 	Student findByIndexNum(String indexNum);
 	Student findByUserId(Integer id);
 
-	
+	List<Student> findByIndexNumContaining(String indexNum);
+	List<Student> findByFirstnameContaining(String firstname);
+	List<Student> findByLastnameContaining(String lastname);
 }

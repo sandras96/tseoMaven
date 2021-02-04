@@ -39,8 +39,10 @@ public class ExamPeriodController {
 		List<ExamPeriod> examPeriods = examPeriodService.findAll();
 		List<ExamPeriodDTO> examPeriodsDTO = new ArrayList<ExamPeriodDTO>();
 		for(ExamPeriod examPeriod : examPeriods) {
-			System.out.println("examPeriod je :" + examPeriod.getName());
-			examPeriodsDTO.add(new ExamPeriodDTO(examPeriod));
+			if(!examPeriod.isDeleted()) {
+				System.out.println("examPeriod je :" + examPeriod.getName());
+				examPeriodsDTO.add(new ExamPeriodDTO(examPeriod));
+			}
 		}
 		System.out.println("lista je "+ examPeriodsDTO.toString());
 		return new ResponseEntity<>(examPeriodsDTO, HttpStatus.OK);
@@ -53,6 +55,10 @@ public class ExamPeriodController {
 		if(examPeriod == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		if(examPeriod.isDeleted()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	
 		return new ResponseEntity<>(new ExamPeriodDTO(examPeriod), HttpStatus.OK);
 	}
 	
@@ -85,9 +91,25 @@ public class ExamPeriodController {
 		if(examPeriod == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}else {
-			examPeriodService.remove(id);
+			examPeriod.setDeleted(true);
+			examPeriodService.save(examPeriod);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
+	}
+	
+	@RequestMapping(value="searchByName/{name}", method= RequestMethod.GET)
+	public ResponseEntity<List<ExamPeriodDTO>> getByName(@PathVariable("name") String name){
+		List<ExamPeriod> examPeriods = examPeriodService.findAllByNameContaining(name);
+		List<ExamPeriodDTO> examPeriodsDTO = new ArrayList<ExamPeriodDTO>();
+		for(ExamPeriod examPeriod : examPeriods) {
+			if(!examPeriod.isDeleted()) {
+				System.out.println("examPeriod je :" + examPeriod.getName());
+				examPeriodsDTO.add(new ExamPeriodDTO(examPeriod));
+			}
+		
+		}
+		System.out.println("lista je "+ examPeriodsDTO.toString());
+		return new ResponseEntity<>(examPeriodsDTO, HttpStatus.OK);
 	}
 	
 	

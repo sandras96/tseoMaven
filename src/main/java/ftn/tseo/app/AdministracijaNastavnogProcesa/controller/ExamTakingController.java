@@ -18,7 +18,9 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.ETakingDTOtoETaking;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.ETakingToETakingDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.ExamTakingDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.ExamTaking;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Student;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.ExamTakingService;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.service.StudentService;
 
 @RestController
 @RequestMapping(value="api/examtakings")
@@ -32,6 +34,9 @@ public class ExamTakingController {
 	
 	@Autowired
 	ETakingToETakingDTO eTakingToETakingDTO;
+	
+	@Autowired
+	StudentService studentService;
 	
 	
 	@RequestMapping(value="/all", method= RequestMethod.GET)
@@ -53,7 +58,6 @@ public class ExamTakingController {
 		if(examTaking == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		
 		return new ResponseEntity<>(new ExamTakingDTO(examTaking), HttpStatus.OK);
 	}
 	
@@ -92,11 +96,15 @@ public class ExamTakingController {
 		Set<ExamTaking> examtakings = examTakingService.findAllByStudentId(id);
 		Set<ExamTakingDTO> examtakingsDTO = new HashSet<ExamTakingDTO>();
 		for(ExamTaking examTaking : examtakings) {
-			System.out.println("examtaking je :" + examTaking.getPoints());
-			examtakingsDTO.add(new ExamTakingDTO(examTaking));
+			
+				System.out.println("examtaking je :" + examTaking.getPoints());
+				examtakingsDTO.add(new ExamTakingDTO(examTaking));
+			
+			
 		}
 		System.out.println("lista je "+examtakingsDTO.toString());
 		return new ResponseEntity<>(examtakingsDTO, HttpStatus.OK);
+		
 	}
 	@RequestMapping(value="/exam/{id}", method= RequestMethod.GET)
 	public ResponseEntity<Set<ExamTakingDTO>> getExamTakingstByExamId(@PathVariable Integer id){
@@ -104,7 +112,10 @@ public class ExamTakingController {
 		Set<ExamTakingDTO> examtakingsDTO = new HashSet<ExamTakingDTO>();
 		for(ExamTaking examTaking : examtakings) {
 			System.out.println("examtaking je :" + examTaking.getPoints());
-			examtakingsDTO.add(new ExamTakingDTO(examTaking));
+			if(!examTaking.getStudent().getUser().isDeleted()) {
+				examtakingsDTO.add(new ExamTakingDTO(examTaking));
+			}
+			
 		}
 		System.out.println("lista je "+examtakingsDTO.toString());
 		return new ResponseEntity<>(examtakingsDTO, HttpStatus.OK);

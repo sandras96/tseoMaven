@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course.Semester;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Professor;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.repository.CourseRepository;
 
@@ -44,9 +45,16 @@ public class CourseService {
 		return courseRepository.getAllByProfessorId(id);
 	}
 	
-	/*
-	 * public List<Course> findByNameContaining(String name){ return
-	 * courseRepository.findByNameContaining(name); }
-	 */
 	
+	public List<Course> findByNameContaining(String name){ 
+	  return courseRepository.findByNameContaining(name); 
+	}
+	
+	public List<Course> findBySemesterContaining(String semester){ 
+		  return courseRepository.findBySemester(semester); 
+	}
+	 
+	public List<Course> findByEspb(Float espb){ 
+		  return courseRepository.findByEspb(espb); 
+	}
 }

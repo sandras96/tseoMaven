@@ -11,6 +11,7 @@ public class ExamPeriodDTO {
 	private String name;
 	private Date startDate;
 	private Date endDate;
+	private boolean deleted;
 	private Set<ExamDTO> exams;
 	
 	public ExamPeriodDTO() {
@@ -18,15 +19,16 @@ public class ExamPeriodDTO {
 	}
 	
 	public ExamPeriodDTO(ExamPeriod examPeriod) {
-		this(examPeriod.getId(), examPeriod.getName(), examPeriod.getStartDate(), examPeriod.getEndDate());
+		this(examPeriod.getId(), examPeriod.getName(), examPeriod.getStartDate(), examPeriod.getEndDate(), examPeriod.isDeleted());
 	}
 	
 
-	public ExamPeriodDTO(Integer id, String name, Date startDate, Date endDate) {
+	public ExamPeriodDTO(Integer id, String name, Date startDate, Date endDate, boolean deleted) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.startDate = startDate;
+		this.deleted = deleted;
 		this.endDate = endDate;
 	}
 
@@ -69,6 +71,14 @@ public class ExamPeriodDTO {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public Set<ExamDTO> getExams() {

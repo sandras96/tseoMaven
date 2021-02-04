@@ -75,8 +75,11 @@ public class ProfessorController {
 		List<Professor> professors = professorService.findAll();
 		List<ProfessorDTO> professorsDTO = new ArrayList<ProfessorDTO>();
 		for(Professor professor : professors) {
+			if(!professor.getUser().isDeleted()) {
 				System.out.println("professor je :" + professor.getFirstname());
 				professorsDTO.add(new ProfessorDTO(professor));
+			}
+			
 		}
 		System.out.println("lista je "+ professorsDTO.toString());
 		return new ResponseEntity<>(professorsDTO, HttpStatus.OK);
@@ -87,6 +90,9 @@ public class ProfessorController {
 		Professor professor = professorService.findOne(id);
 		System.out.println("PROFESSOR JE " + professor);
 		if(professor == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		if(professor.getUser().isDeleted()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
@@ -143,7 +149,7 @@ public class ProfessorController {
 //		}
 //		user.setUser_authorities(aa);
 		
-		professor.setUser(userDTOtoUser.convert(professorDTO.getUser()));
+//		professor.setUser(userDTOtoUser.convert(professorDTO.getUser()));
 		professorService.save(professor);
 		
 		return new ResponseEntity<>(professorToProfessorDTO.convert(professor), HttpStatus.OK);
@@ -155,9 +161,9 @@ public class ProfessorController {
 		if(professor == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}else {
-		//	User user = userService.findOne(professor.getUser().getId());
-		//	user.setDeleted(true);
-			System.out.println("PROFESSOR ZA BRISANJE JE " + professor.getPerson_id());
+			User user = userService.findOne(professor.getUser().getId());
+			user.setDeleted(true);
+			professorService.save(professor);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		
@@ -169,7 +175,10 @@ public class ProfessorController {
 	 	List<Professor> professors =professorService.getAllByCourseId(id);
         List<ProfessorDTO> professorsDTO = new ArrayList<ProfessorDTO>();
             for (Professor professor : professors) {
+            	if(!professor.getUser().isDeleted()) {
             		professorsDTO.add(new ProfessorDTO(professor));
+            	}
+            		
             }
          
         return new ResponseEntity<List<ProfessorDTO>>(professorsDTO,HttpStatus.OK);
@@ -180,7 +189,10 @@ public class ProfessorController {
 	 	List<Course> courses =courseService.getAllByProfessorId(id);
         List<CourseDTO> coursesDTO = new ArrayList<CourseDTO>();
             for (Course course : courses) {
+            	if(!course.isDeleted()) {
             		coursesDTO.add(new CourseDTO(course));
+            	}
+            	
            }
          
         return new ResponseEntity<List<CourseDTO>>(coursesDTO,HttpStatus.OK);
@@ -241,5 +253,51 @@ public class ProfessorController {
 		}
 		
 		return new ResponseEntity<>(new ProfessorDTO(professor), HttpStatus.OK);
+	}
+	
+	/////////////////////////// SEARCH//////////////////////////////////////
+	
+	@RequestMapping(value="/searchByFirstname/{firstname}", method= RequestMethod.GET)
+	public ResponseEntity<List<ProfessorDTO>> findAllByFirstname(@PathVariable("firstname")String firstname){
+		List<Professor> professors = professorService.findAllByFirstname(firstname);
+		List<ProfessorDTO> professorsDTO = new ArrayList<ProfessorDTO>();
+		for(Professor professor : professors) {
+			if(!professor.getUser().isDeleted()) {
+				System.out.println("professor je :" + professor.getFirstname());
+				professorsDTO.add(new ProfessorDTO(professor));
+			}
+			
+		}
+		System.out.println("lista je "+ professorsDTO.toString());
+		return new ResponseEntity<>(professorsDTO, HttpStatus.OK);
+	}
+	@RequestMapping(value="/searchByLastname/{lastname}", method= RequestMethod.GET)
+	public ResponseEntity<List<ProfessorDTO>> findAllByLastname(@PathVariable("lastname")String lastname){
+		List<Professor> professors = professorService.findAllByLastname(lastname);
+		List<ProfessorDTO> professorsDTO = new ArrayList<ProfessorDTO>();
+		for(Professor professor : professors) {
+			if(!professor.getUser().isDeleted()) {
+				System.out.println("professor je :" + professor.getFirstname());
+				professorsDTO.add(new ProfessorDTO(professor));
+			}
+			
+		}
+		System.out.println("lista je "+ professorsDTO.toString());
+		return new ResponseEntity<>(professorsDTO, HttpStatus.OK);
+	}
+	@RequestMapping(value="/searchByRole/{role}", method= RequestMethod.GET)
+	public ResponseEntity<List<ProfessorDTO>> findAllByRole(@PathVariable("role")String role){
+		String r = "%"+role+"%";
+		List<Professor> professors = professorService.findAllByRole(r);
+		List<ProfessorDTO> professorsDTO = new ArrayList<ProfessorDTO>();
+		for(Professor professor : professors) {
+			if(!professor.getUser().isDeleted()) {
+				System.out.println("professor je :" + professor.getFirstname());
+				professorsDTO.add(new ProfessorDTO(professor));
+			}
+			
+		}
+		System.out.println("lista je "+ professorsDTO.toString());
+		return new ResponseEntity<>(professorsDTO, HttpStatus.OK);
 	}
 }

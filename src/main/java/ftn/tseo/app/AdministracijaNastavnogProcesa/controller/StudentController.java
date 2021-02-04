@@ -64,8 +64,11 @@ public class StudentController {
 		List<Student> students = studentService.findAll();
 		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
 		for (Student student : students) {
-			System.out.println("student je :" + student.getIndexNum());
-			studentsDTO.add(new StudentDTO(student));
+			if(!student.getUser().isDeleted()) {
+				System.out.println("student je :" + student.getIndexNum());
+				studentsDTO.add(new StudentDTO(student));
+			}
+			
 		}
 		System.out.println("lista je " + studentsDTO.toString());
 		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
@@ -76,6 +79,9 @@ public class StudentController {
 		Student student = studentService.findOne(id);
 		System.out.println("STUDENT JE " + student);
 		if (student == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		if(student.getUser().isDeleted()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
@@ -121,21 +127,23 @@ public class StudentController {
 		if (student == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		
+		
 		student = studentDTOtoStudent.convert(studentDTO);
+		
+		System.out.println("USER JE " + student.getUser().getPassword());
 
-		System.out.println("USER JE " + student.getUser().getId());
-
-		User user = userService.findOne(studentDTO.getUser().getId());
-		String string = "";
-		Set<Authority> aa = new HashSet<>();
-		for (Authority a : studentDTO.getUser().getAuthorities()) {
-			string = a.getName();
-			Authority b = authorityRepository.findByName(string);
-			aa.add(b);
-		}
-		user.setUser_authorities(aa);
-
-		student.setUser(userDTOtoUser.convert(studentDTO.getUser())); 
+//		User user = userService.findOne(studentDTO.getUser().getId());
+//		String string = "";
+//		Set<Authority> aa = new HashSet<>();
+//		for (Authority a : studentDTO.getUser().getAuthorities()) {
+//			string = a.getName();
+//		Authority b = authorityRepository.findByName(string);
+//			aa.add(b);
+//		}
+//		user.setUser_authorities(aa);
+//		user.setPassword(student.getUser().getPassword());
+//		student.setUser(userDTOtoUser.convert(studentDTO.getUser())); 
 		studentService.save(student);
 
 		return new ResponseEntity<>(studentToStudentDTO.convert(student), HttpStatus.OK);
@@ -169,5 +177,53 @@ public class StudentController {
 
 		return new ResponseEntity<>(new StudentDTO(student), HttpStatus.OK);
 	}
+	
+////////////////////////////SEARCH///////////////////////////////////////
+	
+	@RequestMapping(value = "/searchByFirstname/{firstname}", method = RequestMethod.GET)
+	public ResponseEntity<List<StudentDTO>> getAllByFirstname(@PathVariable("firstname") String firstname) {
+		List<Student> students = studentService.findByFirstname(firstname);
+		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
+		for (Student student : students) {
+			if(!student.getUser().isDeleted()) {
+				System.out.println("student je :" + student.getIndexNum());
+				studentsDTO.add(new StudentDTO(student));
+			}
+			
+		}
+		System.out.println("lista je " + studentsDTO.toString());
+		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/searchByLastname/{lastname}", method = RequestMethod.GET)
+	public ResponseEntity<List<StudentDTO>> getAllByLastname(@PathVariable("lastname") String lastname) {
+		List<Student> students = studentService.findByLastname(lastname);
+		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
+		for (Student student : students) {
+			if(!student.getUser().isDeleted()) {
+				System.out.println("student je :" + student.getIndexNum());
+				studentsDTO.add(new StudentDTO(student));
+			}
+			
+		}
+		System.out.println("lista je " + studentsDTO.toString());
+		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/searchByIndexnumber/{indexnumber}", method = RequestMethod.GET)
+	public ResponseEntity<List<StudentDTO>> getAllByIndexnumber(@PathVariable("indexnumber") String indexnumber) {
+		List<Student> students = studentService.findByIndexnumber(indexnumber);
+		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
+		for (Student student : students) {
+			if(!student.getUser().isDeleted()) {
+				System.out.println("student je :" + student.getIndexNum());
+				studentsDTO.add(new StudentDTO(student));
+			}
+			
+		}
+		System.out.println("lista je " + studentsDTO.toString());
+		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
+	}
+	
 
 }

@@ -13,4 +13,9 @@ public interface ProfessorRepository extends JpaRepository<Professor, Integer> {
 	List<Professor> getAllByCourseId(Integer id);
 	
 	Professor findByUserId(Integer id);
+	
+	List<Professor> findAllByFirstnameContaining(String firstname);
+	List<Professor> findAllByLastnameContaining(String lastname);
+	@Query(value = "Select * from professor where role like ?;",nativeQuery = true)
+	List<Professor> findAllByRole(String role);
 }

@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,12 +43,18 @@ public class UserController {
 	@Autowired
 	AuthorityRepository authorityRepository;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<UserDTO>> getAllUsers() {
 		List<User> users = userService.findAll();
 		List<UserDTO> usersDTO = new ArrayList<UserDTO>();
 		for (User user : users) {
-			usersDTO.add(new UserDTO(user));
+			if(!user.isDeleted()) {
+				usersDTO.add(new UserDTO(user));
+			}
+			
 		}
 		return new ResponseEntity<>(usersDTO, HttpStatus.OK);
 	}
@@ -57,6 +64,9 @@ public class UserController {
 		User user = userService.findOne(id);
 		System.out.println("USER JE " + user);
 		if (user == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		if(user.isDeleted()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
@@ -70,8 +80,16 @@ public class UserController {
 			return new ResponseEntity<UserDTO>(HttpStatus.FORBIDDEN);
 		}
 		User user = new User();
-		user = userDTOtoUser.convert(userDTO);
-
+		//user = userDTOtoUser.convert(userDTO);
+		if(userDTO.getUsername()!=null) {
+			user.setUsername(userDTO.getUsername());
+		}
+		if(userDTO.getPassword() != null)
+			user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+		
+		if(!userDTO.isDeleted()) { 
+			user.setDeleted(false);
+		}
 		System.out.println("AUthorities su: " + userDTO.getAuthorities());
 
 		String string = "";
@@ -96,7 +114,11 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		System.out.println("User je koji: " + user.toString());
-		user = userDTOtoUser.convert(userDTO);
+		user.setUsername(userDTO.getUsername());
+		user.setPassword(userDTO.getPassword());
+		
+		
+		user.setDeleted(false);
 		String string = "";
 		Set<Authority> aa = new HashSet<>();
 		for (Authority a : userDTO.getAuthorities()) {
@@ -118,7 +140,8 @@ public class UserController {
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
-			userService.remove(id);
+			user.setDeleted(true);
+			userService.save(user);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 
@@ -134,15 +157,18 @@ public class UserController {
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
 	}
 	
-//	@RequestMapping(value = "/all", method = RequestMethod.GET)
-//	public ResponseEntity<List<AuthorityDTO>> getAuthoritiesByUserId(@PathVariable Integer id) {
-//		User user = userService.findOne(id);
-//		Authority a = new ArrayList<AuthorityDTO>();
-///		List<UserDTO> usersDTO = new ArrayList<UserDTO>();
-//		for (User user : users) {
-//			usersDTO.add(new UserDTO(user));
-//		}
-//		return new ResponseEntity<>(usersDTO, HttpStatus.OK);
-//	}
-//	
+	@RequestMapping(value = "/searchByAuthority/{name}", method = RequestMethod.GET)
+	public ResponseEntity<List<UserDTO>> getAllByAuthority(@PathVariable("name") String name) {
+		String n = "%"+name+"%";
+		List<User> users = userService.findByAuthority(n);
+		List<UserDTO> usersDTO = new ArrayList<UserDTO>();
+		for (User user : users) {
+			if(!user.isDeleted()) {
+				usersDTO.add(new UserDTO(user));
+			}
+			
+		}
+		return new ResponseEntity<>(usersDTO, HttpStatus.OK);
+	}
+
 }

@@ -51,6 +51,13 @@ public class StudentService {
 	public Student findByUserId(Integer id) {
 		return studentRepository.findByUserId(id);
 	}
-	
-
+	public List<Student> findByFirstname(String firstname) {
+		return studentRepository.findByFirstnameContaining(firstname);
+	}
+	public List<Student> findByLastname(String lastname) {
+		return studentRepository.findByLastnameContaining(lastname);
+	}
+	public List<Student> findByIndexnumber(String indexNum) {
+		return studentRepository.findByIndexNumContaining(indexNum);
+	}
 }

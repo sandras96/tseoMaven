@@ -33,6 +33,9 @@ public class ExamPeriod {
 	@Column(name="endDate", nullable=false)
 	private Date endDate;
 	
+	@Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
+	private boolean deleted;
+	
 	@OneToMany(cascade= {CascadeType.REFRESH}, fetch= FetchType.LAZY, mappedBy="examPeriod")
 	private Set<Exam> exams = new HashSet<Exam>();
 
@@ -42,12 +45,13 @@ public class ExamPeriod {
 		super();
 	}
 
-	public ExamPeriod(Integer id, String name, Date startDate, Date endDate, Set<Exam> exams) {
+	public ExamPeriod(Integer id, String name, Date startDate, Date endDate, boolean deleted, Set<Exam> exams) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.deleted = deleted;
 		this.exams = exams;
 	}
 
@@ -81,6 +85,14 @@ public class ExamPeriod {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public Set<Exam> getExams() {

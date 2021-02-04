@@ -38,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User Not Found with username: " + username);
         } else {
-            return UserDetailsImpl.build(user);
+             return UserDetailsImpl.build(user);
         }
 	}
 	//Funkcija pomocu koje korisnik menja svoju lozinku
@@ -53,12 +53,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 	            return;
 	        }
 	     LOGGER.debug("Changing password for user '"+ username + "'");
-	     User user = (User) loadUserByUsername(username);
+	     UserDetails userDetails =  loadUserByUsername(username);
+	     System.out.println("user details username je "+ userDetails.getUsername());
+	     User user = userRepository.getByUsername(userDetails.getUsername());
 	     
-	     //pre nego sto u bazu upisemo novu lozinku, potrebno ju je hesirati ne zelimo da u bazi cuvamo lozinke u plain text formatu
+	   //pre nego sto u bazu upisemo novu lozinku, potrebno ju je hesirati ne zelimo da u bazi cuvamo lozinke u plain text formatu
 	     user.setPassword(passwordencoder.encode(newPassword));
 	     userRepository.save(user);
-	     
 	 }
 	
 

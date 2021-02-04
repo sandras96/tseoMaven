@@ -47,4 +47,17 @@ public class ExamService {
 	public List<Exam> getAllByStudentId(Integer id){
 		return examRepository.getAllByStudentId(id);
 	}
+	
+	public List<Exam> findByExamPeriodName(String name){
+		return examRepository.findByExamPeriodNameContaining(name);
+	}
+	public List<Exam> findByCourseName(String name){
+		return examRepository.findByCourseNameContaining(name);
+	}
+	public List<Exam> findByExamPeriodNameAndCourse(String name, Integer id){
+		return examRepository.findByExamPeriodNameContainingAndCourseId(name, id);
+	}
+	public List<Exam> findByCourseNameAndExamPeriod(String name, Integer id){
+		return examRepository.findByCourseNameContainingAndExamPeriodId(name, id);
+	}
 }

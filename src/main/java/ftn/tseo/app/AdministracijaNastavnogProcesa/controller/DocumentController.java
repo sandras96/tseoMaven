@@ -80,7 +80,8 @@ public class DocumentController {
 		if(document == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}else {
-			documentService.remove(id);
+			document.setDeleted(true);
+			documentService.save(document);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		

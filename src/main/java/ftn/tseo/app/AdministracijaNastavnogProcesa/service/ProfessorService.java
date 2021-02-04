@@ -43,4 +43,14 @@ public class ProfessorService {
 	public Professor findByUserId(Integer id) {
 		return professorRepository.findByUserId(id);
 	}
+	public List<Professor> findAllByFirstname(String firstname) {
+		return professorRepository.findAllByFirstnameContaining(firstname);
+	}
+	public List<Professor> findAllByLastname(String lastname) {
+		return professorRepository.findAllByLastnameContaining(lastname);
+	}
+	public List<Professor> findAllByRole(String role) {
+		return professorRepository.findAllByRole(role);
+	}
+	
 }

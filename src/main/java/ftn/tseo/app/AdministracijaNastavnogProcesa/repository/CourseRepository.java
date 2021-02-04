@@ -11,6 +11,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Course.Semester;
 
 public interface CourseRepository extends JpaRepository<Course, Integer> {
 	
@@ -20,9 +21,11 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 	List<Course> getAllByProfessorId(Integer id);
 	
 	
-	Page<Course> findByNameContaining(String title, Pageable pageable);
+	List<Course> findByNameContaining(String title);
 	
-	
+	List<Course> findByEspb(Float espb);
+	@Query(value = "Select * from course where semester like ?;",nativeQuery = true)
+	List<Course> findBySemester(String semester);
 	
 
 }

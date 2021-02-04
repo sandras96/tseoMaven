@@ -43,5 +43,7 @@ public class UserService {
 	public User getByStudentId(Integer id) {
 		return userRepository.getByStudentId(id);
 	}
-
+	public List<User> findByAuthority(String name) {
+		return userRepository.findByAuthority(name);
+	}
 }

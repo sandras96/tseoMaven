@@ -25,6 +25,9 @@ public class EPeriodDTOtoEPeriod implements Converter<ExamPeriodDTO, ExamPeriod>
 		if(source.getEndDate()!=null) {
 			examPeriod.setEndDate(source.getEndDate());
 		}
+		if(!source.isDeleted()) {
+			examPeriod.setDeleted(source.isDeleted());
+		}
 		return examPeriod;
 	}
 

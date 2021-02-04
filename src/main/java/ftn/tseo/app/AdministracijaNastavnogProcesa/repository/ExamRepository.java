@@ -14,4 +14,9 @@ public interface ExamRepository extends JpaRepository<Exam, Integer>{
 	
 	@Query(value = "SELECT e.* FROM exam e JOIN exam_taking et ON e.exam_id = et.exam_id WHERE student_id=?;",nativeQuery = true)
 	List<Exam> getAllByStudentId(Integer id);
+	
+	List<Exam> findByExamPeriodNameContaining(String name);
+	List<Exam> findByExamPeriodNameContainingAndCourseId(String name, Integer id);
+	List<Exam> findByCourseNameContaining(String name);
+	List<Exam> findByCourseNameContainingAndExamPeriodId(String name, Integer id);
 }

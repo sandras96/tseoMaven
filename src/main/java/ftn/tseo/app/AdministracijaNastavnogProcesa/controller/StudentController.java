@@ -21,6 +21,7 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.UserDTOtoUser;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.UserToUserDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.StudentDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Authority;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.FinancialCard;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Student;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.User;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.repository.AuthorityRepository;
@@ -114,6 +115,10 @@ public class StudentController {
 		System.out.println("Authorities su " + user.getUser_authorities());
 
 		student.setUser(userService.findOne(user.getId()));
+		String acc = FinancialCard.getRandomAccountNumber();
+		String ref = FinancialCard.getRandomReference();
+		FinancialCard fc = new FinancialCard(acc, ref, 97, 0, student);
+		student.setFinancialCard(fc);
 		studentService.save(student);
 		System.out.println("USER JE " + student.getUser().getId());
 

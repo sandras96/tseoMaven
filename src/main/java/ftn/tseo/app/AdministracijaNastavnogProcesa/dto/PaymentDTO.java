@@ -7,18 +7,12 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Payment;
 public class PaymentDTO {
 	
 	private Integer id;
-	private String name;
-	private String address;
-	private String city;
-	private Integer paymentCode;
 	private double amount;
 	private String purpose;
-	private Integer accountNumber;
-	private Integer model;
-	private Integer reference;
 	private Date date;
 	private boolean deleted;
-	private StudentDTO student;
+	private FinancialCardDTO financialCard;
+	private CreditCardDTO creditCard;
 	
 	
 	public PaymentDTO() {
@@ -27,27 +21,18 @@ public class PaymentDTO {
 
 	
 	public PaymentDTO(Payment p) { 
-			this(p.getId(), p.getName(), p.getAddress(), p.getCity(), p.getPaymentCode(), p.getAmount(), p.getPurpose(),
-					p.getAccountNumber(),p.getModel(), p.getReference(),p.getDate(), p.isDeleted(), new StudentDTO(p.getStudent())); }
+			this(p.getId(), p.getAmount(), p.getPurpose(), p.getDate(), p.isDeleted(), new FinancialCardDTO(p.getFinancialCard()), new CreditCardDTO(p.getCreditCard())); }
 	 
 
-	public PaymentDTO(Integer id, String name, String address, String city, Integer paymentCode, double amount,
-			String purpose, Integer accountNumber, Integer model, Integer reference, Date date, boolean deleted,
-			StudentDTO student) {
+	public PaymentDTO(Integer id, double amount, String purpose, Date date, boolean deleted, FinancialCardDTO financialCard, CreditCardDTO creditCard) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.address = address;
-		this.city = city;
-		this.paymentCode = paymentCode;
 		this.amount = amount;
 		this.purpose = purpose;
-		this.accountNumber = accountNumber;
-		this.model = model;
-		this.reference = reference;
 		this.date = date;
 		this.deleted = deleted;
-		this.student = student;
+		this.financialCard = financialCard;
+		this.creditCard = creditCard;
 	}
 
 	public Integer getId() {
@@ -56,38 +41,6 @@ public class PaymentDTO {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public Integer getPaymentCode() {
-		return paymentCode;
-	}
-
-	public void setPaymentCode(Integer paymentCode) {
-		this.paymentCode = paymentCode;
 	}
 
 	public double getAmount() {
@@ -106,30 +59,6 @@ public class PaymentDTO {
 		this.purpose = purpose;
 	}
 
-	public Integer getAccountNumber() {
-		return accountNumber;
-	}
-
-	public void setAccountNumber(Integer accountNumber) {
-		this.accountNumber = accountNumber;
-	}
-
-	public Integer getModel() {
-		return model;
-	}
-
-	public void setModel(Integer model) {
-		this.model = model;
-	}
-
-	public Integer getReference() {
-		return reference;
-	}
-
-	public void setReference(Integer reference) {
-		this.reference = reference;
-	}
-
 	public Date getDate() {
 		return date;
 	}
@@ -146,15 +75,21 @@ public class PaymentDTO {
 		this.deleted = deleted;
 	}
 
-	public StudentDTO getStudent() {
-		return student;
+	public FinancialCardDTO getFinancialCard() {
+		return financialCard;
 	}
 
-	public void setStudent(StudentDTO student) {
-		this.student = student;
+	public void setFinancialCard(FinancialCardDTO financialCard) {
+		this.financialCard = financialCard;
 	}
 
+	public CreditCardDTO getCreditCard() {
+		return creditCard;
+	}
 
-	
+	public void setCreditCard(CreditCardDTO creditCard) {
+		this.creditCard = creditCard;
+	}
 
+	 
 }

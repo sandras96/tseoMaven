@@ -38,8 +38,5 @@ public class PaymentService {
 		paymentRepository.deleteById(id);
 	}
 	
-	public Set<Payment> findAllByStudentId(Integer id) {
-		return paymentRepository.findAllByStudentId(id);
-	}
 
 }

@@ -1,9 +1,7 @@
 package ftn.tseo.app.AdministracijaNastavnogProcesa.controller;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.CreditCardDTOtoCreditCard;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.FinancialCardDTOtoFinancialCard;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.PaymentDTOtoPayment;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.PaymentToPaymentDTO;
-import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.DocumentDTO;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.CreditCardDTO;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.FinancialCardDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.PaymentDTO;
-import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Document;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Payment;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.service.FinancialCardService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.PaymentService;
 
 @RestController
@@ -30,17 +31,25 @@ public class PaymentController {
 	PaymentService paymentService;
 	
 	@Autowired
+	FinancialCardService financialCardService;
+	
+	@Autowired
 	PaymentDTOtoPayment paymentDTOtoPayment;
 	
 	@Autowired
 	PaymentToPaymentDTO paymentToPaymentDTO;
+	
+	@Autowired
+	FinancialCardDTOtoFinancialCard financialCardDTOtoFinancialCard;
+	
+	@Autowired
+	CreditCardDTOtoCreditCard creditCardDTOtoCreditCard;
 	
 	@RequestMapping(value="/all", method= RequestMethod.GET)
 	public ResponseEntity<List<PaymentDTO>> getAllPayments(){
 		List<Payment> payments = paymentService.findAll();
 		List<PaymentDTO> paymentsDTO = new ArrayList<PaymentDTO>();
 		for(Payment payment : payments) {
-			System.out.println("payy je :" + payment.getName());
 			paymentsDTO.add(new PaymentDTO(payment));
 		}
 		System.out.println("lista je "+paymentsDTO.toString());
@@ -59,7 +68,15 @@ public class PaymentController {
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<PaymentDTO> savePayment(@RequestBody PaymentDTO paymentDTO){
-		Payment payment = paymentService.save(paymentDTOtoPayment.convert(paymentDTO));
+		System.out.println(paymentDTO.getFinancialCard().getBalance());
+		FinancialCardDTO fc = paymentDTO.getFinancialCard();
+		fc.setBalance(Double.sum(fc.getBalance(), paymentDTO.getAmount()));
+		CreditCardDTO cc = paymentDTO.getCreditCard();
+		Payment payment = paymentDTOtoPayment.convert(paymentDTO);
+		payment.setFinancialCard(financialCardDTOtoFinancialCard.convert(fc));
+		payment.setCreditCard(creditCardDTOtoCreditCard.convert(cc));
+		financialCardService.save(financialCardDTOtoFinancialCard.convert(fc));
+		paymentService.save(payment);
 		
 		System.out.println("PAY JE" + payment);
 		return new ResponseEntity<>(paymentToPaymentDTO.convert(payment), HttpStatus.CREATED);
@@ -88,19 +105,19 @@ public class PaymentController {
 		
 	}
 	
-	@RequestMapping(value="/student/{id}", method= RequestMethod.GET)
-	public ResponseEntity<Set<PaymentDTO>> getPaymentByStudentId(@PathVariable Integer id){
-		Set<Payment> payments = paymentService.findAllByStudentId(id);
-		Set<PaymentDTO> paymentsDTO = new HashSet<PaymentDTO>();
-		for(Payment payment : payments) {
-			if(!payment.isDeleted()) {
-				System.out.println("document je :" + payment.getName());
-				paymentsDTO.add(new PaymentDTO(payment));
-			}
-			
-		}
-		System.out.println("lista je "+paymentsDTO.toString());
-		return new ResponseEntity<>(paymentsDTO, HttpStatus.OK);
-	}
+//	@RequestMapping(value="/student/{id}", method= RequestMethod.GET)
+//	public ResponseEntity<Set<PaymentDTO>> getPaymentByStudentId(@PathVariable Integer id){
+//		Set<Payment> payments = paymentService.findAllByStudentId(id);
+//		Set<PaymentDTO> paymentsDTO = new HashSet<PaymentDTO>();
+//		for(Payment payment : payments) {
+//			if(!payment.isDeleted()) {
+//				paymentsDTO.add(new PaymentDTO(payment));
+//			}
+//			
+//		}
+//		System.out.println("lista je "+paymentsDTO.toString());
+//		return new ResponseEntity<>(paymentsDTO, HttpStatus.OK);
+//	}
 
+	
 }

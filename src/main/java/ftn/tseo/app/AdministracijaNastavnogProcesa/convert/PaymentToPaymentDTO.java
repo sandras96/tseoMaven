@@ -9,9 +9,13 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Payment;
 
 @Component
 public class PaymentToPaymentDTO implements Converter<Payment, PaymentDTO>{
-
+	
+	
 	@Autowired
-	StudentToStudentDTO studentToStudentDTO;
+	FinancialCardToCFinancialCardDTO financialCardToCFinancialCardDTO;
+	
+	@Autowired
+	CreditCardToCreditCardDTO creditCardToCreditCardDTO;
 	
 	@Override
 	public PaymentDTO convert(Payment source) {
@@ -20,38 +24,21 @@ public class PaymentToPaymentDTO implements Converter<Payment, PaymentDTO>{
 		}
 		PaymentDTO paymentDTO = new PaymentDTO();
 		paymentDTO.setId(source.getId());
-		if(source.getAccountNumber()!=null) {
-			paymentDTO.setAccountNumber(source.getAccountNumber());
-		}
-		if(source.getAddress()!=null) {
-			paymentDTO.setAddress(source.getAddress());
-		}
+		
 		if(source.getAmount()!=0) {
 			paymentDTO.setAmount(source.getAmount());
-		}
-		if(source.getCity()!=null) {
-			paymentDTO.setCity(source.getCity());
 		}
 		if(source.getDate()!=null) {
 			paymentDTO.setDate(source.getDate());
 		}
-		if(source.getModel()!=null) {
-			paymentDTO.setModel(source.getModel());
-		}
-		if(source.getName()!=null) {
-			paymentDTO.setName(source.getName());
-		}
-		if(source.getPaymentCode()!=null) {
-			paymentDTO.setPaymentCode(source.getPaymentCode());
-		}
 		if(source.getPurpose()!=null) {
 			paymentDTO.setPurpose(source.getPurpose());
 		}
-		if(source.getReference()!=null) {
-			paymentDTO.setReference(source.getReference());
+		if(source.getFinancialCard()!=null) {
+			paymentDTO.setFinancialCard(financialCardToCFinancialCardDTO.convert(source.getFinancialCard()));
 		}
-		if(source.getStudent()!=null) {
-			paymentDTO.setStudent(studentToStudentDTO.convert(source.getStudent()));
+		if(source.getFinancialCard()!=null) {
+			paymentDTO.setCreditCard(creditCardToCreditCardDTO.convert(source.getCreditCard()));
 		}
 		if(!source.isDeleted()) {
 			paymentDTO.setDeleted(source.isDeleted());

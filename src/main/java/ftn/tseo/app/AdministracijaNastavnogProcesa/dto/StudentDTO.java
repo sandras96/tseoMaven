@@ -19,8 +19,8 @@ public class StudentDTO {
 	private String email;
 	private String phone;
 	private UserDTO user;
+	private FinancialCardDTO financialCard;
 	private Set<DocumentDTO> documents;
-	private Set<PaymentDTO> payments;
 	private Set<CourseAttendanceDTO> courseAttendances;
 	private Set<ExamTakingDTO> examTakings;
 	
@@ -49,6 +49,7 @@ public class StudentDTO {
 		this.email = email;
 		this.phone = phone;
 		this.user = user;
+		this.financialCard = financialCard;
 	}
 
 	public Integer getId() {
@@ -147,51 +148,37 @@ public class StudentDTO {
 		this.user = user;
 	}
 
+	public FinancialCardDTO getFinancialCard() {
+		return financialCard;
+	}
+
+	public void setFinancialCard(FinancialCardDTO financialCard) {
+		this.financialCard = financialCard;
+	}
+
 	public Set<DocumentDTO> getDocuments() {
 		return documents;
-	}
-
-	public Set<PaymentDTO> getPayments() {
-		return payments;
-	}
-
-	public Set<CourseAttendanceDTO> getCourseAttendances() {
-		return courseAttendances;
-	}
-
-	public Set<ExamTakingDTO> getExamTakings() {
-		return examTakings;
 	}
 
 	public void setDocuments(Set<DocumentDTO> documents) {
 		this.documents = documents;
 	}
 
-	public void setPayments(Set<PaymentDTO> payments) {
-		this.payments = payments;
+	public Set<CourseAttendanceDTO> getCourseAttendances() {
+		return courseAttendances;
 	}
 
 	public void setCourseAttendances(Set<CourseAttendanceDTO> courseAttendances) {
 		this.courseAttendances = courseAttendances;
 	}
 
+	public Set<ExamTakingDTO> getExamTakings() {
+		return examTakings;
+	}
+
 	public void setExamTakings(Set<ExamTakingDTO> examTakings) {
 		this.examTakings = examTakings;
 	}
 
-	@Override
-	public String toString() {
-		return "StudentDTO [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", indexNum=" + indexNum
-				+ ", birthDate=" + birthDate + ", address=" + address + ", city=" + city + ", zip=" + zip + ", country="
-				+ country + ", email=" + email + ", phone=" + phone + ", user=" + user + ", documents=" + documents
-				+ ", payments=" + payments + ", courseAttendances=" + courseAttendances + ", examTakings=" + examTakings
-				+ "]";
-	}
-
-
-
-	
-	
-	
 
 }

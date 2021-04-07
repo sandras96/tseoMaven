@@ -4,15 +4,15 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Date;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -25,32 +25,11 @@ public class Payment {
 	@Column(name="payment_id", unique= true, nullable=false)
 	private Integer id;
 	
-	@Column(name="name", unique=false, nullable=false, length=50)
-	private String name;
-	
-	@Column(name="address", unique=false, nullable=false)
-	private String address;
-	
-	@Column(name="city", unique=false, nullable=false, length=30)
-	private String city;
-	
-	@Column(name="paymentCode", unique=false, nullable=false)
-	private Integer paymentCode;
-	
 	@Column(name="amount", unique=false, nullable=false)
 	private double amount;
 	
 	@Column(name="purpose", unique=false, nullable=false, length=50)
 	private String purpose;
-	
-	@Column(name="accountNumber", unique=false, nullable=false)
-	private Integer accountNumber;
-	
-	@Column(name="model", unique=false, nullable=false)
-	private Integer model;
-	
-	@Column(name="reference", unique=false, nullable=false)
-	private Integer reference;
 	
 	@Column(name="date", unique=false, nullable=false)
 	private Date date;
@@ -58,38 +37,29 @@ public class Payment {
 	@Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private boolean deleted;
 			
-	@ManyToOne(fetch= FetchType.EAGER)
-	@JoinColumn(name="student_id")
-	private Student student;
+	@ManyToOne
+	@JoinColumn(name="financialCard_id")
+	private FinancialCard financialCard;
 	
-	
+	@OneToOne(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY)
+	@JoinColumn(name="creditCard_Id", referencedColumnName="creditCard_id", unique=true)
+	private CreditCard creditCard;
 
 	public Payment() {
 		super();
 	}
 
-
-	public Payment(Integer id, String name, String address, String city, Integer paymentCode, double amount,
-			String purpose, Integer accountNumber, Integer model, Integer reference, Date date, boolean deleted,
-			Student student) {
+	public Payment(Integer id, double amount, String purpose, Date date, boolean deleted, FinancialCard financialCard,
+			CreditCard creditCard) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.address = address;
-		this.city = city;
-		this.paymentCode = paymentCode;
 		this.amount = amount;
 		this.purpose = purpose;
-		this.accountNumber = accountNumber;
-		this.model = model;
-		this.reference = reference;
 		this.date = date;
 		this.deleted = deleted;
-		this.student = student;
+		this.financialCard = financialCard;
+		this.creditCard = creditCard;
 	}
-
-
-
 
 	public Integer getId() {
 		return id;
@@ -97,38 +67,6 @@ public class Payment {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public Integer getPaymentCode() {
-		return paymentCode;
-	}
-
-	public void setPaymentCode(Integer paymentCode) {
-		this.paymentCode = paymentCode;
 	}
 
 	public double getAmount() {
@@ -147,30 +85,6 @@ public class Payment {
 		this.purpose = purpose;
 	}
 
-	public Integer getAccountNumber() {
-		return accountNumber;
-	}
-
-	public void setAccountNumber(Integer accountNumber) {
-		this.accountNumber = accountNumber;
-	}
-
-	public Integer getModel() {
-		return model;
-	}
-
-	public void setModel(Integer model) {
-		this.model = model;
-	}
-
-	public Integer getReference() {
-		return reference;
-	}
-
-	public void setReference(Integer reference) {
-		this.reference = reference;
-	}
-
 	public Date getDate() {
 		return date;
 	}
@@ -187,14 +101,21 @@ public class Payment {
 		this.deleted = deleted;
 	}
 
-	public Student getStudent() {
-		return student;
+	public FinancialCard getFinancialCard() {
+		return financialCard;
 	}
 
-	public void setStudent(Student student) {
-		this.student = student;
-	}	
-	
+	public void setFinancialCard(FinancialCard financialCard) {
+		this.financialCard = financialCard;
+	}
+
+	public CreditCard getCreditCard() {
+		return creditCard;
+	}
+
+	public void setCreditCard(CreditCard creditCard) {
+		this.creditCard = creditCard;
+	}
 	
 	
 	

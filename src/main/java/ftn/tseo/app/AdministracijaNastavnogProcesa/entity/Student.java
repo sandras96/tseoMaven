@@ -31,14 +31,15 @@ public class Student extends Person{
 	@JoinColumn(name="userRel", referencedColumnName="user_id", unique=true)
 	private User user;
 	
+	@OneToOne(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy = "student")
+	private FinancialCard financialCard;
+	
 	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="student")
 	private Set<Document> documents = new HashSet<Document>();
 	
 //	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="student")
 //	private Set<FileDB> files = new HashSet<FileDB>();
 	
-	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="student")
-	private Set<Payment> payments = new HashSet<Payment>();
 	
 	@OneToMany(cascade= {CascadeType.REFRESH}, fetch= FetchType.LAZY, mappedBy="student")
 	private Set<CourseAttendance> courseAttendances = new HashSet<CourseAttendance>();
@@ -52,13 +53,13 @@ public class Student extends Person{
 
 	
 
-	public Student(String indexNum, User user, Set<Document> documents, Set<Payment> payments,
+	public Student(String indexNum, User user, FinancialCard financialCard, Set<Document> documents, 
 			Set<CourseAttendance> courseAttendances, Set<ExamTaking> examTakings) {
 		super();
 		this.indexNum = indexNum;
 		this.user = user;
+		this.financialCard = financialCard;
 		this.documents = documents;
-		this.payments = payments;
 		this.courseAttendances = courseAttendances;
 		this.examTakings = examTakings;
 	}
@@ -80,6 +81,14 @@ public class Student extends Person{
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	public FinancialCard getFinancialCard() {
+		return financialCard;
+	}
+
+	public void setFinancialCard(FinancialCard financialCard) {
+		this.financialCard = financialCard;
+	}
 
 	public Set<Document> getDocuments() {
 		return documents;
@@ -87,14 +96,6 @@ public class Student extends Person{
 
 	public void setDocuments(Set<Document> documents) {
 		this.documents = documents;
-	}
-
-	public Set<Payment> getPayments() {
-		return payments;
-	}
-
-	public void setPayments(Set<Payment> payments) {
-		this.payments = payments;
 	}
 
 	public Set<CourseAttendance> getCourseAttendances() {
@@ -116,9 +117,11 @@ public class Student extends Person{
 
 	@Override
 	public String toString() {
-		return "Student [indexNum=" + indexNum + ", user=" + user + ", documents=" + documents + ", payments="
-				+ payments + ", courseAttendances=" + courseAttendances + ", examTakings=" + examTakings + "]";
+		return "Student [indexNum=" + indexNum + ", user=" + user + ", financialCard=" + financialCard + ", documents="
+				+ documents + ", courseAttendances=" + courseAttendances + ", examTakings=" + examTakings + "]";
 	}
+
+
 
 	
 }

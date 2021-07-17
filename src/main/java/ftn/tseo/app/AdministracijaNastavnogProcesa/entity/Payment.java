@@ -34,6 +34,9 @@ public class Payment {
 	@Column(name="date", unique=false, nullable=false)
 	private Date date;
 	
+	@Column(name="name", unique=false, nullable=false)
+	private String name;
+	
 	@Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
 	private boolean deleted;
 			
@@ -49,13 +52,14 @@ public class Payment {
 		super();
 	}
 
-	public Payment(Integer id, double amount, String purpose, Date date, boolean deleted, FinancialCard financialCard,
+	public Payment(Integer id, double amount, String purpose, Date date, String name, boolean deleted, FinancialCard financialCard,
 			CreditCard creditCard) {
 		super();
 		this.id = id;
 		this.amount = amount;
 		this.purpose = purpose;
 		this.date = date;
+		this.name = name;
 		this.deleted = deleted;
 		this.financialCard = financialCard;
 		this.creditCard = creditCard;
@@ -91,6 +95,14 @@ public class Payment {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public boolean isDeleted() {

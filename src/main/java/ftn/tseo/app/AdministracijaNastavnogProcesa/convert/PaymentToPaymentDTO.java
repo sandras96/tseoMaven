@@ -12,7 +12,7 @@ public class PaymentToPaymentDTO implements Converter<Payment, PaymentDTO>{
 	
 	
 	@Autowired
-	FinancialCardToCFinancialCardDTO financialCardToCFinancialCardDTO;
+	FinancialCardToFinancialCardDTO financialCardToCFinancialCardDTO;
 	
 	@Autowired
 	CreditCardToCreditCardDTO creditCardToCreditCardDTO;
@@ -30,6 +30,9 @@ public class PaymentToPaymentDTO implements Converter<Payment, PaymentDTO>{
 		}
 		if(source.getDate()!=null) {
 			paymentDTO.setDate(source.getDate());
+		}
+		if(source.getName()!=null) {
+			paymentDTO.setAccountName(source.getName());
 		}
 		if(source.getPurpose()!=null) {
 			paymentDTO.setPurpose(source.getPurpose());

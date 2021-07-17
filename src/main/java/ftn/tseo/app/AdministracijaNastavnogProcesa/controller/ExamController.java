@@ -2,6 +2,7 @@ package ftn.tseo.app.AdministracijaNastavnogProcesa.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -161,6 +162,26 @@ public class ExamController {
 		return new ResponseEntity<>(examsDTO, HttpStatus.OK);
 	}
 	
+/*	@RequestMapping(value="/student/{id}", method= RequestMethod.GET)
+	public ResponseEntity<List<ExamDTO>> getExamByStudentId2(@PathVariable Integer id){
+		
+		List<Exam> exams = examService.getAllUnregisteredExams();
+		List<ExamDTO> examsDTO = new ArrayList<ExamDTO>();
+		List<CourseAttendance> courseAttendances = courseAttendanceService.findCourseAttendanceByStudentId(id);
+		for(CourseAttendance courseAttendance : courseAttendances) {
+			for(Exam exam : exams) {
+				if(courseAttendance.getCourse().getId()==exam.getCourse().getId()) {
+					if(!exam.getCourse().isDeleted() && !exam.getExamPeriod().isDeleted()) {
+						examsDTO.add(new ExamDTO(exam));
+					}
+					
+				}
+			}
+		}
+		System.out.println("lista je "+ examsDTO.toString());
+		return new ResponseEntity<>(examsDTO, HttpStatus.OK);
+	}
+	*/
 	@RequestMapping(value="/professor/{id}", method= RequestMethod.GET)
 	public ResponseEntity<List<ExamDTO>> getExamByProfessorId(@PathVariable Integer id){
 		List<Exam> exams = examService.findAll();
@@ -234,4 +255,7 @@ public class ExamController {
 		System.out.println("lista je "+ examsDTO.toString());
 		return new ResponseEntity<>(examsDTO, HttpStatus.OK);
 	}
+	
+	
+	
 }

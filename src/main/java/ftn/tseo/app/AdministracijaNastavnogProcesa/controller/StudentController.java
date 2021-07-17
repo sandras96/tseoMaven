@@ -21,11 +21,13 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.UserDTOtoUser;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.convert.UserToUserDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.StudentDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Authority;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Exam;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.FinancialCard;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.Student;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.User;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.repository.AuthorityRepository;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.DocumentService;
+import ftn.tseo.app.AdministracijaNastavnogProcesa.service.FinancialCardService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.StudentService;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.service.UserService;
 
@@ -38,6 +40,9 @@ public class StudentController {
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	FinancialCardService financialCardService;
 
 	@Autowired
 	StudentDTOtoStudent studentDTOtoStudent;
@@ -65,11 +70,11 @@ public class StudentController {
 		List<Student> students = studentService.findAll();
 		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
 		for (Student student : students) {
-			if(!student.getUser().isDeleted()) {
+			if (!student.getUser().isDeleted()) {
 				System.out.println("student je :" + student.getIndexNum());
 				studentsDTO.add(new StudentDTO(student));
 			}
-			
+
 		}
 		System.out.println("lista je " + studentsDTO.toString());
 		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
@@ -82,7 +87,7 @@ public class StudentController {
 		if (student == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		if(student.getUser().isDeleted()) {
+		if (student.getUser().isDeleted()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
@@ -117,7 +122,8 @@ public class StudentController {
 		student.setUser(userService.findOne(user.getId()));
 		String acc = FinancialCard.getRandomAccountNumber();
 		String ref = FinancialCard.getRandomReference();
-		FinancialCard fc = new FinancialCard(acc, ref, 97, 0, student);
+		FinancialCard fc = new FinancialCard("840-1234567-13", ref, 97, 0, student);
+		financialCardService.save(fc);
 		student.setFinancialCard(fc);
 		studentService.save(student);
 		System.out.println("USER JE " + student.getUser().getId());
@@ -126,16 +132,16 @@ public class StudentController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value = "/{id}")
-	public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO, @PathVariable("id") Integer id) {
+	public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO,
+			@PathVariable("id") Integer id) {
 		Student student = studentService.findOne(id);
 		System.out.println("student JE " + student);
 		if (student == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
-		
+
 		student = studentDTOtoStudent.convert(studentDTO);
-		
+
 		System.out.println("USER JE " + student.getUser().getPassword());
 
 //		User user = userService.findOne(studentDTO.getUser().getId());
@@ -165,13 +171,13 @@ public class StudentController {
 			User user = userService.getByStudentId(id);
 			user.setDeleted(true);
 			userService.save(user);
-		//	studentService.deleteStudentById(id);
-			
+			// studentService.deleteStudentById(id);
+
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 
 	}
-	
+
 	@RequestMapping(value = "user/{id}", method = RequestMethod.GET)
 	public ResponseEntity<StudentDTO> getStudentByUserId(@PathVariable Integer id) {
 		Student student = studentService.findByUserId(id);
@@ -182,53 +188,53 @@ public class StudentController {
 
 		return new ResponseEntity<>(new StudentDTO(student), HttpStatus.OK);
 	}
-	
+
 ////////////////////////////SEARCH///////////////////////////////////////
-	
+
 	@RequestMapping(value = "/searchByFirstname/{firstname}", method = RequestMethod.GET)
 	public ResponseEntity<List<StudentDTO>> getAllByFirstname(@PathVariable("firstname") String firstname) {
 		List<Student> students = studentService.findByFirstname(firstname);
 		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
 		for (Student student : students) {
-			if(!student.getUser().isDeleted()) {
+			if (!student.getUser().isDeleted()) {
 				System.out.println("student je :" + student.getIndexNum());
 				studentsDTO.add(new StudentDTO(student));
 			}
-			
+
 		}
 		System.out.println("lista je " + studentsDTO.toString());
 		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/searchByLastname/{lastname}", method = RequestMethod.GET)
 	public ResponseEntity<List<StudentDTO>> getAllByLastname(@PathVariable("lastname") String lastname) {
 		List<Student> students = studentService.findByLastname(lastname);
 		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
 		for (Student student : students) {
-			if(!student.getUser().isDeleted()) {
+			if (!student.getUser().isDeleted()) {
 				System.out.println("student je :" + student.getIndexNum());
 				studentsDTO.add(new StudentDTO(student));
 			}
-			
+
 		}
 		System.out.println("lista je " + studentsDTO.toString());
 		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/searchByIndexnumber/{indexnumber}", method = RequestMethod.GET)
 	public ResponseEntity<List<StudentDTO>> getAllByIndexnumber(@PathVariable("indexnumber") String indexnumber) {
 		List<Student> students = studentService.findByIndexnumber(indexnumber);
 		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
 		for (Student student : students) {
-			if(!student.getUser().isDeleted()) {
+			if (!student.getUser().isDeleted()) {
 				System.out.println("student je :" + student.getIndexNum());
 				studentsDTO.add(new StudentDTO(student));
 			}
-			
+
 		}
 		System.out.println("lista je " + studentsDTO.toString());
 		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
 	}
-	
+
 
 }

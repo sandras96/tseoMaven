@@ -16,6 +16,9 @@ public class StudentToStudentDTO implements Converter<Student, StudentDTO> {
 	@Autowired
 	DocumentToDocumentDTO documentToDocumentDTO;
 	
+	@Autowired
+	FinancialCardToFinancialCardDTO financialCardToFinancialCardDTO;
+	
 	@Override
 	public StudentDTO convert(Student source) {
 		if(source == null) {
@@ -57,6 +60,10 @@ public class StudentToStudentDTO implements Converter<Student, StudentDTO> {
 		if(source.getUser()!=null) {
 			studentDTO.setUser(userToUserDTO.convert(source.getUser()));
 		}
+//		if(source.getFinancialCard()!=null) {
+//			studentDTO.setFinancialCard(financialCardToFinancialCardDTO.convert(source.getFinancialCard()));
+//		}
+		
 	//	if(source.getDocuments()!= null) {
 	//		studentDTO.setDocuments(documentToDocumentDTO.convert(source.getDocuments()));
 	//	}

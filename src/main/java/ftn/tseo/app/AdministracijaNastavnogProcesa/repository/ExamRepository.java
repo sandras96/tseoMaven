@@ -1,6 +1,7 @@
 package ftn.tseo.app.AdministracijaNastavnogProcesa.repository;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,10 @@ public interface ExamRepository extends JpaRepository<Exam, Integer>{
 	List<Exam> findByExamPeriodNameContainingAndCourseId(String name, Integer id);
 	List<Exam> findByCourseNameContaining(String name);
 	List<Exam> findByCourseNameContainingAndExamPeriodId(String name, Integer id);
+	
+	@Query(value = "SELECT * FROM exam e JOIN sign_exams se ON se.exam_id = e.exam_id WHERE se.student_id=?;",nativeQuery = true)
+	Set<Exam> getAllRegisteredExams(Integer id);
+	
+	@Query(value = " SELECT e.* from exam e LEFT JOIN sign_exams se ON e.exam_id = se.exam_id WHERE se.exam_id IS NULL;",nativeQuery = true)
+	List<Exam> getAllUnregisteredExams();
 }

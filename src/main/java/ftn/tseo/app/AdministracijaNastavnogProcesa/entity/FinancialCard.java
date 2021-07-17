@@ -38,6 +38,7 @@ public class FinancialCard {
 	@Column(name="balance", unique=false, nullable=true)
 	private double balance;
 	
+	
 	@OneToOne(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY)
 	@JoinColumn(name="student_id", referencedColumnName="student_id", unique=true)
 	private Student student;
@@ -145,11 +146,16 @@ public class FinancialCard {
 	public static String getRandomReference(){
 		 Random rand = new Random();
 		 String ref = "";
-		 for (int i = 0; i < 16; i++)
+		 for (int i = 0; i < 2; i++)
 		    {
 		        int n = rand.nextInt(10) + 0;
 		        ref += Integer.toString(n);
 		    }
+		 ref += "-12345-1-7789-";
+		 for(int i=0; i <4; i++) {
+			  int n = rand.nextInt(10) + 0;
+		      ref += Integer.toString(n);
+		 }
 		
 		 return ref;
 	}

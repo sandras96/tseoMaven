@@ -1,7 +1,9 @@
 package ftn.tseo.app.AdministracijaNastavnogProcesa.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -105,19 +107,19 @@ public class PaymentController {
 		
 	}
 	
-//	@RequestMapping(value="/student/{id}", method= RequestMethod.GET)
-//	public ResponseEntity<Set<PaymentDTO>> getPaymentByStudentId(@PathVariable Integer id){
-//		Set<Payment> payments = paymentService.findAllByStudentId(id);
-//		Set<PaymentDTO> paymentsDTO = new HashSet<PaymentDTO>();
-//		for(Payment payment : payments) {
-//			if(!payment.isDeleted()) {
-//				paymentsDTO.add(new PaymentDTO(payment));
-//			}
-//			
-//		}
-//		System.out.println("lista je "+paymentsDTO.toString());
-//		return new ResponseEntity<>(paymentsDTO, HttpStatus.OK);
-//	}
+	@RequestMapping(value="/financialCard/{id}", method= RequestMethod.GET)
+	public ResponseEntity<Set<PaymentDTO>> getPaymentByFinancialCardId(@PathVariable Integer id){
+		Set<Payment> payments = paymentService.findAllByFinancialCardId(id);
+		Set<PaymentDTO> paymentsDTO = new HashSet<PaymentDTO>();
+		for(Payment payment : payments) {
+			if(!payment.isDeleted()) {
+				paymentsDTO.add(new PaymentDTO(payment));
+			}
+			
+		}
+		System.out.println("lista je "+paymentsDTO.toString());
+		return new ResponseEntity<>(paymentsDTO, HttpStatus.OK);
+	}
 
 	
 }

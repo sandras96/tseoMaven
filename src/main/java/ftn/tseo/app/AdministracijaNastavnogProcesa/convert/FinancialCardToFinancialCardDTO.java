@@ -9,7 +9,7 @@ import ftn.tseo.app.AdministracijaNastavnogProcesa.dto.FinancialCardDTO;
 import ftn.tseo.app.AdministracijaNastavnogProcesa.entity.FinancialCard;
 
 @Component
-public class FinancialCardToCFinancialCardDTO implements Converter<FinancialCard, FinancialCardDTO>{
+public class FinancialCardToFinancialCardDTO implements Converter<FinancialCard, FinancialCardDTO>{
 
 	@Autowired
 	StudentToStudentDTO studentToStudentDTO;
@@ -34,9 +34,9 @@ public class FinancialCardToCFinancialCardDTO implements Converter<FinancialCard
 		if(source.getBalance()!=0) {
 			financialCardDTO.setBalance(source.getBalance());
 		}
-		if(source.getStudent()!=null) {
-			financialCardDTO.setStudent(studentToStudentDTO.convert(source.getStudent()));
-		}
+	//	if(source.getStudent()!=null) {
+	//		financialCardDTO.setStudent(studentToStudentDTO.convert(source.getStudent()));
+	//	}
 		return financialCardDTO;
 	}
 

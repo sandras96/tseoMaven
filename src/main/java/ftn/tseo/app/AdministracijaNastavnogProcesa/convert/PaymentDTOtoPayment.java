@@ -26,6 +26,9 @@ public class PaymentDTOtoPayment implements Converter<PaymentDTO, Payment>{
 		if(source.getDate()!=null) {
 			payment.setDate(source.getDate());
 		}
+		if(source.getAccountName()!=null) {
+			payment.setName(source.getAccountName());
+		}
 		if(source.getPurpose()!=null) {
 			payment.setPurpose(source.getPurpose());
 		}

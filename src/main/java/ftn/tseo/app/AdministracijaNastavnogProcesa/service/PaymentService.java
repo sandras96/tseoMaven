@@ -38,5 +38,8 @@ public class PaymentService {
 		paymentRepository.deleteById(id);
 	}
 	
+	public Set<Payment> findAllByFinancialCardId(Integer id) {
+		return paymentRepository.findAllByFinancialCardId(id);
+	}
 
 }

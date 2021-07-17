@@ -7,10 +7,10 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
 import javax.persistence.FetchType;
-
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -34,6 +34,7 @@ public class Student extends Person{
 	@OneToOne(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy = "student")
 	private FinancialCard financialCard;
 	
+	
 	@OneToMany(cascade= {CascadeType.ALL}, fetch= FetchType.LAZY, mappedBy="student")
 	private Set<Document> documents = new HashSet<Document>();
 	
@@ -46,6 +47,11 @@ public class Student extends Person{
 	
 	@OneToMany(cascade= {CascadeType.REFRESH}, fetch= FetchType.LAZY, mappedBy="student")
 	private Set<ExamTaking> examTakings = new HashSet<ExamTaking>();
+	
+	@ManyToMany
+    @JoinTable(name = "sign_exams", joinColumns = { @JoinColumn(name = "student_id") }, 
+    			inverseJoinColumns = { @JoinColumn(name = "exam_id") })
+	private Set<Exam> exams = new HashSet<Exam>();
 
 	public Student() {
 		super();
@@ -114,6 +120,15 @@ public class Student extends Person{
 		this.examTakings = examTakings;
 	}
 
+	public Set<Exam> getExams() {
+		return exams;
+	}
+
+	public void setExams(Set<Exam> exams) {
+		this.exams = exams;
+	}
+
+
 
 	@Override
 	public String toString() {
@@ -122,6 +137,14 @@ public class Student extends Person{
 	}
 
 
-
+	public void addExam(Exam exam) {
+        this.exams.add(exam);
+        exam.getStudents().add(this);
+	}
 	
+    public void removeExam(Exam exam) {
+        this.exams.remove(exam);
+        exam.getStudents().remove(this);
+    }
+
 }

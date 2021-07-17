@@ -1,6 +1,7 @@
 package ftn.tseo.app.AdministracijaNastavnogProcesa.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -59,5 +60,13 @@ public class ExamService {
 	}
 	public List<Exam> findByCourseNameAndExamPeriod(String name, Integer id){
 		return examRepository.findByCourseNameContainingAndExamPeriodId(name, id);
+	}
+	
+	public Set<Exam> getAllRegisteredExams(Integer id){
+		return examRepository.getAllRegisteredExams(id);
+	}
+	
+	public List<Exam> getAllUnregisteredExams(){
+		return examRepository.getAllUnregisteredExams();
 	}
 }

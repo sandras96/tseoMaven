@@ -18,7 +18,8 @@ public class FinancialCardDTO {
 	}
 
 	public FinancialCardDTO(FinancialCard financialCard) {
-		this(financialCard.getId(), financialCard.getAccountNumber(), financialCard.getModel(), financialCard.getBalance(), financialCard.getReference(), new StudentDTO(financialCard.getStudent()));
+		this(financialCard.getId(), financialCard.getAccountNumber(), financialCard.getModel(), financialCard.getBalance(), financialCard.getReference(),
+				new StudentDTO(financialCard.getStudent()));
 	}
 	public FinancialCardDTO(Integer id, String accountNumber, Integer model, double balance, String reference, StudentDTO student) {
 		super();

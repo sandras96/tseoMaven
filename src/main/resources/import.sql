@@ -113,12 +113,12 @@ INSERT INTO user_authority VALUES (12,3);
 INSERT INTO user_authority VALUES (13,3);
 
 ---student---
-insert into student(firstname, lastname,address,birthdate, city, country,email, index_number, zip, user_rel, phone)values("Nela", "Milojevic","Adresa1", '1996-03-23', "Uzice", "Srbija", "nelamilojevic@gmail.com","sf10/2016", 31000, 2, '065/1234567');
-insert into student(firstname, lastname,address,birthdate, city, country,email, index_number, zip, user_rel, phone)values("Sanja", "Milojevic","Adresa2", '1992-11-12', "Uzice", "Srbija", "sanjamilojevic@gmail.com", "sf8/2015", 31000, 3, '064/1234567');
-insert into student(firstname, lastname,address,birthdate, city, country,email, index_number, zip, user_rel, phone)values("Student", "Student","Adresa3", '1995-09-12', "Novi Sad", "Srbija", "student@gmail.com", "sf56/2016", 21000, 4, '061/7894569');
-insert into student(firstname, lastname,address,birthdate, city, country,email, index_number, zip, user_rel, phone)values("Magdalena", "Salipur","Adresa4", '1997-01-27', "Priboj", "Srbija", "megs@gmail.com", "sf11/2016", 31330, 5, '062/0096569');
-insert into student(firstname, lastname,address,birthdate, city, country,email, index_number, zip, user_rel, phone)values("Uros", "Cvijovic","Adresa5", '1996-03-02', "Sevojno", "Srbija", "uroscvija@gmail.com", "sf15/2015", 31100, 6, '069/1494569');
-insert into student(firstname, lastname,address,birthdate, city, country,email, index_number, zip, user_rel, phone)values("Vuk", "Jovanovic","Adresa6", '1996-07-18', "Sevojno", "Srbija", "vulejovana@gmail.com", "sf45/2016", 31100, 7, '066/1245673');
+--insert into student(firstname, lastname,address,birthdate, city, country,email, index_number, zip, user_rel, phone)values("Nela", "Milojevic","Adresa1", '1996-03-23', "Uzice", "Srbija", "nelamilojevic@gmail.com","sf10/2016", 31000, 2, '065/1234567');
+--insert into student(firstname, lastname,address,birthdate, city, country,email, index_number, zip, user_rel, phone)values("Sanja", "Milojevic","Adresa2", '1992-11-12', "Uzice", "Srbija", "sanjamilojevic@gmail.com", "sf8/2015", 31000, 3, '064/1234567');
+--insert into student(firstname, lastname,address,birthdate, city, country,email, index_number, zip, user_rel, phone)values("Student", "Student","Adresa3", '1995-09-12', "Novi Sad", "Srbija", "student@gmail.com", "sf56/2016", 21000, 4, '061/7894569');
+--insert into student(firstname, lastname,address,birthdate, city, country,email, index_number, zip, user_rel, phone)values("Magdalena", "Salipur","Adresa4", '1997-01-27', "Priboj", "Srbija", "megs@gmail.com", "sf11/2016", 31330, 5, '062/0096569');
+--insert into student(firstname, lastname,address,birthdate, city, country,email, index_number, zip, user_rel, phone)values("Uros", "Cvijovic","Adresa5", '1996-03-02', "Sevojno", "Srbija", "uroscvija@gmail.com", "sf15/2015", 31100, 6, '069/1494569');
+--insert into student(firstname, lastname,address,birthdate, city, country,email, index_number, zip, user_rel, phone)values("Vuk", "Jovanovic","Adresa6", '1996-07-18', "Sevojno", "Srbija", "vulejovana@gmail.com", "sf45/2016", 31100, 7, '066/1245673');
 
 ---professor---
 insert into professor(firstname, lastname,address,birthdate, city, country,email, zip, phone, role, user_rel)values("Lidija", "Salipur","Adresa7", '1994-04-12', "Priboj", "Srbija", "liki@gmail.com", 31330, '065/789654','PROFESSOR', 8);
@@ -152,23 +152,23 @@ insert into course_professor(course_id,professor_id)values(6,2);
 insert into course_professor(course_id,professor_id)values(6,4);
 
 ---course_attendance---
-insert into course_attendance (course_id,student_id)values(1,1);
-insert into course_attendance (course_id,student_id)values(1,4);
-insert into course_attendance (course_id,student_id)values(1,6);
-insert into course_attendance (course_id,student_id)values(2,3);
-insert into course_attendance (course_id,student_id)values(2,2);
-insert into course_attendance (course_id,student_id)values(3,6);
-insert into course_attendance (course_id,student_id)values(3,5);
-insert into course_attendance (course_id,student_id)values(3,4);
-insert into course_attendance (course_id,student_id)values(3,1);
-insert into course_attendance (course_id,student_id)values(4,1);
-insert into course_attendance (course_id,student_id)values(4,3);
-insert into course_attendance (course_id,student_id)values(4,2);
-insert into course_attendance (course_id,student_id)values(5,2);
-insert into course_attendance (course_id,student_id)values(5,3);
-insert into course_attendance (course_id,student_id)values(5,1);
-insert into course_attendance (course_id,student_id)values(6,4);
-insert into course_attendance (course_id,student_id)values(6,6);
+--insert into course_attendance (course_id,student_id)values(1,1);
+--insert into course_attendance (course_id,student_id)values(1,4);
+--insert into course_attendance (course_id,student_id)values(1,6);
+--insert into course_attendance (course_id,student_id)values(2,3);
+--insert into course_attendance (course_id,student_id)values(2,2);
+--insert into course_attendance (course_id,student_id)values(3,6);
+--insert into course_attendance (course_id,student_id)values(3,5);
+--insert into course_attendance (course_id,student_id)values(3,4);
+--insert into course_attendance (course_id,student_id)values(3,1);
+--insert into course_attendance (course_id,student_id)values(4,1);
+--insert into course_attendance (course_id,student_id)values(4,3);
+--insert into course_attendance (course_id,student_id)values(4,2);
+--insert into course_attendance (course_id,student_id)values(5,2);
+--insert into course_attendance (course_id,student_id)values(5,3);
+--insert into course_attendance (course_id,student_id)values(5,1);
+--insert into course_attendance (course_id,student_id)values(6,4);
+--insert into course_attendance (course_id,student_id)values(6,6);
 
 ---exam---
 --insert into exam (date, points, assignment, course_id, exam_period_id) values ('2018-12-12', 65, 'assignment1', 1, 1);
@@ -188,16 +188,16 @@ insert into exam(assignment,date,points,course_id,exam_period_id)values('sistems
 insert into exam(assignment,date,points,course_id,exam_period_id)values('assignment5','2021-06-28',15,6,4);
 
 ---exam_taking---
-insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(7,66,1,1,1);
-insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(8,73,1,4,4);
-insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(8,88,2,4,6);
-insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(4,45,3,3,3);
-insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(8,75,3,2,2);
-insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(6,51,9,6,2);
-insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(9,88,9,5,1);
-insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(6,55,9,6,3);
-insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(8,75,10,2,2);
-insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(7,66,10,2,3);
+--insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(7,66,1,1,1);
+--insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(8,73,1,4,4);
+--insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(8,88,2,4,6);
+--insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(4,45,3,3,3);
+--insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(8,75,3,2,2);
+--insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(6,51,9,6,2);
+--insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(9,88,9,5,1);
+--insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(6,55,9,6,3);
+--insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(8,75,10,2,2);
+--insert into exam_taking(mark,points,exam_id,professor_id,student_id)values(7,66,10,2,3);
 
 ---exam_period---
 insert into exam_period(name, start_date, end_date)values('januarski rok', '2021-01-22', '2021-02-02');
@@ -208,7 +208,7 @@ insert into exam_period(name, start_date, end_date)values('julski rok', '2021-07
 insert into exam_period(name, start_date, end_date)values('septembarski rok', '2021-08-22', '2021-09-10');
 
 ---payment---
-insert into payment(account_number,address,amount,city,date,deleted,model,name,payment_code,purpose,reference,student_id) values (1567456, 'adress1', 520, 'Ue', '2018-12-12', false, 15, 'name', 5, 'purpose', 556, 1);
-insert into payment(account_number, address, amount, city, date, deleted, model, name, payment_code, purpose, reference, student_id) values (123456, 'address', 560, 'UE', '2018-12-12', false, 5, 'name1', 456, 'uplata', 36, 1);
+--insert into payment(account_number,address,amount,city,date,deleted,model,name,payment_code,purpose,reference,student_id) values (1567456, 'adress1', 520, 'Ue', '2018-12-12', false, 15, 'name', 5, 'purpose', 556, 1);
+--insert into payment(account_number, address, amount, city, date, deleted, model, name, payment_code, purpose, reference, student_id) values (123456, 'address', 560, 'UE', '2018-12-12', false, 5, 'name1', 456, 'uplata', 36, 1);
 
 ---file---

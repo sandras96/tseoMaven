@@ -10,6 +10,7 @@ public class PaymentDTO {
 	private double amount;
 	private String purpose;
 	private Date date;
+	private String accountName;
 	private boolean deleted;
 	private FinancialCardDTO financialCard;
 	private CreditCardDTO creditCard;
@@ -21,15 +22,16 @@ public class PaymentDTO {
 
 	
 	public PaymentDTO(Payment p) { 
-			this(p.getId(), p.getAmount(), p.getPurpose(), p.getDate(), p.isDeleted(), new FinancialCardDTO(p.getFinancialCard()), new CreditCardDTO(p.getCreditCard())); }
+			this(p.getId(), p.getAmount(), p.getPurpose(), p.getDate(), p.getName(), p.isDeleted(), new FinancialCardDTO(p.getFinancialCard()), new CreditCardDTO(p.getCreditCard())); }
 	 
 
-	public PaymentDTO(Integer id, double amount, String purpose, Date date, boolean deleted, FinancialCardDTO financialCard, CreditCardDTO creditCard) {
+	public PaymentDTO(Integer id, double amount, String purpose, Date date, String accountName, boolean deleted, FinancialCardDTO financialCard, CreditCardDTO creditCard) {
 		super();
 		this.id = id;
 		this.amount = amount;
 		this.purpose = purpose;
 		this.date = date;
+		this.accountName = accountName;
 		this.deleted = deleted;
 		this.financialCard = financialCard;
 		this.creditCard = creditCard;
@@ -66,6 +68,15 @@ public class PaymentDTO {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
+	public String getAccountName() {
+		return accountName;
+	}
+
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
+	}
+
 
 	public boolean isDeleted() {
 		return deleted;

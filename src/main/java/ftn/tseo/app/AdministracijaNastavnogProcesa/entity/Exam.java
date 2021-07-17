@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -47,6 +48,8 @@ public class Exam {
 	@JoinColumn(name="examPeriod_id")
 	private ExamPeriod examPeriod;
 	
+	@ManyToMany(mappedBy="exams")
+	private Set<Student> students = new HashSet<Student>();
 	
 	public Exam() {
 		super();
@@ -123,6 +126,15 @@ public class Exam {
 
 	public void setExamPeriod(ExamPeriod examPeriod) {
 		this.examPeriod = examPeriod;
+	}
+
+
+	public Set<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(Set<Student> students) {
+		this.students = students;
 	}
 
 	
